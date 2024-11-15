@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=Effects
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Effects\ here.\r\n\ \r\n\ @Andrew\ Xu\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=a\ actsLeft\ fadeLength
+comment1.target=void\ fade(greenfoot.Actor,\ int,\ int)
+comment2.params=actor\ image\ width\ height\ FPS\ direction
+comment2.target=void\ animate(greenfoot.Actor,\ greenfoot.GreenfootImage[],\ int,\ int,\ int,\ int)
+numComments=3
