@@ -3,8 +3,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class MyWorld here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Andrew
+ * @Darius
+ * @Jonarahn
+ * @Logan
+ *
+ * @1.2.0
  */
 public class MyWorld extends World
 {
@@ -26,8 +30,14 @@ public class MyWorld extends World
         spawnOnce = true;
 
 
-        addObject(scroller = new Scroller(this, new GreenfootImage("bgtemp.png"), 1700, 1500));
+        addObject(scroller = new Scroller(this, new GreenfootImage("bgtemp.png"), 5048, 2024));
         addObject(player = new Player(), this.getWidth()/2, this.getHeight()/2);
+        
+        
+        addObject(new Hitbox(200, 200), 375, 400);
+        
+        Slider slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130);
+        addObject(slider, 155, 540);
         //addObject(lives = new Lives(), 50, 20);
 
         // addObject(new MiniMap(), 30, 370);

@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=Interface
+comment1.params=
+comment1.target=void\ act()
+comment2.params=
+comment2.target=boolean\ isUserInteracting()
+comment3.params=
+comment3.target=void\ resetTransparency()
+comment4.params=
+comment4.target=void\ fadeTransparency()
+numComments=5

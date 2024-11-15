@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.target=SliderObject
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ SliderObject\ here.\r\n\ \r\n\ @lumilk\r\n\ @version\ 1.0.0\r\n
+comment1.params=max\ refX\ image\ scale
+comment1.target=SliderObject(int,\ int,\ java.lang.String,\ double)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=t
+comment3.target=void\ setTransparency(double)
+comment4.params=
+comment4.target=int\ getMaxOffset()
+comment5.params=
+comment5.target=boolean\ isUserInteracting()
+numComments=6
