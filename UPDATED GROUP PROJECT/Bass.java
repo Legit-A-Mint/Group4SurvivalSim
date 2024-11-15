@@ -11,13 +11,13 @@ public class Bass extends Enemy
     // Changed to animate method to stay upright
     private GreenfootImage[] img = new GreenfootImage[1];
 
-    public Bass(MyWorld origin){
-        super(origin);
+    public Bass(){
+
         img[0] = new GreenfootImage("shark.png");
         
         setImage(img[0]);
         
-        speed = 0.85;
+        speed = 1.35;
 
     }
     
