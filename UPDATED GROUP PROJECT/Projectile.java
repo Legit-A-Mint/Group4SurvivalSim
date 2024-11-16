@@ -17,6 +17,9 @@ public class Projectile extends SuperSmoothMover{
     private double speed;
     private int lifeSpan;
     private Enemy enemy;
+    protected int damage;
+    protected int flightDuration;
+    private int flightTimeElapsed;
 
     /**
      * FAILSAFE VERSION, IN CASE MOMVEMENT REPOSITIONING FAILS
@@ -30,8 +33,15 @@ public class Projectile extends SuperSmoothMover{
     public Projectile(double Speed){
         this.speed = 5;
         this.lifeSpan = 150;
+        flightTimeElapsed = 0;
     }
 
+    public void initialize(int damage, int speed, int flightDuration) {
+        this.damage = damage;
+        this.speed = speed;
+        this.flightDuration = flightDuration;
+    }
+    
     public void act(){
 
         if(lifeSpan > 0) lifeSpan--;
@@ -51,8 +61,16 @@ public class Projectile extends SuperSmoothMover{
                 getWorld().removeObject(this);
             } 
         }
-    }
+        
+        move(speed);
+        flightTimeElapsed++;
 
+        // Remove projectile if it exceeds its flight duration
+        if (flightTimeElapsed >= flightDuration) {
+            getWorld().removeObject(this);
+        }
+    }
+    
     public void targeting (){
         double closestTargetDistance = 0;
         double distanceToActor;

@@ -1,9 +1,9 @@
 #BlueJ class context
 comment0.target=Player
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Player\ here.\r\n\ \r\n\ @lumilk\r\n\ @Andrew\r\n\ \r\n\ @1.0.0\r\n
+comment0.text=\n\ Write\ a\ description\ of\ class\ Player\ here.\n\ \n\ @lumilk\n\ @Andrew\n\ \n\ @1.0.0\n
 comment1.params=
 comment1.target=Player()
-comment1.text=\r\n\ \ \ \ private\ int\ playerHealth,\ playerMaxHealth,\ gold,\ intelligence,\ actCount;\r\n\ \ \ \ private\ double\ maxSpeed,\ speed;\r\n\ \ \ \ private\ boolean\ attackReady;\r\n\r\n\ \ \ \ private\ double\ closestTargetDistance\ \=\ 0;\r\n\ \ \ \ private\ double\ distanceToActor;\r\n\ \ \ \ private\ int\ relativeX,\ relativeY;\r\n\r\n\ \ \ \ private\ boolean\ collided;\ \ \r\n
+comment1.text=\n\ \ \ \ private\ int\ playerHealth,\ playerMaxHealth,\ gold,\ intelligence,\ actCount;\n\ \ \ \ private\ double\ maxSpeed,\ speed;\n\ \ \ \ private\ boolean\ attackReady;\n\n\ \ \ \ private\ double\ closestTargetDistance\ \=\ 0;\n\ \ \ \ private\ double\ distanceToActor;\n\ \ \ \ private\ int\ relativeX,\ relativeY;\n\n\ \ \ \ private\ boolean\ collided;\ \ \n
 comment2.params=
 comment2.target=void\ act()
 comment3.params=
