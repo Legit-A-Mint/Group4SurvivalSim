@@ -2,38 +2,38 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 
 /**
- * Write a description of class Enemies here.
+ * Write a description of class Island here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Enemy extends Effects
+public class Island extends SuperSmoothMover
 {
-    protected int direction;
-    protected double speed;
-    protected Player player;
-
-    public Enemy(){
-        speed = 1;
-        direction = 1;
+    private boolean createdHitbox;
+    private GreenfootImage img;
+    private Hitbox hitbox;
+    
+    private static final double BOUNDINGFACTOR = 2.0;
+    public Island(GreenfootImage img){
+        this.img = img;
+        setImage(img);
+        createdHitbox = false;
     }
-
+    
+    
+    
+    
     public void act()
     {
-        lookForTarget();
-        repel();
-    }
-
-    public void lookForTarget(){
-        if(!getWorld().getObjects(Player.class).isEmpty()){
-            player = getWorld().getObjects(Player.class).get(0);
-            turnTowards(player.getX(), player.getY());
-            move(speed);
+        if(!createdHitbox){
+            hitbox = new Hitbox(img.getWidth(), (int)(img.getHeight()/1.35));
+            getWorld().addObject(hitbox, this.getX(), this.getY() + 10);
+            createdHitbox = true;
         }
+        repelEnemies();
     }
-
-    //modified repel method
-    public void repel() {
+    
+    public void repelEnemies() {
         ArrayList<Enemy> enemies = (ArrayList<Enemy>)getIntersectingObjects(Enemy.class);
         ArrayList<Actor> actorsTouching = new ArrayList<Actor>();
 
@@ -65,8 +65,8 @@ public class Enemy extends Effects
             double distance = Math.sqrt(Math.pow(currentX - objectX, 2) + Math.pow(currentY - objectY, 2));
 
             // Calculate the effective radii of the bounding ovals
-            double thisRadius = Math.max(getImage().getWidth() / 4.0, getImage().getHeight() / 4.0);
-            double objectRadius = Math.max(objectWidth / 4.0, objectHeight / 4.0);
+            double thisRadius = Math.max(getImage().getWidth() / BOUNDINGFACTOR, getImage().getHeight() / BOUNDINGFACTOR);
+            double objectRadius = Math.max(objectWidth / BOUNDINGFACTOR, objectHeight / BOUNDINGFACTOR);
 
             // Check if the distance is less than the sum of the radii
             if (distance < (thisRadius + objectRadius + minDistance)) {
@@ -90,5 +90,4 @@ public class Enemy extends Effects
             }
         }
     }
-
 }

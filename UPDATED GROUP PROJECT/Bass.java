@@ -17,7 +17,7 @@ public class Bass extends Enemy
         
         setImage(img[0]);
         
-        speed = 1.35;
+        speed = 2;
 
     }
     

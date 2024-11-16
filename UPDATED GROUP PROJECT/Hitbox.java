@@ -21,7 +21,7 @@ public class Hitbox extends SuperSmoothMover
         this.type = type;
         box = new GreenfootImage(h, w);
         box.setColor(Color.RED);
-        box.setTransparency(100); //less distracting when turned on
+        box.setTransparency(55); //less distracting when turned on
         if(visible){
             box.fill();
         }
