@@ -12,11 +12,13 @@ public class Hitbox extends SuperSmoothMover
     //image variables
     private GreenfootImage box;
     private Actor owner;
+    private String type;
     private static final boolean visible = true;
     
     private int offsetX, offsetY;
     
     public Hitbox(int h, int w){
+        this.type = type;
         box = new GreenfootImage(h, w);
         box.setColor(Color.RED);
         box.setTransparency(100); //less distracting when turned on
@@ -27,6 +29,7 @@ public class Hitbox extends SuperSmoothMover
     }
     
     public Hitbox(int h, int w, int offsetX, int offsetY, Actor owner){
+        this.type = type;
         box = new GreenfootImage(h, w);
         box.setColor(Color.RED);
         box.setTransparency(100);
@@ -52,7 +55,6 @@ public class Hitbox extends SuperSmoothMover
     }
     
     public List<Hitbox> getIntersectingHitboxes() {
-            // Cast to Hitbox as we are specifically looking for hitboxes
             List<Hitbox> hitboxes = (List<Hitbox>) getIntersectingObjects(Hitbox.class);
             return hitboxes;
         }
@@ -75,5 +77,9 @@ public class Hitbox extends SuperSmoothMover
         boolean isTouchingY = thisBottom > otherTop && thisTop < otherBottom;
 
         return isTouchingX && isTouchingY;
+    }
+    
+    public String getType(){
+        return type;
     }
 }

@@ -22,14 +22,13 @@ public class Counter extends Interface
     }
 
     public Counter(String name, String image, double scale, boolean isDouble, int myX, int myY){
-        this.name = name;
+        super(name, myX, myY);
+        
         myImage = image;
         imgBase = new GreenfootImage(image);
 
         imgBase.scale((int)(imgBase.getWidth() * scale), (int)(imgBase.getHeight() * scale)); 
         setImage(imgBase);
-        this.myX = myX;
-        this.myY = myY;
     }
 
     public void setCount(double count){

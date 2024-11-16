@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * <ul>
  * <li><code>getPreciseX, getPreciseY -></code> Retrieves precise values</li>
  * <li><code>getPreciseRotation -></code> gets the precise angle</li>
- * <li><code>turnTowards (Actor) -></code> an added bonus - turn towards another Actor instead of an xy position</li>
+ * <li><code>turnTowards (Actor) -></code> an added bonus - turwn towards another Actor instead of an xy position</li>
  * </ul>
  * <p>Version 3.1 update - Now includes the option to enable static rotation, meaning the Actor will remain
  *    facing the same direction visually even while turning and moving as desired. Call the method enableStaticRotation() 

@@ -10,8 +10,10 @@ public class ShopUI extends Interface
 {   
     private GreenfootImage bottomBar;
     
-    public ShopUI(int width, int height)
+    public ShopUI(String name, int width, int height, int myX, int myY)
     {
+        super(name, myX, myY);    
+            
         bottomBar = new GreenfootImage(width, height);
         bottomBar.setColor(Color.BLACK);
         bottomBar.fill();

@@ -12,7 +12,9 @@ public class SliderObject extends Interface
     private int maxOffset;
     private int refX, refY; //refers to the reference point of Slider
 
-    public SliderObject(int max, int refX, String image, double scale){
+    public SliderObject(String name, int max, int refX, String image, double scale, int myX, int myY){
+        super(name, myX, myY);
+        
         img = new GreenfootImage(image);
         setImage(img);
         img.scale((int)(img.getWidth() * scale), 
@@ -28,13 +30,17 @@ public class SliderObject extends Interface
 
             //Set a boundary for the slider, x position cannot exceed the maxOffset
             if(this.getX() <= refX + maxOffset && this.getX() >= refX - maxOffset){
-                setLocation(m.getX(), this.getY());   
+                myX = m.getX();
+                setLocation(m.getX(), this.getY());
             }
+            
             //If user goes too far above, set it down
             if(this.getX() >= refX + maxOffset){
+                myX = refX + maxOffset - 1;
                 setLocation(refX + maxOffset - 1, this.getY());
             }
             else if(this.getX() <= refX - maxOffset){
+                myX = refX - maxOffset + 1;
                 setLocation(refX - maxOffset + 1, this.getY());
             }
         }

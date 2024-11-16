@@ -24,6 +24,7 @@ public class Enemy extends Effects
 
     public Enemy(){
         speed = 1;
+        createdHitbox = true;
     }
 
     public void act()
@@ -53,13 +54,15 @@ public class Enemy extends Effects
 
     private void updateHitboxPosition() {
         //align hitbox with this
-        hitbox.setLocation(getX(), getY());
+        if(hitbox != null) hitbox.setLocation(getX(), getY());            
     }
 
     private boolean isCollidingWithHitbox() {
-        //check my hitbox is touching any other hitboxes
-        for (Hitbox other : hitbox.getIntersectingHitboxes()) {
-            return(other != hitbox && other.checkCollision(hitbox));
+        if(hitbox != null){
+            //check my hitbox is touching any other hitboxes
+            for (Hitbox other : hitbox.getIntersectingHitboxes()) {
+                return(other != hitbox && other.checkCollision(hitbox));
+            }
         }
         return false;
     }

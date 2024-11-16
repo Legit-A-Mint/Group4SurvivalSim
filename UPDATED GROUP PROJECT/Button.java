@@ -15,8 +15,9 @@ public class Button extends Interface
     private boolean isAnimated;
     
     //use this constructor for debugging
-    public Button(String name){
-        this.name = name;
+    public Button(String name, int myX, int myY){
+        super(name, myX, myY);
+        
         isAnimated = true;
         
         //3 animation states
@@ -34,8 +35,9 @@ public class Button extends Interface
         
         setImage(img[0]);
     }
-    public Button(String name, String[] images, boolean isAnimated , double scale){
-        this.name = name;
+    public Button(String name, String[] images, boolean isAnimated , double scale, int myX, int myY){
+        super(name, myX, myY);
+        
         this.isAnimated = isAnimated;
         
         img = new GreenfootImage[3];
@@ -47,8 +49,9 @@ public class Button extends Interface
         setImage(img[0]);
     }
     //constructor supports Color class in an array use Color.COLOR to set a color
-    public Button(String name, int width, int height, Color[] colors, boolean isAnimated){
-        this.name = name;
+    public Button(String name, int width, int height, Color[] colors, boolean isAnimated, int myX, int myY){
+        super(name, myX, myY);
+        
         this.isAnimated = isAnimated;
         
         img = new GreenfootImage[3];

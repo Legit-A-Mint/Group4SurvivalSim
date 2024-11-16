@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @Jonarahn
  * @Logan
  *
- * @1.2.0
+ * @1.2.1
  */
 public class MyWorld extends World
 {
@@ -20,6 +20,7 @@ public class MyWorld extends World
     private static final int MAX_SPAWN_DISTANCE = 100;
     private boolean spawnOnce;
 
+    private static final int WIDTH = 2000, height = 2000;
     public MyWorld()
     {
         super(1024, 576, 1, false);
@@ -30,13 +31,22 @@ public class MyWorld extends World
         spawnOnce = true;
 
 
-        addObject(scroller = new Scroller(this, new GreenfootImage("bgtemp.png"), 5048, 2024));
+        addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
         addObject(player = new Player(), this.getWidth()/2, this.getHeight()/2);
         
+        //border hitbox
+        addObject(new Hitbox(WIDTH, 100), WIDTH/2, height);
+        addObject(new Hitbox(WIDTH, 100), WIDTH/2, 0);
+        addObject(new Hitbox(100, height), WIDTH, height/2);
+        addObject(new Hitbox(100, height), 0, height/2);
         
-        addObject(new Hitbox(200, 200), 375, 400);
         
-        Slider slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130);
+        addObject(new Hitbox(200, 200), 275, 400);
+        addObject(new Hitbox(200, 200), 600, 900);
+        
+        
+        
+        Slider slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540);
         addObject(slider, 155, 540);
         //addObject(lives = new Lives(), 50, 20);
 

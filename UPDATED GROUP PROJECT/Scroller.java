@@ -3,7 +3,7 @@ import greenfoot.*;
 /**
  * Write a description of class Scroller here.
  * 
- * @author (your name) 
+ * @Andrew
  * @version (a version number or a date)
  */
 public class Scroller extends Actor
@@ -46,7 +46,6 @@ public class Scroller extends Actor
         }
         scrollBackground(); // sets initial world background image
     }
-
     /** sets the world background image determined by the current scroll values */
     private void scrollBackground()
     {

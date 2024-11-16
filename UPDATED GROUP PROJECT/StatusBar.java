@@ -12,6 +12,10 @@ public class StatusBar extends Interface
      * Act - do whatever the StatusBar wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    public StatusBar(String name, int myX, int myY){
+        super(name, myX, myY);
+    }
+    
     public void act()
     {
         super.act();

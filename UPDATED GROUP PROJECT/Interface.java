@@ -10,8 +10,19 @@ public abstract class Interface extends SuperSmoothMover{
 
     //inherited variables
     protected String name;
+    protected int myX, myY;
 
+    //every subclass must contain a check to see if the user interacts with object
+    protected abstract boolean isUserInteracting();
+    
+    public Interface(String name, int myX, int myY){
+        this.name = name;
+        this.myX = myX;
+        this.myY = myY;
+    }
+    
     public void act() {
+        updatePos();
         if(isUserInteracting()){ 
             lastInteractionTime = 0;  //reset global timer
             resetTransparency();
@@ -27,8 +38,6 @@ public abstract class Interface extends SuperSmoothMover{
         //continue to increase
         lastInteractionTime++;
     }
-    //every subclass must contain a check to see if the user interacts with object
-    protected abstract boolean isUserInteracting();
 
     //handle transparency
     private void resetTransparency(){
@@ -44,5 +53,11 @@ public abstract class Interface extends SuperSmoothMover{
             //gets image from subclass
             getImage().setTransparency(transparency);  //reapply transparency
         }
+    }
+    
+    //updates position of any interface object, this is to allow movement of some of the objects (like slider)
+    //cannot override setlocation because movement would be disabled
+    private void updatePos(){
+        this.setLocation(myX, myY);
     }
 }
