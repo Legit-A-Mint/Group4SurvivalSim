@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @Jonarahn
  * @Logan
  *
- * @1.2.1
+ * @1.2.2
  */
 public class MyWorld extends World
 {
@@ -41,9 +41,10 @@ public class MyWorld extends World
         addObject(new Hitbox(100, height), 0, height/2);
         
         
-        addObject(new Hitbox(200, 200), 275, 400);
-        addObject(new Hitbox(200, 200), 600, 900);
+        //addObject(new Hitbox(200, 200), 275, 400);
+        //addObject(new Hitbox(200, 200), 600, 900);
         
+        addObject(new Hitbox(10, 10), 500 - getScroller().getScrolledX(), 500 - getScroller().getScrolledY());
         
         
         Slider slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540);
