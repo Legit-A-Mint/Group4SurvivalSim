@@ -97,6 +97,11 @@ public class MyWorld extends World
     public Scroller getScroller(){
         return scroller;
     }
+    
+    public static double getDistance (Actor a, Actor b)
+    {
+        return Math.hypot (a.getX() - b.getX(), a.getY() - b.getY());
+    }
 
     /** prevents restarting after game over (called by greenfoot framework) */
     /**

@@ -6,7 +6,7 @@ import greenfoot.*;
  * @Andrew
  * @version (a version number or a date)
  */
-public class Scroller extends Actor
+public class Scroller extends SuperSmoothMover
 {
     private World scrollWorld;
     private GreenfootImage[][] scrollImages;
@@ -63,7 +63,7 @@ public class Scroller extends Actor
             bg.drawImage(scrollImages[y+1][x+1], dx+worldWidth, dy+worldHeight);
     }
     
-    public void scroll(int dx, int dy)
+    public void scroll(double dx, double dy)
     {
         // limit change values
         if (dx > 0 && relativeX +dx > 0) dx = -relativeX;
@@ -80,8 +80,8 @@ public class Scroller extends Actor
         // keep actors in place with relation to background image
         for (Object obj : scrollWorld.getObjects(null))
         {
-            Actor actor = (Actor) obj;
-            actor.setLocation(actor.getX()+dx, actor.getY()+dy);
+            SuperSmoothMover actor = (SuperSmoothMover) obj;
+            actor.setLocation(actor.getPreciseX() + dx , actor.getPreciseY() + dy);
         }
     }
     

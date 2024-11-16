@@ -1,5 +1,4 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, and Greenfoot)
-import java.util.ArrayList; 
 
 /**
  * <p>A variation of an actor that maintains a precise location (using doubles for the co-ordinates
@@ -16,7 +15,7 @@ import java.util.ArrayList;
  * <ul>
  * <li><code>getPreciseX, getPreciseY -></code> Retrieves precise values</li>
  * <li><code>getPreciseRotation -></code> gets the precise angle</li>
- * <li><code>turnTowards (Actor) -></code> an added bonus - turwn towards another Actor instead of an xy position</li>
+ * <li><code>turnTowards (Actor) -></code> an added bonus - turn towards another Actor instead of an xy position</li>
  * </ul>
  * <p>Version 3.1 update - Now includes the option to enable static rotation, meaning the Actor will remain
  *    facing the same direction visually even while turning and moving as desired. Call the method enableStaticRotation() 
@@ -25,13 +24,13 @@ import java.util.ArrayList;
  *    with staticRotation enabled. (Note that these new commands will do nothing if sR is disabled)</p>
  * <p>Version 1.24 update (1/24) - (Version numbers now match library version numbers) - Some performance optimizations via
  *     caching common trig ratios and ensuring turnTowards can deal with trying to turn towards same pixel</p>
- * <p>Version 1.30 update (2/24) - Completed API, added some comments, cleaned up.</p>
+ * 
  * 
  * @author Poul Henriksen
  * @author Michael Kolling
  * @author Neil Brown
  * 
- * @version 1.30.jc -- Modified by Jordan Cohen
+ * @version 1.24.jc -- Modified by Jordan Cohen
  * 
  */
 public abstract class SuperSmoothMover extends Actor
@@ -43,9 +42,6 @@ public abstract class SuperSmoothMover extends Actor
     private double cosRotation;
     private double sinRotation;
 
-    /**
-     * Default constructor - set staticRotation to false.
-     */
     public SuperSmoothMover (){
         staticRotation = false;
     }
@@ -93,10 +89,7 @@ public abstract class SuperSmoothMover extends Actor
      * is disabled. 
      */
     public void disableStaticRotation (){
-        // Round precise rotation in case use is continued, so that
-        // it matches what happened when disabled
-        preciseRotation = (double)((int)(preciseRotation + 0.5));
-        super.setRotation((int)preciseRotation);
+        super.setRotation((int)(preciseRotation + 0.5));
         staticRotation = false;
     }
 
@@ -129,9 +122,12 @@ public abstract class SuperSmoothMover extends Actor
      * 
      * @param preciseRotation the new angle
      */
-    @Override
-    public void setRotation (int angle){
-        setRotation ((double)angle);
+    //@Override
+    public void setRotation (int preciseRotation){
+        //this.preciseRotation = preciseRotation;
+        //if(!staticRotation)
+        //    super.setRotation(preciseRotation);
+        setRotation ((double)preciseRotation);
     }
 
     /**
@@ -260,8 +256,6 @@ public abstract class SuperSmoothMover extends Actor
 
     /**
      * Get the precise movement rotation of this Actor
-     * 
-     * @return double   The precise rotation angle. 
      */
     public double getPreciseRotation (){
         return preciseRotation;
@@ -294,12 +288,6 @@ public abstract class SuperSmoothMover extends Actor
         super.setRotation (rotation);
     }
 
-    /**
-     * Get the rotation as an integer. If this is a precise value,
-     * it will be rounded. 
-     * 
-     * @return  int     The current angle, rounded to the nearest degree.
-     */
     @Override
     public int getRotation (){
         if (!staticRotation){

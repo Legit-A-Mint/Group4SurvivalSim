@@ -12,4 +12,6 @@ comment4.target=Lives\ getLivesCounter()
 comment4.text=returns\ the\ lives\ counter\ object
 comment5.params=
 comment5.target=Scroller\ getScroller()
-numComments=6
+comment6.params=a\ b
+comment6.target=double\ getDistance(greenfoot.Actor,\ greenfoot.Actor)
+numComments=7

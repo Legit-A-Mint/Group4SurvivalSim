@@ -40,7 +40,9 @@ public class Lives extends SuperSmoothMover
         return currentHp; 
     }
     
-    @Override /** over ride methods in super smooth mover to prevent movement*/
+    
+    @Override /** over ride methods in super smooth mover to prevent movement */
     public void setLocation(int x, int y) {}
     public void setLocation(double x, double y) {}
+    
 }
