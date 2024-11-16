@@ -22,6 +22,8 @@ public class MyWorld extends World
     private boolean spawnOnce;
 
     private static final int WIDTH = 2000, height = 2000;
+    
+    private double exactY, exactX;
     public MyWorld()
     {
         super(1024, 576, 1, false);
@@ -32,17 +34,16 @@ public class MyWorld extends World
         spawnOnce = true;
 
 
-        addObject(scroller = new Scroller(this, new GreenfootImage("water1.png"), WIDTH, height));
+        addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
         addObject(player = new Player(), this.getWidth()/2, this.getHeight()/2);
         
         //border hitbox
-        addObject(new Hitbox(WIDTH, 100, 2.0), WIDTH/2, height);
-        addObject(new Hitbox(WIDTH, 100, 2.0), WIDTH/2, 0);
-        addObject(new Hitbox(100, height, 2.0), WIDTH, height/2);
-        addObject(new Hitbox(100, height, 2.0), 0, height/2);
+        addObject(new Hitbox(WIDTH, 100), WIDTH/2, height);
+        addObject(new Hitbox(WIDTH, 100), WIDTH/2, 0);
+        addObject(new Hitbox(100, height), WIDTH, height/2);
+        addObject(new Hitbox(100, height), 0, height/2);
         
         addObject(new Island(new GreenfootImage("island.png")), 500 - getScroller().getScrolledX(), 500 - getScroller().getScrolledY());
-        addObject(new Island(new GreenfootImage("island.png")), 500 - getScroller().getScrolledX(), 1000 - getScroller().getScrolledY());
         //addObject(new Hitbox(200, 200), 275, 400);
         //addObject(new Hitbox(200, 200), 600, 900);
         
@@ -86,8 +87,7 @@ public class MyWorld extends World
 
         }
 
-        scroller.scroll(getWidth()/2-player.getX(), getHeight()/2-player.getY());
-        //zSort ((ArrayList<Actor>)(getObjects(Actor.class)), this);
+        scroller.scroll(getWidth()/2-player.getX(), getHeight()/2-player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
     }
 
     /** returns the lives counter object */
@@ -99,69 +99,99 @@ public class MyWorld extends World
     public Scroller getScroller(){
         return scroller;
     }
-    
-    public static double getDistance (Actor a, Actor b)
-    {
-        return Math.hypot (a.getX() - b.getX(), a.getY() - b.getY());
-    }
-    
-      /**
-     * A z-sort method which will sort Actors so that Actors that are
-     * displayed "higher" on the screen (lower y values) will show up underneath
-     * Actors that are drawn "lower" on the screen (higher y values), creating a
-     * better perspective. 
-     */
-    public static void zSort (ArrayList<Actor> actorsToSort, World world){
+     
+    public static void zSort (ArrayList<SuperSmoothMover> actorsToSort, World world){
         ArrayList<ActorContent> acList = new ArrayList<ActorContent>();
         // Create a list of ActorContent objects and populate it with all Actors sent to be sorted
-        for (Actor a : actorsToSort){
-            acList.add (new ActorContent (a, a.getX(), a.getY()));
+        for (SuperSmoothMover a : actorsToSort){
+            acList.add (new ActorContent (a, a.getPreciseX(), a.getPreciseY()));
         }    
         // Sort the Actor, using the ActorContent comparitor (compares by y coordinate)
         Collections.sort(acList);
+        
+        System.out.println(acList.toString());
         // Replace the Actors from the ActorContent list into the World, inserting them one at a time
         // in the desired paint order (in this case lowest y value first, so objects further down the 
         // screen will appear in "front" of the ones above them).
         for (ActorContent a : acList){
             Actor actor  = a.getActor();
             world.removeObject(actor);
+            System.out.println(a.getPreciseX());
             world.addObject(actor, a.getX(), a.getY());
         }
     }
+    
+    public void addObject(Actor object, double x, double y){
+        super.addObject(object, (int)(x + 0.5), (int)(y + 0.5));
+    }
 
-    /** prevents restarting after game over (called by greenfoot framework) */
-    /**
+    /** prevents restarting after game over (called by greenfoot framework) 
+    
     public void started()
     {
     if (!getObjects(GameOver.class).isEmpty()) Greenfoot.stop();
     }
-     */
+    
+    */
+    
+    public static double getDistance (Actor a, Actor b)
+    {
+        return Math.hypot (a.getX() - b.getX(), a.getY() - b.getY());
+    }
+
+    public double getPreciseY() 
+    {
+        return exactY;
+    }
+
+    public double exactY(){
+        return exactY;
+    }
+    
+    public double getPreciseX() 
+    {
+        return exactY;
+    }
+
+    public double exactX(){
+        return exactY;
+    }
 }
 
 /**
- * Container to hold and Actor and an LOCAL position (so the data isn't lost when the Actor is temporarily
- * removed from the World).
- */
 class ActorContent implements Comparable <ActorContent> {
+    
+    
     private Actor actor;
-    private int xx, yy;
-    public ActorContent(Actor actor, int xx, int yy){
+    private double xx, yy;
+    
+    private int x, y;
+    
+    public ActorContent(Actor actor, double xx, double yy){
         this.actor = actor;
         this.xx = xx;
         this.yy = yy;
     }
 
-    public void setLocation (int x, int y){
+    public void setLocation (double x, double y){
         xx = x;
         yy = y;
     }
 
-    public int getX() {
+    public double getPreciseX() {
         return xx;
     }
 
-    public int getY() {
+    public double getPreciseY() {
         return yy;
+    }
+    
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public Actor getActor(){
@@ -171,8 +201,15 @@ class ActorContent implements Comparable <ActorContent> {
     public String toString () {
         return "Actor: " + actor + " at " + xx + ", " + yy;
     }
-
+    
+    @Override
     public int compareTo (ActorContent a){
-        return this.getY() - a.getY();
+        return Double.compare(this.getPreciseX(), a.getPreciseY());
+    }
+    
+    public double preciseCompareTo (ActorContent a){
+        return this.getPreciseX() - a.getPreciseY();
     }
 }
+
+*/

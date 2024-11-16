@@ -1,4 +1,6 @@
 import greenfoot.*;
+import java.util.*;
+//import java.util.ArrayList;
 
 /**
  * Write a description of class Scroller here.
@@ -63,7 +65,7 @@ public class Scroller extends SuperSmoothMover
             bg.drawImage(scrollImages[y+1][x+1], dx+worldWidth, dy+worldHeight);
     }
     
-    public void scroll(double dx, double dy)
+    public void scroll(double dx, double dy, World world, ArrayList<SuperSmoothMover> actorsToSort)
     {
         // limit change values
         if (dx > 0 && relativeX +dx > 0) dx = -relativeX;
@@ -78,9 +80,24 @@ public class Scroller extends SuperSmoothMover
         // update world background
         scrollBackground();
         // keep actors in place with relation to background image
-        for (Object obj : scrollWorld.getObjects(null))
+        
+        ArrayList<ActorContent> acList = new ArrayList<ActorContent>();
+        // Create a list of ActorContent objects and populate it with all Actors sent to be sorted
+        for (SuperSmoothMover a : actorsToSort){
+            System.out.println(a.getPreciseY());
+            acList.add (new ActorContent (a, a.getPreciseX(), a.getPreciseY()));
+        }    
+        
+        Collections.sort(acList);
+        
+        System.out.println(acList.toString());
+ 
+        for (ActorContent obj : acList)
         {
-            SuperSmoothMover actor = (SuperSmoothMover) obj;
+            ActorContent actor = (ActorContent) obj;
+            Actor instance  = obj.getActor();
+            world.removeObject(instance);
+            world.addObject(instance, (int)(actor.getPreciseX() + dx), (int)(actor.getPreciseY() + dy));
             actor.setLocation(actor.getPreciseX() + dx , actor.getPreciseY() + dy);
         }
     }
@@ -109,4 +126,63 @@ public class Scroller extends SuperSmoothMover
         return scrollHeight;
     }
     
+}
+
+class ActorContent implements Comparable <ActorContent> {
+    
+    
+    private Actor actor;
+    private double xx, yy;
+    
+    private int x, y;
+    
+    public ActorContent(Actor actor, double xx, double yy){
+        this.actor = actor;
+        this.xx = xx;
+        this.yy = yy;
+    }
+
+    public void setLocation (double x, double y){
+        xx = x;
+        yy = y;
+    }
+
+    public double getPreciseX() {
+        return xx;
+    }
+
+    public double getPreciseY() {
+        return yy;
+    }
+    
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public Actor getActor(){
+        return actor;
+    }
+
+    public String toString () {
+        return "Actor: " + actor + " at " + xx + ", " + yy;
+    }
+
+    /**
+    public int compareTo (ActorContent a){
+        return this.getX() - a.getY();
+    }
+    */
+    
+    @Override
+    public int compareTo (ActorContent a){
+        return Double.compare(this.getPreciseX(), a.getPreciseY());
+    }
+    
+    public double preciseCompareTo (ActorContent a){
+        return this.getPreciseX() - a.getPreciseY();
+    }
 }
