@@ -16,7 +16,8 @@ public class Projectile extends SuperSmoothMover{
     protected Enemy targetEnemies;
     protected ArrayList<Enemy> enemies;
     protected double speed;
-    
+    private int lifeSpan;
+
     /**
      * FAILSAFE VERSION, IN CASE MOMVEMENT REPOSITIONING FAILS
      * SWITCH BACK TO SETLOCATION
@@ -24,23 +25,23 @@ public class Projectile extends SuperSmoothMover{
     protected double speedMulti = 3;
     private double speedX, speedY;
     private int x, y;
-    */
-   
-    public Projectile(){
-        speed = 0.75;
+     */
+
+    public Projectile(double Speed){
+        this.speed = 5;
+        this.lifeSpan = 150;
     }
 
     public void act(){
+        if(lifeSpan > 0) lifeSpan--;
+        
         if(!targetFound){
             targeting();
         }
 
         if(targetFound){
-            move(speed);
-            /**
-            setLocation(getPreciseX() + speedX, getPreciseY() + speedY);
-            System.out.println("x velocity: " + 0.1 + " " + "y velocity: " + 0.1);
-            */
+            if(lifeSpan > 0) move(speed);
+            else if(lifeSpan == 0) getWorld().removeObject(this);
         }
     }
 
@@ -91,7 +92,7 @@ public class Projectile extends SuperSmoothMover{
 
             targetFound = true;
             turnTowards(targetEnemies);
-            
+
             //speedX = (((targetEnemies.getX() - getX())/closestTargetDistance)*speedMulti);
             //speedY = (((targetEnemies.getY() - getY())/closestTargetDistance)*speedMulti);
         }

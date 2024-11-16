@@ -27,7 +27,7 @@ public class Projectile extends SuperSmoothMover{
     */
    
     public Projectile(){
-        speed = 0.75;
+        speed = 5;
     }
 
     public void act(){

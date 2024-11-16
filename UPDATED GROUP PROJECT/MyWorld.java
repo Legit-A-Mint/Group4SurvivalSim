@@ -32,16 +32,17 @@ public class MyWorld extends World
         spawnOnce = true;
 
 
-        addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
+        addObject(scroller = new Scroller(this, new GreenfootImage("water1.png"), WIDTH, height));
         addObject(player = new Player(), this.getWidth()/2, this.getHeight()/2);
         
         //border hitbox
-        addObject(new Hitbox(WIDTH, 100), WIDTH/2, height);
-        addObject(new Hitbox(WIDTH, 100), WIDTH/2, 0);
-        addObject(new Hitbox(100, height), WIDTH, height/2);
-        addObject(new Hitbox(100, height), 0, height/2);
+        addObject(new Hitbox(WIDTH, 100, 2.0), WIDTH/2, height);
+        addObject(new Hitbox(WIDTH, 100, 2.0), WIDTH/2, 0);
+        addObject(new Hitbox(100, height, 2.0), WIDTH, height/2);
+        addObject(new Hitbox(100, height, 2.0), 0, height/2);
         
         addObject(new Island(new GreenfootImage("island.png")), 500 - getScroller().getScrolledX(), 500 - getScroller().getScrolledY());
+        addObject(new Island(new GreenfootImage("island.png")), 500 - getScroller().getScrolledX(), 1000 - getScroller().getScrolledY());
         //addObject(new Hitbox(200, 200), 275, 400);
         //addObject(new Hitbox(200, 200), 600, 900);
         
@@ -86,7 +87,7 @@ public class MyWorld extends World
         }
 
         scroller.scroll(getWidth()/2-player.getX(), getHeight()/2-player.getY());
-        zSort ((ArrayList<Actor>)(getObjects(Actor.class)), this);
+        //zSort ((ArrayList<Actor>)(getObjects(Actor.class)), this);
     }
 
     /** returns the lives counter object */
@@ -97,6 +98,11 @@ public class MyWorld extends World
 
     public Scroller getScroller(){
         return scroller;
+    }
+    
+    public static double getDistance (Actor a, Actor b)
+    {
+        return Math.hypot (a.getX() - b.getX(), a.getY() - b.getY());
     }
     
       /**

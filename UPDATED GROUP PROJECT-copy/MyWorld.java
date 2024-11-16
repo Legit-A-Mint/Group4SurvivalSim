@@ -21,7 +21,7 @@ public class MyWorld extends World
     private static final int MAX_SPAWN_DISTANCE = 100;
     private boolean spawnOnce;
 
-    private static final int WIDTH = 2000, height = 2000;
+    private static final int WIDTH = 2000, HEIGHT = 2000;
     public MyWorld()
     {
         super(1024, 576, 1, false);
@@ -32,14 +32,15 @@ public class MyWorld extends World
         spawnOnce = true;
 
 
-        addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
+        addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, HEIGHT));
         addObject(player = new Player(), this.getWidth()/2, this.getHeight()/2);
         
         //border hitbox
-        addObject(new Hitbox(WIDTH, 100), WIDTH/2, height);
+        /*
+        addObject(new Hitbox(WIDTH, 100), WIDTH/2, HEIGHT);
         addObject(new Hitbox(WIDTH, 100), WIDTH/2, 0);
-        addObject(new Hitbox(100, height), WIDTH, height/2);
-        addObject(new Hitbox(100, height), 0, height/2);
+        addObject(new Hitbox(100, HEIGHT), WIDTH, HEIGHT/2);
+        addObject(new Hitbox(100, HEIGHT), 0, HEIGHT/2);*/
         
         addObject(new Island(new GreenfootImage("island.png")), 500 - getScroller().getScrolledX(), 500 - getScroller().getScrolledY());
         //addObject(new Hitbox(200, 200), 275, 400);
@@ -85,7 +86,7 @@ public class MyWorld extends World
 
         }
 
-        scroller.scroll(getWidth()/2-player.getX(), getHeight()/2-player.getY());
+        scroller.scroll(getWidth()/2-player.getPreciseX(), getHeight()/2-player.getPreciseY());
         zSort ((ArrayList<Actor>)(getObjects(Actor.class)), this);
     }
 

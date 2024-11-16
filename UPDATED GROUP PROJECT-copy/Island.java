@@ -20,9 +20,6 @@ public class Island extends SuperSmoothMover
         createdHitbox = false;
     }
     
-    
-    
-    
     public void act()
     {
         if(!createdHitbox){
