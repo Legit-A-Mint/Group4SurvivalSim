@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.target=EnemyHitbox
+comment0.text=\r\n\ Full\ hitbox\ class\r\n\ \r\n\ @lumilk\r\n\ @1.0.0\r\n
+comment1.params=h\ w\ boundingFactor
+comment1.target=EnemyHitbox(int,\ int,\ double)
+comment2.params=h\ w\ offsetX\ offsetY\ owner\ boundingFactor
+comment2.target=EnemyHitbox(int,\ int,\ int,\ int,\ greenfoot.Actor,\ double)
+comment3.params=
+comment3.target=void\ act()
+comment4.params=
+comment4.target=void\ moveWithOwner()
+numComments=5

@@ -1,15 +1,13 @@
 #BlueJ class context
 comment0.target=Bass
-comment0.text=\n\ Write\ a\ description\ of\ class\ Bass\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
-comment1.params=hp
-comment1.target=Bass(int)
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Bass\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=Bass()
 comment2.params=
-comment2.target=void\ act()
+comment2.target=void\ attack()
+comment2.text=Bass\ has\ no\ other\ unique\ perks\ other\ then\ doing\ damage
 comment3.params=
-comment3.target=void\ attack()
-comment3.text=Bass\ has\ no\ other\ unique\ perks\ other\ then\ doing\ damage
+comment3.target=void\ damaged()
 comment4.params=
-comment4.target=void\ damaged()
-comment5.params=
-comment5.target=boolean\ checkForCollision()
-numComments=6
+comment4.target=boolean\ checkForCollision()
+numComments=5

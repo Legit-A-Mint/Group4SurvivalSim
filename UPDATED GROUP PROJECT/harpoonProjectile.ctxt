@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=harpoonProjectile
-comment0.text=\n\ harpoonProjectile\ -\ A\ balanced\ projectile\ with\ moderate\ damage\ and\ speed.\n
+comment0.text=All\ subclasses\ require\ a\ Speed,\ lifeSpan,\ Damage
 comment1.params=
 comment1.target=harpoonProjectile()
 comment2.params=

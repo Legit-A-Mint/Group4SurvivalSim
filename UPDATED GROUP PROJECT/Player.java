@@ -62,6 +62,7 @@ public class Player extends Effects
 
     public void act()
     {
+        
         animate(this, playerImage, playerImage[0].getWidth(), playerImage[0].getHeight(), 16, direction);
         
         MyWorld world = (MyWorld) getWorld();
@@ -147,7 +148,7 @@ public class Player extends Effects
             if(!getWorld().getObjects(Enemy.class).isEmpty()){
                 if(Greenfoot.isKeyDown("e")){
                     shootCounter = weaponCooldown;
-                    getWorld().addObject(new Projectile(5.0), this.getX(), this.getY());
+                    getWorld().addObject(new Projectile(), this.getX(), this.getY());
                 }
             }
         }

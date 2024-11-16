@@ -8,42 +8,29 @@ import java.util.ArrayList;
  * @version (a version number or a date)
  */
 public class Projectile extends SuperSmoothMover{
-    private Actor origin, target; 
-    private GreenfootImage img;
+    protected Actor origin, target; 
+    protected GreenfootImage img;
+    protected boolean targetFound = false;
 
-    private boolean targetFound = false;
-
-    private ArrayList<Enemy> enemies;
-    private double speed;
-    private int lifeSpan;
-    private Enemy enemy;
+    // Other classes
+    protected ArrayList<Enemy> enemies;
+    protected Enemy enemy;
+    protected EnemyHitbox enemyHitbox;
+    
+    // Inherited Instance variables
+    protected double speed;
+    protected int lifeSpan;
     protected int damage;
-    protected int flightDuration;
-    private int flightTimeElapsed;
-
-    /**
-     * FAILSAFE VERSION, IN CASE MOMVEMENT REPOSITIONING FAILS
-     * SWITCH BACK TO SETLOCATION
-     * 
-    private double speedMulti = 3;
-    private double speedX, speedY;
-    private int x, y;
-     */
-
-    public Projectile(double Speed){
-        this.speed = 5;
-        this.lifeSpan = 150;
-        flightTimeElapsed = 0;
-    }
-
-    public void initialize(int damage, int speed, int flightDuration) {
-        this.damage = damage;
-        this.speed = speed;
-        this.flightDuration = flightDuration;
+    
+    /** temp constructor to do testing with */
+    // Please use contructors in subclasses in real version
+    public Projectile(){
+        speed = 1.25;
+        lifeSpan = 150;
+        damage = 1;
     }
     
     public void act(){
-
         if(lifeSpan > 0) lifeSpan--;
 
         if(enemy == null){
@@ -55,20 +42,21 @@ public class Projectile extends SuperSmoothMover{
                 getWorld().removeObject(this);
                 return;
             }
-            //enemy = (Enemy) getOneIntersectingObject(Enemy.class);
-            if(this.intersects(enemy)){
-                enemy.damageMe(1);
-                getWorld().removeObject(this);
-            } 
+            
+            if(enemy.getHitbox() != null){
+                try{
+                
+                    if(this.intersects(enemy.getHitbox())){
+                        enemy.damageMe(damage);
+                        getWorld().removeObject(this);
+                    }
+                }catch(Exception e){
+                    
+                }
+            }
         }
         
         move(speed);
-        flightTimeElapsed++;
-
-        // Remove projectile if it exceeds its flight duration
-        if (flightTimeElapsed >= flightDuration) {
-            getWorld().removeObject(this);
-        }
     }
     
     public void targeting (){

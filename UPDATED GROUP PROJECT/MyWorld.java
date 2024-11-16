@@ -17,10 +17,9 @@ public class MyWorld extends World
     private Player player; // main actor
     private Lives lives;
     private int waveCount, actCount;
-
-    private static final int MAX_SPAWN_DISTANCE = 100;
     private boolean spawnOnce;
 
+    private static final int MAX_SPAWN_DISTANCE = 100;
     private static final int WIDTH = 2000, height = 2000;
     
     private double exactY, exactX;
@@ -78,7 +77,7 @@ public class MyWorld extends World
                 if(spawnOnce){
                     spawnOnce = false;
                     for(int i = 0; i < 3; i++){
-                        addObject(new Bass(3), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
+                        addObject(new Bass(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
                             Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
                     }
 

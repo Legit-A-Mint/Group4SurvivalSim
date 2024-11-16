@@ -9,21 +9,17 @@ import java.util.*;
  */
 public abstract class Enemy extends Effects
 {
-    protected int direction;
-    protected int hitpoints;
+    protected GreenfootImage[] img;
+    protected int hp;
     protected int damage;
-    
     protected double speed;
-    protected Player player;
     
-
-    public Enemy(int hp){
-        speed = 1;
-        direction = 1;
-        hitpoints = hp;
-        
-        
-    }
+    // Not added to subclass
+    protected Player player;
+    protected int direction;    
+    
+    private EnemyHitbox hitbox;
+    private boolean createdHitbox;
 
     public void act()
     {
@@ -31,7 +27,16 @@ public abstract class Enemy extends Effects
         lookForTarget();
         repel();
         
-        if(this.hitpoints == 0){
+        animate(this, img, img[0].getWidth(), img[0].getHeight(), 6, direction);
+        
+        if(!createdHitbox){
+            hitbox = new EnemyHitbox(img[0].getWidth() - 30, img[0].getHeight()/2, 0, 0, this, 2.5);
+            getWorld().addObject(hitbox, 0, 0);
+            createdHitbox = true;
+        }   
+        
+        if(this.hp == 0){
+            getWorld().removeObject(hitbox);
             getWorld().removeObject(this);
         }
     }
@@ -52,7 +57,7 @@ public abstract class Enemy extends Effects
     }
 
     public void damageMe(int damage){
-        this.hitpoints -= damage;
+        this.hp -= damage;
     }
     
     //modified repel method
@@ -112,6 +117,10 @@ public abstract class Enemy extends Effects
                 object.setLocation(objectX + (int)(pushAmount * unitX), objectY + (int)(pushAmount * unitY));
             }
         }
+    }
+    
+    public EnemyHitbox getHitbox(){
+        return hitbox;
     }
 
 }
