@@ -87,9 +87,7 @@ public class MyWorld extends World
 
         }
 
-        scroller.scroll(getWidth()/2-player.getX(), getHeight()/2-player.getY());
-        
-        //zSort ((ArrayList<Actor>)(getObjects(Actor.class)), this);
+        scroller.scroll(getWidth()/2-player.getX(), getHeight()/2-player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
     }
 
     /** returns the lives counter object */
@@ -116,8 +114,13 @@ public class MyWorld extends World
         for (ActorContent a : acList){
             Actor actor  = a.getActor();
             world.removeObject(actor);
+            System.out.println(a.getPreciseX());
             world.addObject(actor, a.getX(), a.getY());
         }
+    }
+    
+    public void addObject(Actor object, double x, double y){
+        super.addObject(object, (int)(x + 0.5), (int)(y + 0.5));
     }
 
     /** prevents restarting after game over (called by greenfoot framework) 
@@ -153,6 +156,7 @@ public class MyWorld extends World
     }
 }
 
+/**
 class ActorContent implements Comparable <ActorContent> {
     
     
@@ -195,12 +199,6 @@ class ActorContent implements Comparable <ActorContent> {
     public String toString () {
         return "Actor: " + actor + " at " + xx + ", " + yy;
     }
-
-    /**
-    public int compareTo (ActorContent a){
-        return this.getX() - a.getY();
-    }
-    */
     
     @Override
     public int compareTo (ActorContent a){
@@ -211,3 +209,5 @@ class ActorContent implements Comparable <ActorContent> {
         return this.getPreciseX() - a.getPreciseY();
     }
 }
+
+*/
