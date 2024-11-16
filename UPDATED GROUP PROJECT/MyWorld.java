@@ -108,6 +108,8 @@ public class MyWorld extends World
         }    
         // Sort the Actor, using the ActorContent comparitor (compares by y coordinate)
         Collections.sort(acList);
+        
+        System.out.println(acList.toString());
         // Replace the Actors from the ActorContent list into the World, inserting them one at a time
         // in the desired paint order (in this case lowest y value first, so objects further down the 
         // screen will appear in "front" of the ones above them).
