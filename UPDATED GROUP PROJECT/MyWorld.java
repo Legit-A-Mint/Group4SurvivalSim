@@ -22,6 +22,8 @@ public class MyWorld extends World
     private boolean spawnOnce;
 
     private static final int WIDTH = 2000, height = 2000;
+    
+    private double exactY, exactX;
     public MyWorld()
     {
         super(1024, 576, 1, false);
@@ -86,7 +88,8 @@ public class MyWorld extends World
         }
 
         scroller.scroll(getWidth()/2-player.getX(), getHeight()/2-player.getY());
-        zSort ((ArrayList<Actor>)(getObjects(Actor.class)), this);
+        
+        //zSort ((ArrayList<Actor>)(getObjects(Actor.class)), this);
     }
 
     /** returns the lives counter object */
@@ -98,18 +101,12 @@ public class MyWorld extends World
     public Scroller getScroller(){
         return scroller;
     }
-    
-      /**
-     * A z-sort method which will sort Actors so that Actors that are
-     * displayed "higher" on the screen (lower y values) will show up underneath
-     * Actors that are drawn "lower" on the screen (higher y values), creating a
-     * better perspective. 
-     */
-    public static void zSort (ArrayList<Actor> actorsToSort, World world){
+     
+    public static void zSort (ArrayList<SuperSmoothMover> actorsToSort, World world){
         ArrayList<ActorContent> acList = new ArrayList<ActorContent>();
         // Create a list of ActorContent objects and populate it with all Actors sent to be sorted
-        for (Actor a : actorsToSort){
-            acList.add (new ActorContent (a, a.getX(), a.getY()));
+        for (SuperSmoothMover a : actorsToSort){
+            acList.add (new ActorContent (a, a.getPreciseX(), a.getPreciseY()));
         }    
         // Sort the Actor, using the ActorContent comparitor (compares by y coordinate)
         Collections.sort(acList);
@@ -123,39 +120,72 @@ public class MyWorld extends World
         }
     }
 
-    /** prevents restarting after game over (called by greenfoot framework) */
-    /**
+    /** prevents restarting after game over (called by greenfoot framework) 
+    
     public void started()
     {
     if (!getObjects(GameOver.class).isEmpty()) Greenfoot.stop();
     }
-     */
+    
+    */
+    
+    public static double getDistance (Actor a, Actor b)
+    {
+        return Math.hypot (a.getX() - b.getX(), a.getY() - b.getY());
+    }
+
+    public double getPreciseY() 
+    {
+        return exactY;
+    }
+
+    public double exactY(){
+        return exactY;
+    }
+    
+    public double getPreciseX() 
+    {
+        return exactY;
+    }
+
+    public double exactX(){
+        return exactY;
+    }
 }
 
-/**
- * Container to hold and Actor and an LOCAL position (so the data isn't lost when the Actor is temporarily
- * removed from the World).
- */
 class ActorContent implements Comparable <ActorContent> {
+    
+    
     private Actor actor;
-    private int xx, yy;
-    public ActorContent(Actor actor, int xx, int yy){
+    private double xx, yy;
+    
+    private int x, y;
+    
+    public ActorContent(Actor actor, double xx, double yy){
         this.actor = actor;
         this.xx = xx;
         this.yy = yy;
     }
 
-    public void setLocation (int x, int y){
+    public void setLocation (double x, double y){
         xx = x;
         yy = y;
     }
 
-    public int getX() {
+    public double getPreciseX() {
         return xx;
     }
 
-    public int getY() {
+    public double getPreciseY() {
         return yy;
+    }
+    
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public Actor getActor(){
@@ -166,7 +196,18 @@ class ActorContent implements Comparable <ActorContent> {
         return "Actor: " + actor + " at " + xx + ", " + yy;
     }
 
+    /**
     public int compareTo (ActorContent a){
-        return this.getY() - a.getY();
+        return this.getX() - a.getY();
+    }
+    */
+    
+    @Override
+    public int compareTo (ActorContent a){
+        return Double.compare(this.getPreciseX(), a.getPreciseY());
+    }
+    
+    public double preciseCompareTo (ActorContent a){
+        return this.getPreciseX() - a.getPreciseY();
     }
 }
