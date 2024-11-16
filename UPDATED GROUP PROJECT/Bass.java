@@ -22,9 +22,9 @@ public class Bass extends Enemy
     }
     
     public void act(){
-        super.act();
         // takes dir from super class
         animate(this, img, img[0].getWidth(), img[0].getHeight(), 16, direction);
+        super.act();
     }
     
     /* Bass has no other unique perks other then doing damage */

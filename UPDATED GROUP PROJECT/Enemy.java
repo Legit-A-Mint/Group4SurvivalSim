@@ -27,8 +27,17 @@ public class Enemy extends Effects
     public void lookForTarget(){
         if(!getWorld().getObjects(Player.class).isEmpty()){
             player = getWorld().getObjects(Player.class).get(0);
+            
+            
+            
             turnTowards(player.getX(), player.getY());
             move(speed);
+            
+            if(this.getX() < player.getX()){
+                direction = 1;
+            }else{
+                direction = -1;
+            }
         }
     }
 
