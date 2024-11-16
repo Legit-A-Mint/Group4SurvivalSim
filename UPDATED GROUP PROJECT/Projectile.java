@@ -16,7 +16,7 @@ public class Projectile extends SuperSmoothMover{
     private ArrayList<Enemy> enemies;
     private double speed;
     private int lifeSpan;
-    private Enemy myTarget;
+    private Enemy enemy;
 
     /**
      * FAILSAFE VERSION, IN CASE MOMVEMENT REPOSITIONING FAILS
@@ -36,14 +36,18 @@ public class Projectile extends SuperSmoothMover{
 
         if(lifeSpan > 0) lifeSpan--;
 
-        if(myTarget == null){
+        if(enemy == null){
             targeting();
         }
-        else if(myTarget != null){
+        else if(enemy != null){
             if(lifeSpan > 0) move(speed);
-            else if(lifeSpan == 0) getWorld().removeObject(this);
-            if(this.intersects(myTarget)){
-                myTarget.damageMe(1);
+            else if(lifeSpan == 0){ 
+                getWorld().removeObject(this);
+                return;
+            }
+            //enemy = (Enemy) getOneIntersectingObject(Enemy.class);
+            if(this.intersects(enemy)){
+                enemy.damageMe(1);
                 getWorld().removeObject(this);
             } 
         }
@@ -72,10 +76,10 @@ public class Projectile extends SuperSmoothMover{
         if (enemies.size() > 0)
         {
             // set the first one as my target
-            myTarget = enemies.get(0);
+            enemy = enemies.get(0);
             // Use method to get distance to target. This will be used
             // to check if any other targets are closer
-            closestTargetDistance = MyWorld.getDistance (this, myTarget);
+            closestTargetDistance = MyWorld.getDistance (this, enemy);
 
             // Loop through the objects in the ArrayList to find the closest target
             for (Enemy o : enemies)
@@ -88,16 +92,16 @@ public class Projectile extends SuperSmoothMover{
                 // targets
                 if (distanceToActor < closestTargetDistance)
                 {
-                    myTarget = o;
+                    enemy = o;
                     closestTargetDistance = distanceToActor;
                 }
             }
 
             targetFound = true;
-            turnTowards(myTarget);
+            turnTowards(enemy);
 
-            //speedX = (((myTarget.getX() - getX())/closestTargetDistance)*speedMulti);
-            //speedY = (((myTarget.getY() - getY())/closestTargetDistance)*speedMulti);
+            //speedX = (((enemy.getX() - getX())/closestTargetDistance)*speedMulti);
+            //speedY = (((enemy.getY() - getY())/closestTargetDistance)*speedMulti);
         }
     }
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class Player extends Effects
 {
-    private GreenfootImage playerImage, reflectedPlayerImage;
+    private GreenfootImage[] playerImage = new GreenfootImage[1];
     private double speed;
     private double dx = 0, dy = 0;
     private int shootCounter, weaponCooldown;
@@ -22,6 +22,8 @@ public class Player extends Effects
     private boolean createdHitbox;
     private int collisionCounter = 0; //track num times collision has been used
     private final int MAX_COLLISION_ATTEMPTS = 3; 
+    
+    private int direction;
 
     // private Enemy targetEnemy;
     // private ArrayList<Enemy> enemies;
@@ -41,10 +43,8 @@ public class Player extends Effects
      */
 
     public Player(){
-        playerImage = new GreenfootImage("shark.png");
-        reflectedPlayerImage = playerImage;
-        reflectedPlayerImage.mirrorHorizontally();
-        setImage(playerImage);
+        playerImage[0] = new GreenfootImage("shark.png");
+
 
         speed = 6;
         weaponCooldown = 10;
@@ -58,10 +58,14 @@ public class Player extends Effects
          */
 
         createdHitbox = false;
+        
+        direction = 1;
     }
 
     public void act()
     {
+        animate(this, playerImage, playerImage[0].getWidth(), playerImage[0].getHeight(), 16, direction);
+        
         MyWorld world = (MyWorld) getWorld();
         Scroller scroller = world.getScroller();
         //System.out.println("(" + (getX() - scroller.getScrolledX()) + ", " + (getY() - scroller.getScrolledY())  + ")");
@@ -71,7 +75,7 @@ public class Player extends Effects
         }
 
         if(!createdHitbox){
-            hitbox = new Hitbox(playerImage.getWidth() - 30, playerImage.getHeight()/2, 0, 0, this, 2.5);
+            hitbox = new Hitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight()/2, 0, 0, this, 2.5);
             getWorld().addObject(hitbox, 0, 0);
             createdHitbox = true;
         }   
@@ -88,8 +92,8 @@ public class Player extends Effects
         dy = 0;
 
         //handle movement (based on CPU's input)    
-        if (Greenfoot.isKeyDown("a")) dx-= speed;
-        if (Greenfoot.isKeyDown("d")) dx+= speed;
+        if (Greenfoot.isKeyDown("a")) dx-= speed; direction = 1;
+        if (Greenfoot.isKeyDown("d")) dx+= speed; direction = 3;
         if (Greenfoot.isKeyDown("w")) dy-= speed;
         if (Greenfoot.isKeyDown("s")) dy+= speed;
 

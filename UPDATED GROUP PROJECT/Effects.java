@@ -15,7 +15,7 @@ public class Effects extends SuperSmoothMover
     
     protected int frameCounter = 0;
     protected boolean checkOnce = false;
-    protected GreenfootImage[] flip; 
+    protected GreenfootImage[] flipVert, flipHori, flipDiag; 
     
     
     protected void fade (Actor a, int actsLeft, int fadeLength){
@@ -46,20 +46,43 @@ public class Effects extends SuperSmoothMover
         }
         
         GreenfootImage[] currentImages = image;
-        flip = new GreenfootImage[image.length];
+        flipVert = new GreenfootImage[image.length];
+        flipHori = new GreenfootImage[image.length];
+        flipDiag = new GreenfootImage[image.length];
         
         for(int i = 0; i < image.length; i++){
-            flip[i] = new GreenfootImage(image[i]);
-            //flip[i].mirrorHorizontally();
-            flip[i].mirrorVertically();
+            flipVert[i] = new GreenfootImage(image[i]);
+            flipVert[i].mirrorVertically();
+        }
+        
+        for(int i = 0; i < image.length; i++){
+            flipHori[i] = new GreenfootImage(image[i]);
+            flipHori[i].mirrorHorizontally();
         }
 
-        if(direction == 1){
+        for(int i = 0; i < image.length; i++){
+            flipDiag[i] = new GreenfootImage(image[i]);
+            flipDiag[i].mirrorHorizontally();
+            flipDiag[i].mirrorVertically();
+        }
+        
+        switch(direction){
+            case(1):
             currentImages[currentFrameIndex].scale(width, height);
             actor.setImage(currentImages[currentFrameIndex]);
-        }else{
-            flip[currentFrameIndex].scale(width, height);
-            actor.setImage(flip[currentFrameIndex]);
+            break;
+            
+            case(2):
+            flipVert[currentFrameIndex].scale(width, height);
+            actor.setImage(flipVert[currentFrameIndex]);
+            
+            case(3):
+            flipHori[currentFrameIndex].scale(width, height);
+            actor.setImage(flipHori[currentFrameIndex]);
+            
+            case(4):
+            flipDiag[currentFrameIndex].scale(width, height);
+            actor.setImage(flipDiag[currentFrameIndex]);
         }
     }
     

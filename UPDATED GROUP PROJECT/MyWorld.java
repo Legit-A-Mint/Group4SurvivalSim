@@ -99,27 +99,6 @@ public class MyWorld extends World
     public Scroller getScroller(){
         return scroller;
     }
-     
-    public static void zSort (ArrayList<SuperSmoothMover> actorsToSort, World world){
-        ArrayList<ActorContent> acList = new ArrayList<ActorContent>();
-        // Create a list of ActorContent objects and populate it with all Actors sent to be sorted
-        for (SuperSmoothMover a : actorsToSort){
-            acList.add (new ActorContent (a, a.getPreciseX(), a.getPreciseY()));
-        }    
-        // Sort the Actor, using the ActorContent comparitor (compares by y coordinate)
-        Collections.sort(acList);
-        
-        //System.out.println(acList.toString());
-        // Replace the Actors from the ActorContent list into the World, inserting them one at a time
-        // in the desired paint order (in this case lowest y value first, so objects further down the 
-        // screen will appear in "front" of the ones above them).
-        for (ActorContent a : acList){
-            Actor actor  = a.getActor();
-            world.removeObject(actor);
-            //System.out.println(a.getPreciseX());
-            world.addObject(actor, a.getX(), a.getY());
-        }
-    }
     
     public void addObject(Actor object, double x, double y){
         super.addObject(object, (int)(x + 0.5), (int)(y + 0.5));
@@ -158,58 +137,3 @@ public class MyWorld extends World
     }
 }
 
-/**
-class ActorContent implements Comparable <ActorContent> {
-    
-    
-    private Actor actor;
-    private double xx, yy;
-    
-    private int x, y;
-    
-    public ActorContent(Actor actor, double xx, double yy){
-        this.actor = actor;
-        this.xx = xx;
-        this.yy = yy;
-    }
-
-    public void setLocation (double x, double y){
-        xx = x;
-        yy = y;
-    }
-
-    public double getPreciseX() {
-        return xx;
-    }
-
-    public double getPreciseY() {
-        return yy;
-    }
-    
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public Actor getActor(){
-        return actor;
-    }
-
-    public String toString () {
-        return "Actor: " + actor + " at " + xx + ", " + yy;
-    }
-    
-    @Override
-    public int compareTo (ActorContent a){
-        return Double.compare(this.getPreciseX(), a.getPreciseY());
-    }
-    
-    public double preciseCompareTo (ActorContent a){
-        return this.getPreciseX() - a.getPreciseY();
-    }
-}
-
-*/

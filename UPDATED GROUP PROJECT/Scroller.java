@@ -84,7 +84,7 @@ public class Scroller extends SuperSmoothMover
         ArrayList<ActorContent> acList = new ArrayList<ActorContent>();
         // Create a list of ActorContent objects and populate it with all Actors sent to be sorted
         for (SuperSmoothMover a : actorsToSort){
-            System.out.println(a.getPreciseY());
+            System.out.println(a.toString() + ": " + a.getPreciseY());
             acList.add (new ActorContent (a, a.getPreciseX(), a.getPreciseY()));
         }    
         
@@ -179,10 +179,10 @@ class ActorContent implements Comparable <ActorContent> {
     
     @Override
     public int compareTo (ActorContent a){
-        return Double.compare(this.getPreciseX(), a.getPreciseY());
+        return Double.compare(this.getPreciseY(), a.getPreciseY());
     }
     
     public double preciseCompareTo (ActorContent a){
-        return this.getPreciseX() - a.getPreciseY();
+        return this.getPreciseY() - a.getPreciseY();
     }
 }
