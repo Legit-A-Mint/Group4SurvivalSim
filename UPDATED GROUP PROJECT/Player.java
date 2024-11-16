@@ -65,7 +65,7 @@ public class Player extends Effects
         MyWorld world = (MyWorld) getWorld();
         Scroller scroller = world.getScroller();
         //System.out.println("(" + (getX() - scroller.getScrolledX()) + ", " + (getY() - scroller.getScrolledY())  + ")");
-        
+
         if(shootCounter > 0){
             shootCounter--;  
         }
@@ -77,7 +77,7 @@ public class Player extends Effects
         }   
 
         //System.out.println("Collisions: "  + collisionCounter + " Colliding: " + isCollidingWithHitbox() + " dx: " + dx + " dy: " + dy);
-        
+
         handleMovement();
         handleInputs();
         updateHitboxPosition();
@@ -130,13 +130,17 @@ public class Player extends Effects
         } 
 
     }
-    
+
     private void handleInputs(){
         if(shootCounter == 0){
-            if (Greenfoot.isKeyDown("e")){
-                shootCounter = weaponCooldown;
-                getWorld().addObject(new Projectile(5.0), this.getX(), this.getY());
-            }   
+
+            //only shoot if there are enemies
+            if(!getWorld().getObjects(Enemy.class).isEmpty()){
+                if(Greenfoot.isKeyDown("e")){
+                    shootCounter = weaponCooldown;
+                    getWorld().addObject(new Projectile(5.0), this.getX(), this.getY());
+                }
+            }
         }
     }
 

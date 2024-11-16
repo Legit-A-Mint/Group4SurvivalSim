@@ -9,7 +9,7 @@ import java.util.*;
  * @Jonarahn
  * @Logan
  *
- * @1.2.2
+ * @1.2.6
  */
 public class MyWorld extends World
 {
@@ -38,10 +38,10 @@ public class MyWorld extends World
         addObject(player = new Player(), this.getWidth()/2, this.getHeight()/2);
         
         //border hitbox
-        addObject(new Hitbox(WIDTH, 100), WIDTH/2, height);
-        addObject(new Hitbox(WIDTH, 100), WIDTH/2, 0);
-        addObject(new Hitbox(100, height), WIDTH, height/2);
-        addObject(new Hitbox(100, height), 0, height/2);
+        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH/2, height);
+        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH/2, 0);
+        addObject(new Hitbox(100, height, 2.5), WIDTH, height/2);
+        addObject(new Hitbox(100, height, 2.5), 0, height/2);
         
         addObject(new Island(new GreenfootImage("island.png")), 500 - getScroller().getScrolledX(), 500 - getScroller().getScrolledY());
         //addObject(new Hitbox(200, 200), 275, 400);
@@ -53,7 +53,7 @@ public class MyWorld extends World
         //addObject(lives = new Lives(), 50, 20);
 
         // addObject(new MiniMap(), 30, 370);
-        setPaintOrder(Hitbox.class);
+        setPaintOrder(Hitbox.class, SliderObject.class, Slider.class);
     }
 
     public void addObject(Actor a){
@@ -78,7 +78,7 @@ public class MyWorld extends World
                 if(spawnOnce){
                     spawnOnce = false;
                     for(int i = 0; i < 3; i++){
-                        addObject(new Bass(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
+                        addObject(new Bass(3), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
                             Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
                     }
 
@@ -109,14 +109,14 @@ public class MyWorld extends World
         // Sort the Actor, using the ActorContent comparitor (compares by y coordinate)
         Collections.sort(acList);
         
-        System.out.println(acList.toString());
+        //System.out.println(acList.toString());
         // Replace the Actors from the ActorContent list into the World, inserting them one at a time
         // in the desired paint order (in this case lowest y value first, so objects further down the 
         // screen will appear in "front" of the ones above them).
         for (ActorContent a : acList){
             Actor actor  = a.getActor();
             world.removeObject(actor);
-            System.out.println(a.getPreciseX());
+            //System.out.println(a.getPreciseX());
             world.addObject(actor, a.getX(), a.getY());
         }
     }

@@ -11,14 +11,13 @@ public class Bass extends Enemy
     // Changed to animate method to stay upright
     private GreenfootImage[] img = new GreenfootImage[1];
 
-    public Bass(){
-
+    public Bass(int hp){
+        super(hp);
         img[0] = new GreenfootImage("shark.png");
         
         setImage(img[0]);
         
         speed = 2;
-
     }
     
     public void act(){

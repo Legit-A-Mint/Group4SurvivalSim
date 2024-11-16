@@ -8,21 +8,21 @@ import java.util.ArrayList;
  * @version (a version number or a date)
  */
 public class Projectile extends SuperSmoothMover{
-    protected Actor origin, target; 
-    protected GreenfootImage img;
+    private Actor origin, target; 
+    private GreenfootImage img;
 
-    protected boolean targetFound = false;
+    private boolean targetFound = false;
 
-    protected Enemy targetEnemies;
-    protected ArrayList<Enemy> enemies;
-    protected double speed;
+    private ArrayList<Enemy> enemies;
+    private double speed;
     private int lifeSpan;
+    private Enemy myTarget;
 
     /**
      * FAILSAFE VERSION, IN CASE MOMVEMENT REPOSITIONING FAILS
      * SWITCH BACK TO SETLOCATION
      * 
-    protected double speedMulti = 3;
+    private double speedMulti = 3;
     private double speedX, speedY;
     private int x, y;
      */
@@ -33,15 +33,19 @@ public class Projectile extends SuperSmoothMover{
     }
 
     public void act(){
+
         if(lifeSpan > 0) lifeSpan--;
-        
-        if(!targetFound){
+
+        if(myTarget == null){
             targeting();
         }
-
-        if(targetFound){
+        else if(myTarget != null){
             if(lifeSpan > 0) move(speed);
             else if(lifeSpan == 0) getWorld().removeObject(this);
+            if(this.intersects(myTarget)){
+                myTarget.damageMe(1);
+                getWorld().removeObject(this);
+            } 
         }
     }
 
@@ -54,25 +58,24 @@ public class Projectile extends SuperSmoothMover{
         enemies = (ArrayList<Enemy>)getObjectsInRange(40, Enemy.class);
 
         int range = 150;
-
-        while(enemies.size() == 0){
+        int maxRange =  500;
+        while(enemies.size() == 0 && range <= maxRange){
             if (enemies.size() == 0){
-
                 enemies = (ArrayList<Enemy>)getObjectsInRange(range, Enemy.class);
                 range += 50;
             } 
-            if(enemies.size() != 0){
+            if (enemies.size() != 0){
                 break;
             }
-        }
-
+         }
+        
         if (enemies.size() > 0)
         {
             // set the first one as my target
-            targetEnemies = enemies.get(0);
+            myTarget = enemies.get(0);
             // Use method to get distance to target. This will be used
             // to check if any other targets are closer
-            closestTargetDistance = MyWorld.getDistance (this, targetEnemies);
+            closestTargetDistance = MyWorld.getDistance (this, myTarget);
 
             // Loop through the objects in the ArrayList to find the closest target
             for (Enemy o : enemies)
@@ -85,16 +88,16 @@ public class Projectile extends SuperSmoothMover{
                 // targets
                 if (distanceToActor < closestTargetDistance)
                 {
-                    targetEnemies = o;
+                    myTarget = o;
                     closestTargetDistance = distanceToActor;
                 }
             }
 
             targetFound = true;
-            turnTowards(targetEnemies);
+            turnTowards(myTarget);
 
-            //speedX = (((targetEnemies.getX() - getX())/closestTargetDistance)*speedMulti);
-            //speedY = (((targetEnemies.getY() - getY())/closestTargetDistance)*speedMulti);
+            //speedX = (((myTarget.getX() - getX())/closestTargetDistance)*speedMulti);
+            //speedY = (((myTarget.getY() - getY())/closestTargetDistance)*speedMulti);
         }
     }
 }

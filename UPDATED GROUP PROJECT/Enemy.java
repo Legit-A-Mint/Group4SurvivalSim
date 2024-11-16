@@ -7,28 +7,38 @@ import java.util.*;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Enemy extends Effects
+public abstract class Enemy extends Effects
 {
     protected int direction;
+    protected int hitpoints;
+    protected int damage;
+    
     protected double speed;
     protected Player player;
+    
 
-    public Enemy(){
+    public Enemy(int hp){
         speed = 1;
         direction = 1;
+        hitpoints = hp;
+        
+        
     }
 
     public void act()
     {
+        //System.out.println(this + " myHp: " + hitpoints);
         lookForTarget();
         repel();
+        
+        if(this.hitpoints == 0){
+            getWorld().removeObject(this);
+        }
     }
 
     public void lookForTarget(){
         if(!getWorld().getObjects(Player.class).isEmpty()){
             player = getWorld().getObjects(Player.class).get(0);
-            
-            
             
             turnTowards(player.getX(), player.getY());
             move(speed);
@@ -41,6 +51,10 @@ public class Enemy extends Effects
         }
     }
 
+    public void damageMe(int damage){
+        this.hitpoints -= damage;
+    }
+    
     //modified repel method
     public void repel() {
         ArrayList<Enemy> enemies = (ArrayList<Enemy>)getIntersectingObjects(Enemy.class);

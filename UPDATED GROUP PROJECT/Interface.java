@@ -6,7 +6,7 @@ public abstract class Interface extends SuperSmoothMover{
 
     //static creates a global timer for all subclasses
     private static int lastInteractionTime = 0;
-    private final int MAX_IDLE_TIME = 2400;
+    private final int MAX_IDLE_TIME = 1000;
 
     //inherited variables
     protected String name;
