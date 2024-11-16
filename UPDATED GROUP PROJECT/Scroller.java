@@ -84,13 +84,13 @@ public class Scroller extends SuperSmoothMover
         ArrayList<ActorContent> acList = new ArrayList<ActorContent>();
         // Create a list of ActorContent objects and populate it with all Actors sent to be sorted
         for (SuperSmoothMover a : actorsToSort){
-            System.out.println(a.toString() + ": " + a.getPreciseY());
+            //System.out.println(a.toString() + ": " + a.getPreciseY());
             acList.add (new ActorContent (a, a.getPreciseX(), a.getPreciseY()));
         }    
         
         Collections.sort(acList);
         
-        System.out.println(acList.toString());
+        //System.out.println(acList.toString());
  
         for (ActorContent obj : acList)
         {

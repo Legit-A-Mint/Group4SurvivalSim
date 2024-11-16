@@ -46,7 +46,7 @@ public abstract class Enemy extends Effects
             if(this.getX() < player.getX()){
                 direction = 1;
             }else{
-                direction = -1;
+                direction = 2;
             }
         }
     }

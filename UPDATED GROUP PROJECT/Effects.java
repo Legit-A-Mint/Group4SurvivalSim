@@ -75,14 +75,17 @@ public class Effects extends SuperSmoothMover
             case(2):
             flipVert[currentFrameIndex].scale(width, height);
             actor.setImage(flipVert[currentFrameIndex]);
+            break;
             
             case(3):
             flipHori[currentFrameIndex].scale(width, height);
             actor.setImage(flipHori[currentFrameIndex]);
+            break;
             
             case(4):
             flipDiag[currentFrameIndex].scale(width, height);
             actor.setImage(flipDiag[currentFrameIndex]);
+            break;
         }
     }
     

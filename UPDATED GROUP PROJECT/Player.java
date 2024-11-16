@@ -58,8 +58,6 @@ public class Player extends Effects
          */
 
         createdHitbox = false;
-        
-        direction = 1;
     }
 
     public void act()
@@ -90,13 +88,20 @@ public class Player extends Effects
     private void handleMovement(){
         dx = 0;
         dy = 0;
-
+        
         //handle movement (based on CPU's input)    
-        if (Greenfoot.isKeyDown("a")) dx-= speed; direction = 1;
-        if (Greenfoot.isKeyDown("d")) dx+= speed; direction = 3;
+        if (Greenfoot.isKeyDown("a")){
+            dx-= speed; 
+            direction = 3;    
+        }
+        if (Greenfoot.isKeyDown("d")){
+            dx+= speed; 
+            direction = 1;    
+        }
         if (Greenfoot.isKeyDown("w")) dy-= speed;
         if (Greenfoot.isKeyDown("s")) dy+= speed;
 
+        System.out.println(direction);
         //attempt horizontal movement
         /**get future position with +- deltaX*/
         double futureX = getX() + dx;
