@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Enemy
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Enemies\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\n\ Write\ a\ description\ of\ class\ Enemies\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=hp
 comment1.target=Enemy(int)
 comment2.params=
@@ -13,5 +13,5 @@ comment5.params=
 comment5.target=void\ repel()
 comment6.params=nearbyObjects\ minDistance
 comment6.target=void\ pushAwayFromObjects(java.util.ArrayList,\ double)
-comment6.text=\r\n\ New\ repel\ method\!\ Seems\ to\ work\ well.\ Can\ be\ used\ in\ both\ directions,\ but\ for\ now\r\n\ commented\ out\ movement\ on\ x\ so\ players\ are\ only\ "repelled"\ in\ a\ y-direction.\r\n\ \r\n\ @author\ Mr\ Cohen\r\n\ @since\ February\ 2023\r\n
+comment6.text=\n\ New\ repel\ method\!\ Seems\ to\ work\ well.\ Can\ be\ used\ in\ both\ directions,\ but\ for\ now\n\ commented\ out\ movement\ on\ x\ so\ players\ are\ only\ "repelled"\ in\ a\ y-direction.\n\ \n\ @author\ Mr\ Cohen\n\ @since\ February\ 2023\n
 numComments=7
