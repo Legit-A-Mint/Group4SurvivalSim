@@ -5,8 +5,9 @@ import greenfoot.*;
  */
 public class spearProjectile extends Projectile {
     public spearProjectile() {
-        super(8);
-        initialize(15, 8, 100); // Damage: 15, Speed: 8, Flight Duration: 100
+        speed = 2;
+        damage = 3;
+        lifeSpan = 2;
     }
 
     public void act() {

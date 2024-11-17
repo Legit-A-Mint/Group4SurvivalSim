@@ -5,8 +5,9 @@ import greenfoot.*;
  */
 public class netProjectile extends Projectile {
     public netProjectile() {
-        super(3);
-        initialize(5, 3, 200); // Damage: 5, Speed: 3, Flight Duration: 200
+        speed = 1.5;
+        damage = 1;
+        lifeSpan = 3;
     }
 
     public void act() {

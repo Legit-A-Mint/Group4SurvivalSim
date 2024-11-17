@@ -43,7 +43,7 @@ public class Player extends Effects
      */
 
     public Player(){
-        playerImage[0] = new GreenfootImage("shark.png");
+        playerImage[0] = new GreenfootImage("sus.png");
 
 
         speed = 6;

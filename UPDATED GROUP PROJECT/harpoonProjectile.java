@@ -10,6 +10,8 @@ public class harpoonProjectile extends Projectile {
     // set it up in constructor 
     public harpoonProjectile() {
         speed = 1.25;
+        damage = 2;
+        lifeSpan = 2;
     }
 
     public void act() {
