@@ -1,10 +1,15 @@
 #BlueJ class context
 comment0.target=ShopUI
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ ShopUI\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=name\ width\ height\ myX\ myY
 comment1.target=ShopUI(java.lang.String,\ int,\ int,\ int,\ int)
 comment2.params=
-comment2.target=void\ addedToWorld()
+comment2.target=boolean\ isUserInteracting()
 comment3.params=
-comment3.target=boolean\ isUserInteracting()
-numComments=4
+comment3.target=void\ act()
+comment4.params=
+comment4.target=Player\ getPlayer()
+comment5.params=player
+comment5.target=void\ handlePurchase(Player)
+comment6.params=message
+comment6.target=void\ showMessage(java.lang.String)
+numComments=7

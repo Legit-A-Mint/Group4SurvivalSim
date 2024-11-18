@@ -1,16 +1,6 @@
-import greenfoot.*;
-import greenfoot.GreenfootImage;
 import java.util.ArrayList;
+import greenfoot.*;
 
-/**
- * The Player class represents the main player character.
- * It handles movement, collisions, shooting, and interactions.
- * 
- * @lumilk
- * @Andrew Xu
- * 
- * @version 1.1.0
- */
 public class Player extends Effects {
     private GreenfootImage[] playerImage = new GreenfootImage[1];
     private double speed;
@@ -18,16 +8,19 @@ public class Player extends Effects {
     private int hitpoints, maxhitpoints;
     private int shootCounter, weaponCooldown;
 
+    // Inventory
+    private ArrayList<Object> inventory;
+    private int coins;
+
     // Hitbox variables
     private Hitbox hitbox;
     private boolean createdHitbox;
-    private int collisionCounter = 0; // Track number of collisions
+    private int collisionCounter = 0;
     private final int MAX_COLLISION_ATTEMPTS = 3;
 
     // Direction variables for animation
     private int direction;
 
-    // Constructor
     public Player() {
         playerImage[0] = new GreenfootImage("boy.png");
         speed = 7;
@@ -35,9 +28,10 @@ public class Player extends Effects {
         createdHitbox = false;
         maxhitpoints = 20;
         hitpoints = maxhitpoints;
+        coins = 0; // Initialize coins
+        inventory = new ArrayList<>(); // Initialize inventory
     }
 
-    // Called on every act cycle
     public void act() {
         animate(this, playerImage, playerImage[0].getWidth(), playerImage[0].getHeight(), 16, direction);
 
@@ -52,9 +46,41 @@ public class Player extends Effects {
         handleMovement();
         handleInputs();
         updateHitboxPosition();
-        
-        System.out.println("Player Coordinants ("+ (getX() - ((MyWorld)getWorld()).getScroller().getScrolledX())
-        + ", " +  (getY() - ((MyWorld)getWorld()).getScroller().getScrolledY()) + ")");
+
+        // Optional: Display coin count
+        System.out.println("Coins: " + coins);
+    }
+
+    // Add an item to the inventory
+    public void addItem(Object item) {
+        inventory.add(item);
+        System.out.println("Item added to inventory: " + item.getClass().getSimpleName());
+    }
+
+    // Get the player's inventory
+    public ArrayList<Object> getInventory() {
+        return inventory;
+    }
+
+    // Add coins
+    public void addCoins(int amount) {
+        coins += amount;
+        System.out.println("Added " + amount + " coins. Total: " + coins);
+    }
+
+    // Spend coins
+    public void spendCoins(int amount) {
+        if (coins >= amount) {
+            coins -= amount;
+            System.out.println("Spent " + amount + " coins. Remaining: " + coins);
+        } else {
+            System.out.println("Not enough coins! Required: " + amount + ", Available: " + coins);
+        }
+    }
+
+    // Get current coins
+    public int getCoins() {
+        return coins;
     }
 
     // Create the player's hitbox
@@ -124,16 +150,15 @@ public class Player extends Effects {
         }
     }
 
-    // Addobject projectile to my position
+    // Add projectile to player's position
     private void shoot() {
         getWorld().addObject(new Projectile(), getX(), getY());
     }
-    
-    public void damageMe(int damage){
-        if(hitpoints > 0){
-            hitpoints -= damage;   
+
+    public void damageMe(int damage) {
+        if (hitpoints > 0) {
+            hitpoints -= damage;
         }
-        //System.out.println("Player HP: " + hitpoints); 
     }
 
     // Repel the player upon collision
@@ -168,8 +193,8 @@ public class Player extends Effects {
         }
         return false;
     }
-    
-    public Hitbox getHitbox(){
+
+    public Hitbox getHitbox() {
         return this.hitbox;
     }
 }
