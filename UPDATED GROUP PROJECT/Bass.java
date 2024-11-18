@@ -11,7 +11,7 @@ public class Bass extends Enemy
     // Changed to animate method to stay upright
 
     public Bass(){
-        img = new GreenfootImage[1];
+        img = new GreenfootImage[6];
         speed = 2;
         hp = 3;
         damage = 1;
@@ -19,12 +19,11 @@ public class Bass extends Enemy
         // vfx
         img[0] = new GreenfootImage("shark.png");
         
-        //if we want to use animation turn this on and set array size to 6
-        /**
+        //Set the array size to 6 so animation works
         for(int i = 0; i < img.length; i++){
             img[i] = new GreenfootImage("SharkF" + (i+1) + ".png");
         }
-        */
+        
         
         setImage(img[0]);
     }
