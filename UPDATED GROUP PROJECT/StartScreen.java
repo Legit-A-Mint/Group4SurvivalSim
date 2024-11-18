@@ -8,6 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class StartScreen extends Actor
 {
+    private int worldNumber = 0;
     public StartScreen ()
     {
         // image from https://www.reddit.com/r/PixelArt/comments/150mtr6/ocean_by_me/#lightbox
@@ -18,12 +19,7 @@ public class StartScreen extends Actor
     {
         if (Greenfoot.isKeyDown("enter"))
         {
-            nextWorld();
+            Greenfoot.setWorld(new SelectCharacter());
         }
-    }
-    protected void nextWorld()
-    {
-        Greenfoot.setWorld(new MyWorld());
-        MyWorld.ambientSound.playLoop();
     }
 }

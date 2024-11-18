@@ -44,6 +44,9 @@ public class SliderObject extends Interface
                 setLocation(refX - maxOffset + 1, this.getY());
             }
         }
+        
+        // Changes volume depending on sliderObject location
+        MyWorld.ambientSound.setVolume((getX() - 26)*100/258);
     }
 
     public void setTransparency(double t){
