@@ -1,7 +1,7 @@
 #Greenfoot project file
 class.Lives.image=pixel_Heart.png
 class.MyWorld.image=bgtemp.png
-class.Player.image=sus.png
+class.Player.image=boy.png
 class.Projectile.image=arrow.png
 class.harpoonProjectile.image=harpoonProjectile.png
 class.netProjectile.image=netProjectile.png
