@@ -11,7 +11,7 @@ import java.util.*;
  *
  * @1.2.7
  */
-public class MyWorld extends World
+public class SimulationWorld extends World
 {
     public Scroller scroller; // Scroll controller
     private Player player; // Main actor
@@ -31,7 +31,7 @@ public class MyWorld extends World
     // https://pixabay.com/sound-effects/gentle-ocean-waves-fizzing-bubbles-64980/
     public static GreenfootSound ambientSound = new GreenfootSound("gentle_Ocean.mp3");
     
-    public MyWorld()
+    public SimulationWorld()
     {
         super(1024, 576, 1, false);
         // settings
@@ -58,6 +58,8 @@ public class MyWorld extends World
         //addObject(new Hitbox(200, 200), 275, 400);
         //addObject(new Hitbox(200, 200), 600, 900);
 
+        
+        addObject(new Kraken(), getScroller().getScrollWidth()/2 - getScroller().getScrolledX(), getScroller().getScrollHeight()/2 - getScroller().getScrolledY());
         Slider slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540);
         addObject(slider, 155, 540);
         //addObject(lives = new Lives(), 50, 20);
@@ -90,6 +92,7 @@ public class MyWorld extends World
 
     public void act()
     {
+        /*
         actCount++;
         
         switch(waveCount) {
@@ -133,7 +136,7 @@ public class MyWorld extends World
             delay = 30;
             countOnce = true;
         }
-
+        */
         scroller.scroll(getWidth()/2-player.getX(), getHeight()/2-player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
     }
 

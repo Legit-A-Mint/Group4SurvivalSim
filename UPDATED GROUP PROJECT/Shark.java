@@ -11,14 +11,14 @@ public class Shark extends Enemy
     public Shark(){
         super();
         img = new GreenfootImage[2];
-        speed = 4;
+        speed = 2.9;
         hp = 5;
         damage = 5;
         attackCooldown = 60;
-
+        isMovable = true;
         // vfx
         img[0] = new GreenfootImage("SharkF1.png");
-
+        
         //Set the array size to 5 so animation works
         for(int i = 0; i < img.length; i++){
             img[i] = new GreenfootImage("SharkF" + (i+1) + ".png");

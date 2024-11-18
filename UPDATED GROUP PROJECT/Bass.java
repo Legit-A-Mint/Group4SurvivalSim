@@ -15,7 +15,7 @@ public class Bass extends Enemy
         hp = 3;
         damage = 1;
         attackCooldown = 20;
-
+        isMovable = true;
         // vfx
         img[0] = new GreenfootImage("BassF1.png");
 
@@ -25,6 +25,7 @@ public class Bass extends Enemy
         }
 
         setImage(img[0]);
+
     }
 
     public void act(){

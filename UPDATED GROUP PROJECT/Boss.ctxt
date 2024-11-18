@@ -1,8 +1,0 @@
-#BlueJ class context
-comment0.target=Boss
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Boss\ here.\r\n\ \r\n\ @lumilk\ \r\n\ @1.0.0\r\n
-comment1.params=hp
-comment1.target=Boss(int)
-comment2.params=
-comment2.target=void\ act()
-numComments=3

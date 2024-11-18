@@ -98,7 +98,7 @@ public class Projectile extends Effects{
             enemy = enemies.get(0);
             // Use method to get distance to target. This will be used
             // to check if any other targets are closer
-            closestTargetDistance = MyWorld.getDistance (this, enemy);
+            closestTargetDistance = SimulationWorld.getDistance (this, enemy);
 
             // Loop through the objects in the ArrayList to find the closest target
             for (Enemy o : enemies)
@@ -106,7 +106,7 @@ public class Projectile extends Effects{
                 // Cast for use in generic method
                 //Actor a = (Actor) o;
                 // Measure distance from me
-                distanceToActor = MyWorld.getDistance(this, o);
+                distanceToActor = SimulationWorld.getDistance(this, o);
                 // If I find a Enemy closer than my current target, I will change
                 // targets
                 if (distanceToActor < closestTargetDistance)

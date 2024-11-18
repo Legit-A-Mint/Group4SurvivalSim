@@ -5,7 +5,7 @@ public class Player extends Effects {
     private GreenfootImage[] playerImage = new GreenfootImage[1];
     private double speed;
     private double dx = 0, dy = 0;
-    private int hitpoints, maxhitpoints;
+    private int hp, maxhp;
     private int shootCounter, weaponCooldown;
 
     // Inventory
@@ -26,8 +26,8 @@ public class Player extends Effects {
         speed = 7;
         weaponCooldown = 10;
         createdHitbox = false;
-        maxhitpoints = 20;
-        hitpoints = maxhitpoints;
+        maxhp = 20;
+        hp = maxhp;
         coins = 0; // Initialize coins
         inventory = new ArrayList<>(); // Initialize inventory
     }
@@ -46,9 +46,8 @@ public class Player extends Effects {
         handleMovement();
         handleInputs();
         updateHitboxPosition();
-
-        // Optional: Display coin count
-        System.out.println("Coins: " + coins);
+        
+        System.out.println(hp);
     }
 
     // Add an item to the inventory
@@ -156,8 +155,8 @@ public class Player extends Effects {
     }
 
     public void damageMe(int damage) {
-        if (hitpoints > 0) {
-            hitpoints -= damage;
+        if (hp > 0) {
+            hp -= damage;
         }
     }
 

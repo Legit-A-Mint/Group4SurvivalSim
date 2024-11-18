@@ -17,8 +17,8 @@ public class FinalButton extends CharacterSelect
     {
         if (Greenfoot.mouseClicked(this))
         {
-            Greenfoot.setWorld(new MyWorld());
-            MyWorld.ambientSound.playLoop();
+            Greenfoot.setWorld(new SimulationWorld());
+            SimulationWorld.ambientSound.playLoop();
         }
     }
 }

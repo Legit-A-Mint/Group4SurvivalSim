@@ -87,7 +87,11 @@ public class Hitbox extends SuperSmoothMover
         ArrayList<Enemy> enemies = (ArrayList<Enemy>)getIntersectingObjects(Enemy.class);
         ArrayList<Actor> actorsTouching = new ArrayList<Actor>();
 
-        for (Enemy e : enemies) actorsTouching.add(e);
+        for (Enemy e : enemies) {
+            if(e.getMovable()){
+                actorsTouching.add(e);  
+            }   
+        }
         pushAwayFromObjects(actorsTouching, 4);
     }
 

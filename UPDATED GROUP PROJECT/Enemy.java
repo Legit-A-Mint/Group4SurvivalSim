@@ -16,6 +16,7 @@ public abstract class Enemy extends Effects
     protected int attackCooldown;
     protected int attackTimer;
     protected double speed;
+    protected boolean isMovable;
 
     // Once per instance
     protected Player player;
@@ -40,9 +41,6 @@ public abstract class Enemy extends Effects
     public void act(){
         //System.out.println(this + " myHp: " + hitpoints);
 
-        lookForTarget();
-        repel();
-
         if(!createdHitbox){
             hitbox = new EnemyHitbox(img[0].getWidth() - 30, img[0].getHeight()/2, 0, 0, this, 2.5);
             getWorld().addObject(hitbox, 0, 0);
@@ -60,49 +58,60 @@ public abstract class Enemy extends Effects
             }
         }
 
-        // Check for path blockages
-        checkForBlockages();
+        if(isMovable){
 
-        // Try-catch-finally for movement handling
-        try {
-            if (!upBlocked && !downBlocked && !leftBlocked && !rightBlocked) {
-                moveDiagonally();
-            } else if (upBlocked && downBlocked) {
-                // Change direction to horizontal (left or right)
-                setRotation(180); // or 0, depending on the desired horizontal direction
-                moveHorizontally();
-            } else if (leftBlocked && rightBlocked) {
-                // Change direction to vertical (up or down)
-                setRotation(90); // or 270, depending on the desired vertical direction
-                moveVertically();
+            lookForTarget();
+            repel();
+            // Check for path blockages
+            checkForBlockages();
+
+            // Try-catch-finally for movement handling
+            try {
+                if (!upBlocked && !downBlocked && !leftBlocked && !rightBlocked) {
+                    moveDiagonally();
+                } else if (upBlocked && downBlocked) {
+                    // Change direction to horizontal (left or right)
+                    setRotation(180); // or 0, depending on the desired horizontal direction
+                    moveHorizontally();
+                } else if (leftBlocked && rightBlocked) {
+                    // Change direction to vertical (up or down)
+                    setRotation(90); // or 270, depending on the desired vertical direction
+                    moveVertically();
+                }
+            } catch (Exception e) {
+                System.out.println("Error in movement: " + e.getMessage());
+            } finally {
+                // Optionally place any cleanup code here if needed
             }
-        } catch (Exception e) {
-            System.out.println("Error in movement: " + e.getMessage());
-        } finally {
-            // Optionally place any cleanup code here if needed
         }
     }
 
     protected boolean getPlayerCollision(){
-        if(player.getHitbox() != null){
-            return(this.intersects(player.getHitbox()));   
+        try{
+            if(player.getHitbox() != null){
+                return(this.intersects(player.getHitbox()));   
+            }
         }
+        catch(Exception e){}
+
         return false;
     }
 
     public void lookForTarget(){
-        if(!getWorld().getObjects(Player.class).isEmpty()){
-            player = getWorld().getObjects(Player.class).get(0);
+        try{
+            if(!getWorld().getObjects(Player.class).isEmpty()){
+                player = getWorld().getObjects(Player.class).get(0);
 
-            turnTowards(player.getX(), player.getY());
-            move(speed);
+                turnTowards(player.getX(), player.getY());
+                move(speed);
 
-            if(this.getX() < player.getX()){
-                direction = 1;
-            }else{
-                direction = 2;
+                if(this.getX() < player.getX()){
+                    direction = 1;
+                }else{
+                    direction = 2;
+                }
             }
-        }
+        }catch(Exception e){}
     }
 
     public void damageMe(int damage){
@@ -114,7 +123,11 @@ public abstract class Enemy extends Effects
         ArrayList<Enemy> enemies = (ArrayList<Enemy>)getIntersectingObjects(Enemy.class);
         ArrayList<Actor> actorsTouching = new ArrayList<Actor>();
 
-        for (Enemy e : enemies) actorsTouching.add(e);
+        for (Enemy e : enemies) {
+            if(e.getMovable()){
+                actorsTouching.add(e);  
+            }   
+        }
         pushAwayFromObjects(actorsTouching, 4);
     }
 
@@ -191,6 +204,10 @@ public abstract class Enemy extends Effects
 
     public EnemyHitbox getHitbox(){
         return hitbox;
+    }
+
+    public boolean getMovable(){
+        return isMovable;
     }
 
     protected Player getPlayer(){

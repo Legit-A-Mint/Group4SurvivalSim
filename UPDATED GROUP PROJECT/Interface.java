@@ -1,5 +1,10 @@
 import greenfoot.*;  
-
+/**
+ * Interface
+ * 
+ * @lumilk
+ * @1.0.0
+ */
 public abstract class Interface extends SuperSmoothMover{
 
     private int transparency = 255;
