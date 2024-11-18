@@ -24,6 +24,13 @@ public class MyWorld extends World
     private int delay;
 
     private double exactY, exactX;
+    
+    private Button pauseButton;
+    private static boolean acting;
+
+    // https://pixabay.com/sound-effects/gentle-ocean-waves-fizzing-bubbles-64980/
+    public static GreenfootSound ambientSound = new GreenfootSound("gentle_Ocean.mp3");
+    
     public MyWorld()
     {
         super(1024, 576, 1, false);
@@ -57,6 +64,24 @@ public class MyWorld extends World
         //setPaintOrder(Hitbox.class, SliderObject.class, Slider.class, Island.class, Player.class, Enemy.class);
     }
 
+    public void addedToWorld ()
+    {
+        // Plays the ambient noise in a loop
+        ambientSound.playLoop();
+    }
+
+    public void started ()
+    {
+        // Plays the ambient noise in a loop
+        ambientSound.playLoop();
+    }
+
+    public void stopped ()
+    {
+        // Stops playing the ambient noises when simulation is paused
+        ambientSound.pause();
+    }
+    
     public void addObject(Actor a){
 
     }
