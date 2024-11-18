@@ -17,10 +17,11 @@ public class MyWorld extends World
     private Player player; // Main actor
     private Lives lives;
     private int waveCount, actCount;
-    private boolean spawnOnce;
+    private boolean spawnOnce, countOnce;
 
-    private static final int MAX_SPAWN_DISTANCE = 100;
+    private static final int MAX_SPAWN_DISTANCE = 200;
     private static final int WIDTH = 2000, height = 2000;
+    private int delay;
 
     private double exactY, exactX;
     public MyWorld()
@@ -31,6 +32,7 @@ public class MyWorld extends World
         waveCount = 0;
         actCount = 0;
         spawnOnce = true;
+        delay = 30;
 
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
         addObject(player = new Player(), this.getWidth()/2, this.getHeight()/2);
@@ -62,13 +64,7 @@ public class MyWorld extends World
     public void act()
     {
         actCount++;
-
-        if(actCount == 300){
-            spawnOnce = true;
-            waveCount++;
-            actCount = 0;
-        }
-
+        
         switch(waveCount) {
                 case(0):
 
@@ -85,7 +81,30 @@ public class MyWorld extends World
 
                 }
                 break;
+                
+                case(1):
+                delay--;
+                if(delay == 0 && countOnce){
+                    spawnOnce = true;
+                    countOnce = false;
+                }
 
+                if(spawnOnce){
+                    spawnOnce = false;
+                    for(int i = 0; i < 5; i++){
+                        addObject(new Shark(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
+                            Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
+                    }
+                }
+                break;
+
+        }
+        
+        if(actCount == 400 || (getObjects(Enemy.class).isEmpty() && countOnce == false)){
+            waveCount++;
+            actCount = 0;
+            delay = 30;
+            countOnce = true;
         }
 
         scroller.scroll(getWidth()/2-player.getX(), getHeight()/2-player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
