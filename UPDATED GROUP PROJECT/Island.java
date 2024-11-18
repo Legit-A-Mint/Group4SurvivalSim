@@ -16,6 +16,7 @@ public class Island extends SuperSmoothMover
     private static final double BOUNDINGFACTOR = 2.0;
     public Island(GreenfootImage img){
         this.img = img;
+        img.scale((int)(img.getWidth() * 1.5), (int)(img.getHeight() * 1.5));
         setImage(img);
         createdHitbox = false;
     }
