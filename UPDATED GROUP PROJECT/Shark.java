@@ -10,9 +10,9 @@ public class Shark extends Enemy
 {
     public Shark(){
         super();
-        img = new GreenfootImage[5];
-        speed = 2.9;
-        hp = 10;
+        img = new GreenfootImage[2];
+        speed = 4;
+        hp = 5;
         damage = 5;
         attackCooldown = 60;
 

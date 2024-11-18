@@ -29,9 +29,14 @@ public class Player extends Effects {
 
     // Constructor
     public Player() {
+<<<<<<< HEAD
         playerImage[0] = new GreenfootImage("sus.png");
         speed = 10;
         
+=======
+        playerImage[0] = new GreenfootImage("boy.png");
+        speed = 7;
+>>>>>>> ebbde611574e1f2609a738518206389d42a07746
         weaponCooldown = 10;
         createdHitbox = false;
         maxhitpoints = 20;

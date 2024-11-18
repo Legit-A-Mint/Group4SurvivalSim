@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=netProjectile
-comment0.text=\r\n\ NetProjectile\ -\ A\ projectile\ with\ wide\ range\ but\ minimal\ damage.\r\n
+comment0.text=\n\ NetProjectile\ -\ A\ projectile\ with\ wide\ range\ but\ minimal\ damage.\n
 comment1.params=
 comment1.target=netProjectile()
 comment2.params=
