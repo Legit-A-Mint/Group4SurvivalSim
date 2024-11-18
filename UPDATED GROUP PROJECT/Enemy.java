@@ -20,10 +20,15 @@ public abstract class Enemy extends Effects
     
     private EnemyHitbox hitbox;
     private boolean createdHitbox;
+    
+    // Path-blocked flags
+    private boolean upBlocked;
+    private boolean downBlocked;
+    private boolean leftBlocked;
+    private boolean rightBlocked;
 
     public void act()
     {
-        //System.out.println(this + " myHp: " + hitpoints);
         lookForTarget();
         repel();
         
@@ -38,6 +43,28 @@ public abstract class Enemy extends Effects
         if(this.hp == 0){
             getWorld().removeObject(hitbox);
             getWorld().removeObject(this);
+        }
+        
+        // Check for path blockages
+        checkForBlockages();
+        
+        // Try-catch-finally for movement handling
+        try {
+            if (!upBlocked && !downBlocked && !leftBlocked && !rightBlocked) {
+                moveDiagonally();
+            } else if (upBlocked && downBlocked) {
+                // Change direction to horizontal (left or right)
+                setRotation(180); // or 0, depending on the desired horizontal direction
+                moveHorizontally();
+            } else if (leftBlocked && rightBlocked) {
+                // Change direction to vertical (up or down)
+                setRotation(90); // or 270, depending on the desired vertical direction
+                moveVertically();
+            }
+        } catch (Exception e) {
+            System.out.println("Error in movement: " + e.getMessage());
+        } finally {
+            // Optionally place any cleanup code here if needed
         }
     }
 
@@ -69,58 +96,78 @@ public abstract class Enemy extends Effects
         pushAwayFromObjects(actorsTouching, 4);
     }
 
-    /**
-     * New repel method! Seems to work well. Can be used in both directions, but for now
-     * commented out movement on x so players are only "repelled" in a y-direction.
-     * 
-     * @author Mr Cohen
-     * @since February 2023
-     */
     public void pushAwayFromObjects(ArrayList<Actor> nearbyObjects, double minDistance) {
-        // Get the current position of this actor
         int currentX = getX();
         int currentY = getY();
 
-        // Iterate through the nearby objects
         for (Actor object : nearbyObjects) {
-            // Get the position and bounding box of the nearby object
             int objectX = object.getX();
             int objectY = object.getY();
             int objectWidth = object.getImage().getWidth();
             int objectHeight = object.getImage().getHeight();
 
-            // Calculate the distance between this actor and the nearby object's bounding oval
             double distance = Math.sqrt(Math.pow(currentX - objectX, 2) + Math.pow(currentY - objectY, 2));
 
-            // Calculate the effective radii of the bounding ovals
             double thisRadius = Math.max(getImage().getWidth() / 4.0, getImage().getHeight() / 4.0);
             double objectRadius = Math.max(objectWidth / 4.0, objectHeight / 4.0);
 
-            // Check if the distance is less than the sum of the radii
             if (distance < (thisRadius + objectRadius + minDistance)) {
-                // Calculate the direction vector from this actor to the nearby object
                 int deltaX = objectX - currentX;
                 int deltaY = objectY - currentY;
 
-                // Calculate the unit vector in the direction of the nearby object
                 double length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
                 double unitX = deltaX / length;
                 double unitY = deltaY / length;
 
-                // Calculate the amount by which to push the nearby object
                 double pushAmount = (thisRadius + objectRadius + minDistance) - distance;
 
-                // Update the position of the nearby object to push it away
-
-                // 2d version, allows pushing on x and y axis, commented out for now but it works, just not the
-                // effect I'm after:
                 object.setLocation(objectX + (int)(pushAmount * unitX), objectY + (int)(pushAmount * unitY));
             }
         }
     }
-    
+
+    private void moveDiagonally() {
+        try {
+            if (!upBlocked && !downBlocked) {
+                move(speed);  // Diagonal movement if no blockage
+            }
+        } catch (Exception e) {
+            System.out.println("Error moving diagonally: " + e.getMessage());
+        }
+    }
+
+    private void moveHorizontally() {
+        try {
+            move(speed);
+        } catch (Exception e) {
+            System.out.println("Error moving horizontally: " + e.getMessage());
+        }
+    }
+
+    private void moveVertically() {
+        try {
+            move(speed);
+        } catch (Exception e) {
+            System.out.println("Error moving vertically: " + e.getMessage());
+        }
+    }
+
+    private void checkForBlockages() {
+        // Placeholder logic for checking path blockages
+        // You can replace this with actual logic to detect blockages
+        upBlocked = isBlockedInDirection("up");
+        downBlocked = isBlockedInDirection("down");
+        leftBlocked = isBlockedInDirection("left");
+        rightBlocked = isBlockedInDirection("right");
+    }
+
+    private boolean isBlockedInDirection(String direction) {
+        // Placeholder for actual blockage checking logic
+        // Implement the method that checks if the given direction is blocked by walls, obstacles, etc.
+        return false; // Example return, change based on actual game logic
+    }
+
     public EnemyHitbox getHitbox(){
         return hitbox;
     }
-
 }
