@@ -5,6 +5,4 @@ comment1.params=
 comment1.target=StartScreen()
 comment2.params=
 comment2.target=void\ act()
-comment3.params=
-comment3.target=void\ nextWorld()
-numComments=4
+numComments=3

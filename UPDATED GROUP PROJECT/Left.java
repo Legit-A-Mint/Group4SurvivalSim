@@ -1,23 +1,24 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class StartButton here.
+ * Write a description of class Left here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class StartButton extends StartScreen
+public class Left extends DisplayCharacter
 {
-    public StartButton()
+    public Left ()
     {
-        setImage("PlayButton.png");
-        getImage().scale(393, 159);
+        setImage("characterSelectArrow.jpg");
+        getImage().scale(50,100);
     }
     public void act()
     {
         if (Greenfoot.mouseClicked(this))
         {
-            Greenfoot.setWorld(new SelectCharacter());
+            characterNum--;
+            setDisplay(characterNum);
         }
     }
 }
