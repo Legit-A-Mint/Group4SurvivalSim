@@ -23,6 +23,13 @@ public class MyWorld extends World
     private static final int WIDTH = 2000, height = 2000;
 
     private double exactY, exactX;
+    
+    private Button pauseButton;
+    private static boolean acting;
+
+    // https://pixabay.com/sound-effects/gentle-ocean-waves-fizzing-bubbles-64980/
+    public static GreenfootSound ambientSound = new GreenfootSound("gentle_Ocean.mp3");
+    
     public MyWorld()
     {
         super(1024, 576, 1, false);
