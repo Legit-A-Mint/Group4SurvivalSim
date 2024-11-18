@@ -1,19 +1,11 @@
 #BlueJ class context
 comment0.target=MyWorld
-<<<<<<< HEAD
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ MyWorld\ here.\r\n\ \r\n\ @Andrew\r\n\ @Darius\r\n\ @Jonathan\r\n\ @Logan\r\n\r\n\ @1.2.7\r\n
-=======
 comment0.text=\n\ Write\ a\ description\ of\ class\ MyWorld\ here.\n\ \n\ @Andrew\n\ @Darius\n\ @Jonarahn\n\ @Logan\n\n\ @1.2.7\n
->>>>>>> ebbde611574e1f2609a738518206389d42a07746
 comment1.params=
 comment1.target=MyWorld()
 comment10.params=a\ b
 comment10.target=double\ getDistance(greenfoot.Actor,\ greenfoot.Actor)
-<<<<<<< HEAD
-comment10.text=\ prevents\ restarting\ after\ game\ over\ (called\ by\ greenfoot\ framework)\ \r\n\r\n\ \ \ \ public\ void\ started()\r\n\ \ \ \ {\r\n\ \ \ \ if\ (\!getObjects(GameOver.class).isEmpty())\ Greenfoot.stop();\r\n\ \ \ \ }\r\n\r\n
-=======
 comment10.text=\ prevents\ restarting\ after\ game\ over\ (called\ by\ greenfoot\ framework)\ \n\n\ \ \ \ public\ void\ started()\n\ \ \ \ {\n\ \ \ \ if\ (\!getObjects(GameOver.class).isEmpty())\ Greenfoot.stop();\n\ \ \ \ }\n\n
->>>>>>> ebbde611574e1f2609a738518206389d42a07746
 comment11.params=
 comment11.target=double\ getPreciseY()
 comment12.params=
