@@ -29,13 +29,9 @@ public class Player extends Effects {
 
     // Constructor
     public Player() {
-<<<<<<< Updated upstream
         playerImage[0] = new GreenfootImage("sus.png");
         speed = 10;
-=======
-        playerImage[0] = new GreenfootImage("boy.png");
-        speed = 6;
->>>>>>> Stashed changes
+        
         weaponCooldown = 10;
         createdHitbox = false;
         maxhitpoints = 20;
