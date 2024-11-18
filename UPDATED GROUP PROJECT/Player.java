@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * It handles movement, collisions, shooting, and interactions.
  * 
  * @lumilk
- * @Andrew
+ * @Andrew Xu
  * 
  * @version 1.1.0
  */
@@ -15,6 +15,7 @@ public class Player extends Effects {
     private GreenfootImage[] playerImage = new GreenfootImage[1];
     private double speed;
     private double dx = 0, dy = 0;
+    private int hitpoints, maxhitpoints;
     private int shootCounter, weaponCooldown;
 
     // Hitbox variables
@@ -32,6 +33,8 @@ public class Player extends Effects {
         speed = 6;
         weaponCooldown = 10;
         createdHitbox = false;
+        maxhitpoints = 20;
+        hitpoints = maxhitpoints;
     }
 
     // Called on every act cycle
@@ -49,6 +52,9 @@ public class Player extends Effects {
         handleMovement();
         handleInputs();
         updateHitboxPosition();
+        
+        System.out.println("Player Coordinants ("+ (getX() - ((MyWorld)getWorld()).getScroller().getScrolledX())
+        + ", " +  (getY() - ((MyWorld)getWorld()).getScroller().getScrolledY()) + ")");
     }
 
     // Create the player's hitbox
@@ -118,9 +124,16 @@ public class Player extends Effects {
         }
     }
 
-    // Shoot a projectile
+    // Addobject projectile to my position
     private void shoot() {
         getWorld().addObject(new Projectile(), getX(), getY());
+    }
+    
+    public void damageMe(int damage){
+        if(hitpoints > 0){
+            hitpoints -= damage;   
+        }
+        //System.out.println("Player HP: " + hitpoints); 
     }
 
     // Repel the player upon collision
@@ -154,5 +167,9 @@ public class Player extends Effects {
             }
         }
         return false;
+    }
+    
+    public Hitbox getHitbox(){
+        return this.hitbox;
     }
 }

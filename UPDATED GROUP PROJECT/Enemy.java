@@ -12,42 +12,57 @@ public abstract class Enemy extends Effects
     protected GreenfootImage[] img;
     protected int hp;
     protected int damage;
+    protected int direction; 
+    protected int attackCooldown;
+    protected int attackTimer;
     protected double speed;
-    
-    // Not added to subclass
+
+    // Once per instance
     protected Player player;
-    protected int direction;    
-    
+    private boolean foundPlayer;
     private EnemyHitbox hitbox;
     private boolean createdHitbox;
-    
+
     // Path-blocked flags
     private boolean upBlocked;
     private boolean downBlocked;
     private boolean leftBlocked;
     private boolean rightBlocked;
 
-    public void act()
-    {
+    public Enemy(){
+        attackTimer = 0;
+    }
+
+    protected abstract void attack();
+
+    protected abstract void attackAnimation();
+
+    public void act(){
+        //System.out.println(this + " myHp: " + hitpoints);
+
         lookForTarget();
         repel();
-        
-        animate(this, img, img[0].getWidth(), img[0].getHeight(), 6, direction);
-        
+
         if(!createdHitbox){
             hitbox = new EnemyHitbox(img[0].getWidth() - 30, img[0].getHeight()/2, 0, 0, this, 2.5);
             getWorld().addObject(hitbox, 0, 0);
             createdHitbox = true;
         }   
-        
-        if(this.hp == 0){
-            getWorld().removeObject(hitbox);
-            getWorld().removeObject(this);
+        // Find object player
+        if(!foundPlayer){
+            if(getWorld().getObjects(Player.class) != null){
+                player = getWorld().getObjects(Player.class).get(0);
+            }
+
+            if(this.hp == 0){
+                getWorld().removeObject(hitbox);
+                getWorld().removeObject(this);
+            }
         }
-        
+
         // Check for path blockages
         checkForBlockages();
-        
+
         // Try-catch-finally for movement handling
         try {
             if (!upBlocked && !downBlocked && !leftBlocked && !rightBlocked) {
@@ -68,13 +83,20 @@ public abstract class Enemy extends Effects
         }
     }
 
+    protected boolean getPlayerCollision(){
+        if(player.getHitbox() != null){
+            return(this.intersects(player.getHitbox()));   
+        }
+        return false;
+    }
+
     public void lookForTarget(){
         if(!getWorld().getObjects(Player.class).isEmpty()){
             player = getWorld().getObjects(Player.class).get(0);
-            
+
             turnTowards(player.getX(), player.getY());
             move(speed);
-            
+
             if(this.getX() < player.getX()){
                 direction = 1;
             }else{
@@ -86,8 +108,8 @@ public abstract class Enemy extends Effects
     public void damageMe(int damage){
         this.hp -= damage;
     }
-    
-    //modified repel method
+
+    // Modified repel method
     public void repel() {
         ArrayList<Enemy> enemies = (ArrayList<Enemy>)getIntersectingObjects(Enemy.class);
         ArrayList<Actor> actorsTouching = new ArrayList<Actor>();
@@ -169,5 +191,9 @@ public abstract class Enemy extends Effects
 
     public EnemyHitbox getHitbox(){
         return hitbox;
+    }
+
+    protected Player getPlayer(){
+        return player;
     }
 }

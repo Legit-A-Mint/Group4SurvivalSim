@@ -20,14 +20,11 @@ public class Island extends SuperSmoothMover
         createdHitbox = false;
     }
     
-    
-    
-    
     public void act()
     {
         if(!createdHitbox){
-            hitbox = new Hitbox(img.getWidth(), (int)(img.getHeight()/1.35), 2.5);
-            getWorld().addObject(hitbox, this.getX(), this.getY() + 10);
+            hitbox = new Hitbox(img.getWidth(), (int)(img.getHeight()/1.75), 2.5);
+            getWorld().addObject(hitbox, this.getX(), this.getY() - 30);
             createdHitbox = true;
         }
     }

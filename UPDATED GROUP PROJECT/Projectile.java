@@ -25,7 +25,7 @@ public class Projectile extends SuperSmoothMover{
     /** temp constructor to do testing with */
     // Please use contructors in subclasses in real version
     public Projectile(){
-        speed = 1.25;
+        speed = 6;
         lifeSpan = 150;
         damage = 1;
     }

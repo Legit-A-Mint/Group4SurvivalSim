@@ -6,22 +6,22 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Bass extends Enemy
+public class Shark extends Enemy
 {
-    public Bass(){
+    public Shark(){
         super();
         img = new GreenfootImage[2];
-        speed = 2;
-        hp = 3;
-        damage = 1;
-        attackCooldown = 20;
+        speed = 4;
+        hp = 10;
+        damage = 5;
+        attackCooldown = 60;
 
         // vfx
-        img[0] = new GreenfootImage("BassF1.png");
+        img[0] = new GreenfootImage("SharkF1.png");
 
         //Set the array size to 5 so animation works
         for(int i = 0; i < img.length; i++){
-            img[i] = new GreenfootImage("BassF" + (i+1) + ".png");
+            img[i] = new GreenfootImage("SharkF" + (i+1) + ".png");
         }
 
         setImage(img[0]);
