@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Projectile extends SuperSmoothMover{
+public class Projectile extends Effects{
     protected Actor origin, target; 
     protected GreenfootImage img;
     protected boolean targetFound = false;
@@ -15,23 +15,30 @@ public class Projectile extends SuperSmoothMover{
     // Other classes
     protected ArrayList<Enemy> enemies;
     protected Enemy enemy;
+    protected Enemy hitEnemy;
     protected EnemyHitbox enemyHitbox;
     
     // Inherited Instance variables
     protected double speed;
     protected int lifeSpan;
     protected int damage;
+    protected int fadeLength;
+    
     
     /** temp constructor to do testing with */
     // Please use contructors in subclasses in real version
     public Projectile(){
-        speed = 6;
-        lifeSpan = 150;
+        speed = 1.45;
+        lifeSpan = 350;
         damage = 1;
+        
+        fadeLength = 100;
     }
     
     public void act(){
         if(lifeSpan > 0) lifeSpan--;
+        
+        fade(this, lifeSpan, fadeLength);
 
         if(enemy == null){
             targeting();
@@ -45,11 +52,17 @@ public class Projectile extends SuperSmoothMover{
             
             if(enemy.getHitbox() != null){
                 try{
-                
+                    if(getOneIntersectingObject(Enemy.class) != null){
+                        hitEnemy = (Enemy) getOneIntersectingObject(Enemy.class);
+                        hitEnemy.damageMe(damage);
+                        getWorld().removeObject(this);
+                    }
+                    /**
                     if(this.intersects(enemy.getHitbox())){
                         enemy.damageMe(damage);
                         getWorld().removeObject(this);
                     }
+                    */
                 }catch(Exception e){
                     
                 }
