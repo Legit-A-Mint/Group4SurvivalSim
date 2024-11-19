@@ -128,7 +128,7 @@ public abstract class Enemy extends Effects
     }
 
     // Modified repel method
-    public void repel() {
+    public void repel(){
         ArrayList<Enemy> enemies = (ArrayList<Enemy>)getIntersectingObjects(Enemy.class);
         ArrayList<Actor> actorsTouching = new ArrayList<Actor>();
 
