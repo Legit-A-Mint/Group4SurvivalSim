@@ -34,27 +34,31 @@ public class Player extends Effects {
     }
 
     public void act() {
-        animate(this, playerImage, playerImage[0].getWidth(), playerImage[0].getHeight(), 16, direction);
+        if (SimulationWorld.isActing())
+        {
+            animate(this, playerImage, playerImage[0].getWidth(), playerImage[0].getHeight(), 16, direction);
 
-        if (shootCounter > 0) {
-            shootCounter--;
+            if (shootCounter > 0) {
+                shootCounter--;
+            }
+
+            if (!createdHitbox) {
+                createHitbox();
+            }
+
+            handleMovement();
+            handleInputs();
+            updateHitboxPosition();
+
+            System.out.println(hp);
         }
-
-        if (!createdHitbox) {
-            createHitbox();
-        }
-
-        handleMovement();
-        handleInputs();
-        updateHitboxPosition();
-        
-        System.out.println(hp);
     }
-    
+
     // Add an item to the inventory
     public void addItem(Object item) {
         inventory.add(item);
         System.out.println("Item added to inventory: " + item.getClass().getSimpleName());
+
     }
 
     // Get the player's inventory

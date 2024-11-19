@@ -17,61 +17,63 @@ public class Projectile extends Effects{
     protected Enemy enemy;
     protected Enemy hitEnemy;
     protected EnemyHitbox enemyHitbox;
-    
+
     // Inherited Instance variables
     protected double speed;
     protected int lifeSpan;
     protected int damage;
     protected int fadeLength;
-    
-    
+
     /** temp constructor to do testing with */
     // Please use contructors in subclasses in real version
     public Projectile(){
         speed = 1.45;
         lifeSpan = 350;
         damage = 1;
-        
+
         fadeLength = 100;
     }
-    
-    public void act(){
-        if(lifeSpan > 0) lifeSpan--;
-        
-        fade(this, lifeSpan, fadeLength);
 
-        if(enemy == null){
-            targeting();
-        }
-        else if(enemy != null){
-            if(lifeSpan > 0) move(speed);
-            else if(lifeSpan == 0){ 
-                getWorld().removeObject(this);
-                return;
+    public void act(){
+        if (SimulationWorld.isActing())
+        {
+            if(lifeSpan > 0) lifeSpan--;
+
+            fade(this, lifeSpan, fadeLength);
+
+            if(enemy == null){
+                targeting();
             }
-            
-            if(enemy.getHitbox() != null){
-                try{
-                    if(getOneIntersectingObject(Enemy.class) != null){
-                        hitEnemy = (Enemy) getOneIntersectingObject(Enemy.class);
-                        hitEnemy.damageMe(damage);
-                        getWorld().removeObject(this);
-                    }
-                    /**
-                    if(this.intersects(enemy.getHitbox())){
+            else if(enemy != null){
+                if(lifeSpan > 0) move(speed);
+                else if(lifeSpan == 0){ 
+                    getWorld().removeObject(this);
+                    return;
+                }
+
+                if(enemy.getHitbox() != null){
+                    try{
+                        if(getOneIntersectingObject(Enemy.class) != null){
+                            hitEnemy = (Enemy) getOneIntersectingObject(Enemy.class);
+                            hitEnemy.damageMe(damage);
+                            getWorld().removeObject(this);
+                        }
+                        /**
+                        if(this.intersects(enemy.getHitbox())){
                         enemy.damageMe(damage);
                         getWorld().removeObject(this);
+                        }
+                         */
+                    }catch(Exception e){
+
                     }
-                    */
-                }catch(Exception e){
-                    
                 }
             }
+
+            move(speed);
         }
-        
-        move(speed);
     }
-    
+
     public void targeting (){
         double closestTargetDistance = 0;
         double distanceToActor;
@@ -90,8 +92,8 @@ public class Projectile extends Effects{
             if (enemies.size() != 0){
                 break;
             }
-         }
-        
+        }
+
         if (enemies.size() > 0)
         {
             // set the first one as my target

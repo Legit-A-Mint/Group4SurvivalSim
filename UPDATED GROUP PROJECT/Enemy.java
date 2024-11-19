@@ -39,49 +39,52 @@ public abstract class Enemy extends Effects
     protected abstract void attackAnimation();
 
     public void act(){
-        //System.out.println(this + " myHp: " + hitpoints);
+        if (SimulationWorld.isActing())
+        {
+            //System.out.println(this + " myHp: " + hitpoints);
 
-        if(!createdHitbox){
-            hitbox = new EnemyHitbox(img[0].getWidth() - 30, img[0].getHeight()/2, 0, 0, this, 2.5);
-            getWorld().addObject(hitbox, 0, 0);
-            createdHitbox = true;
-        }   
-        // Find object player
-        if(!foundPlayer){
-            if(getWorld().getObjects(Player.class) != null){
-                player = getWorld().getObjects(Player.class).get(0);
-            }
-
-            if(this.hp == 0){
-                getWorld().removeObject(hitbox);
-                getWorld().removeObject(this);
-            }
-        }
-
-        if(isMovable){
-
-            lookForTarget();
-            repel();
-            // Check for path blockages
-            checkForBlockages();
-
-            // Try-catch-finally for movement handling
-            try {
-                if (!upBlocked && !downBlocked && !leftBlocked && !rightBlocked) {
-                    moveDiagonally();
-                } else if (upBlocked && downBlocked) {
-                    // Change direction to horizontal (left or right)
-                    setRotation(180); // or 0, depending on the desired horizontal direction
-                    moveHorizontally();
-                } else if (leftBlocked && rightBlocked) {
-                    // Change direction to vertical (up or down)
-                    setRotation(90); // or 270, depending on the desired vertical direction
-                    moveVertically();
+            if(!createdHitbox){
+                hitbox = new EnemyHitbox(img[0].getWidth() - 30, img[0].getHeight()/2, 0, 0, this, 2.5);
+                getWorld().addObject(hitbox, 0, 0);
+                createdHitbox = true;
+            }   
+            // Find object player
+            if(!foundPlayer){
+                if(getWorld().getObjects(Player.class) != null){
+                    player = getWorld().getObjects(Player.class).get(0);
                 }
-            } catch (Exception e) {
-                System.out.println("Error in movement: " + e.getMessage());
-            } finally {
-                // Optionally place any cleanup code here if needed
+
+                if(this.hp == 0){
+                    getWorld().removeObject(hitbox);
+                    getWorld().removeObject(this);
+                }
+            }
+
+            if(isMovable){
+
+                lookForTarget();
+                repel();
+                // Check for path blockages
+                checkForBlockages();
+
+                // Try-catch-finally for movement handling
+                try {
+                    if (!upBlocked && !downBlocked && !leftBlocked && !rightBlocked) {
+                        moveDiagonally();
+                    } else if (upBlocked && downBlocked) {
+                        // Change direction to horizontal (left or right)
+                        setRotation(180); // or 0, depending on the desired horizontal direction
+                        moveHorizontally();
+                    } else if (leftBlocked && rightBlocked) {
+                        // Change direction to vertical (up or down)
+                        setRotation(90); // or 270, depending on the desired vertical direction
+                        moveVertically();
+                    }
+                } catch (Exception e) {
+                    System.out.println("Error in movement: " + e.getMessage());
+                } finally {
+                    // Optionally place any cleanup code here if needed
+                }
             }
         }
     }
