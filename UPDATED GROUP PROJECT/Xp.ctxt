@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=Xp
+comment0.text=\n\ Represents\ a\ Coin\ for\ the\ ShopUI.\n\ \n\ The\ Coin\ spawns\ with\ a\ predefined\ image.\n\ \n\ @author\ \n\ @version\ \n
+comment1.params=
+comment1.target=Xp()
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Coin.\n
+comment2.params=
+comment2.target=void\ act()
+comment2.text=\n\ Act\ -\ do\ whatever\ the\ Coin\ wants\ to\ do.\n
+comment3.params=
+comment3.target=void\ attack()
+comment3.text=\n\ Implementation\ of\ the\ abstract\ method\ attack().\n\ Since\ a\ Coin\ does\ not\ attack,\ this\ is\ left\ empty\ or\ with\ minimal\ behavior.\n
+comment4.params=
+comment4.target=void\ attackAnimation()
+comment4.text=\n\ Implementation\ of\ the\ abstract\ method\ attackAnimation().\n\ Since\ a\ Coin\ does\ not\ have\ an\ attack\ animation,\ this\ is\ left\ empty.\n
+numComments=5
