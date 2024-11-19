@@ -64,7 +64,7 @@ public class Kraken extends Enemy
     @Override
     protected void createHitbox(){
         if(!createdHitbox){
-            hitbox = new Hitbox((int)(img[0].getWidth()/2), (int)(img[0].getHeight()/2), 2.5);
+            hitbox = new Hitbox((int)(img[0].getWidth()/2.5), (int)(img[0].getHeight()/2.5), 2.5);
             getWorld().addObject(hitbox, this.getX() - 7, this.getY());
             createdHitbox = true;
         }
