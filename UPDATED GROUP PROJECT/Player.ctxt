@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.target=Player
-comment1.params=
-comment1.target=Player()
+comment1.params=playerModel
+comment1.target=Player(java.lang.String)
 comment10.params=dx\ dy
 comment10.target=void\ handleCollision(double,\ double)
 comment11.params=

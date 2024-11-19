@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class FinalButton extends CharacterSelect
+public class FinalButton extends DisplayCharacter
 {
     public FinalButton ()
     {
@@ -17,7 +17,7 @@ public class FinalButton extends CharacterSelect
     {
         if (Greenfoot.mouseClicked(this))
         {
-            Greenfoot.setWorld(new SimulationWorld());
+            Greenfoot.setWorld(new SimulationWorld(getPlayerModel()));
             SimulationWorld.ambientSound.playLoop();
         }
     }

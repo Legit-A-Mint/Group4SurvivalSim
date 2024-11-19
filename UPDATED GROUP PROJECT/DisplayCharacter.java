@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class DisplayCharacter extends CharacterSelect
 {
     protected ArrayList<String> listOfCharacters = new ArrayList<String>();
-    protected int characterNum = 0;
+    protected static int characterNum = 0;
     public DisplayCharacter ()
     {
         listOfCharacters.add("boy.png");
@@ -19,15 +19,18 @@ public class DisplayCharacter extends CharacterSelect
     }
     public void act()
     {
-        setDisplay(characterNum);
-    }
-    public void setDisplay(int num)
-    {
-        if (num > 2)
-            num = 0;
-        if (num < 0)
-            num = 2;
-        setImage(listOfCharacters.get(num));
+        setImage(listOfCharacters.get(characterNum));
         getImage().scale(300, 300);
+    }
+    public void setDisplay()
+    {
+        if (characterNum > 2)
+            characterNum = 0;
+        if (characterNum < 0)
+            characterNum = 2;
+    }
+    public String getPlayerModel()
+    {
+        return listOfCharacters.get(characterNum);
     }
 }

@@ -10,7 +10,7 @@ public class Left extends DisplayCharacter
 {
     public Left ()
     {
-        setImage("characterSelectArrow.jpg");
+        setImage("charArror.png");
         getImage().scale(50,100);
     }
     public void act()
@@ -18,7 +18,7 @@ public class Left extends DisplayCharacter
         if (Greenfoot.mouseClicked(this))
         {
             characterNum--;
-            setDisplay(characterNum);
+            setDisplay();
         }
     }
 }

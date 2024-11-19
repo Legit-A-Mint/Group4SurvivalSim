@@ -10,14 +10,16 @@ public class Right extends DisplayCharacter
 {
     public Right ()
     {
-        setImage("characterSelectArrow.jpg");
+        setImage("charArror.png");
+        getImage().mirrorHorizontally();
+        getImage().scale(50,100);
     }
     public void act()
     {
         if (Greenfoot.mouseClicked(this))
         {
             characterNum++;
-            setDisplay(characterNum);
+            setDisplay();
         }
     }
 }

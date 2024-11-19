@@ -21,8 +21,9 @@ public class Player extends Effects {
     // Direction variables for animation
     private int direction;
 
-    public Player() {
-        playerImage[0] = new GreenfootImage("boy.png");
+    public Player(String playerModel) {
+        playerImage[0] = new GreenfootImage(playerModel);
+        setImage(playerModel);
         speed = 7;
         weaponCooldown = 10;
         createdHitbox = false;
@@ -49,7 +50,7 @@ public class Player extends Effects {
         
         System.out.println(hp);
     }
-
+    
     // Add an item to the inventory
     public void addItem(Object item) {
         inventory.add(item);

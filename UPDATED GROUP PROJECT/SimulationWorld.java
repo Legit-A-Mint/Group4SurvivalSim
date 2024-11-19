@@ -31,7 +31,7 @@ public class SimulationWorld extends World
     // https://pixabay.com/sound-effects/gentle-ocean-waves-fizzing-bubbles-64980/
     public static GreenfootSound ambientSound = new GreenfootSound("gentle_Ocean.mp3");
     
-    public SimulationWorld()
+    public SimulationWorld(String playerModel)
     {
         super(1024, 576, 1, false);
         // settings
@@ -42,7 +42,7 @@ public class SimulationWorld extends World
         delay = 30;
 
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
-        addObject(player = new Player(), this.getWidth()/2, this.getHeight()/2);
+        addObject(player = new Player(playerModel), this.getWidth()/2, this.getHeight()/2);
 
         //border hitbox
         addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH/2, height);

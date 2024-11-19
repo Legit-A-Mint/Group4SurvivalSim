@@ -14,8 +14,8 @@ public class SelectCharacter extends World
         super(1024, 576, 1, false);
         addObject(new CharacterSelect(), 512, 288);
         addObject(new DisplayCharacter(), 512, 288);
-        addObject(new Left(), 412, 288);
-        addObject(new Left(), 612, 288);
-        addObject(new FinalButton(), 512, 500);
+        addObject(new Left(), 362, 288);
+        addObject(new Right(), 662, 288);
+        addObject(new FinalButton(), 512, 475);
     }
 }
