@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=spearProjectile
-comment0.text=\r\n\ spearProjectile\ -\ A\ high-damage,\ fast\ projectile.\r\n
+comment0.text=\n\ spearProjectile\ -\ A\ high-damage,\ fast\ projectile.\n
 comment1.params=
 comment1.target=spearProjectile()
 comment2.params=
