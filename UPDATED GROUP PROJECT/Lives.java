@@ -20,26 +20,31 @@ public class Lives extends SuperSmoothMover
     private static final int heartOffset = 4;
     
     private GreenfootImage hearts;
-    private GreenfootImage storeHearts;
+    private Font storeHearts;
     
-    public Lives(){
+    public Lives(int max){
         hearts = new GreenfootImage("pixel_Heart.png");
-        maxValue = 5;
-        storeHearts = new GreenfootImage( maxValue*(hearts.getWidth() + heartOffset), hearts.getHeight());
+        maxValue = max;
+        currentHp = maxValue;
+        hearts.drawString(Integer.toString(currentHp), 512, 100);
+        hearts.scale(80, 80);
         updateDisplay();
-        setImage(storeHearts);
+    }
+    
+    public void act()
+    {
+        updateDisplay();
     }
     
     private void updateDisplay() {
-        for (int i = 0; i < currentHp; i++) {
-            storeHearts.drawImage(hearts, maxValue*(hearts.getWidth() + heartOffset) , 0);
-        }
+        hearts = new GreenfootImage("pixel_Heart.png");
+        hearts.drawString(Integer.toString(currentHp), 512, 100);
+        setImage(hearts);
     }
     
     public int getValue() {
         return currentHp; 
     }
-    
     
     @Override /** over ride methods in super smooth mover to prevent movement */
     public void setLocation(int x, int y) {}

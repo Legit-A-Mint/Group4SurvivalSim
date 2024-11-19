@@ -26,12 +26,13 @@ public class SimulationWorld extends World
     private double exactY, exactX;
     
     private Button pauseButton;
+    private Slider slider;
     private static boolean acting;
 
     // https://pixabay.com/sound-effects/gentle-ocean-waves-fizzing-bubbles-64980/
     public static GreenfootSound ambientSound = new GreenfootSound("gentle_Ocean.mp3");
     
-    public SimulationWorld(String playerModel)
+    public SimulationWorld(String playerModel, int maxLives)
     {
         super(1024, 576, 1, false);
         // settings
@@ -66,10 +67,11 @@ public class SimulationWorld extends World
         pauseButton = new Button("PauseButton", new String[] {"db_1.png", "db_2.png", "db_3.png"}, true, 1, 55, 35);
         addObject(pauseButton, 55, 35);
         
-        Slider slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540);
+        slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540);
         addObject(slider, 155, 540);
         
-        //addObject(lives = new Lives(), 50, 20);
+        lives = new Lives(maxLives);
+        addObject(lives, 300, 300);
 
         // addObject(new MiniMap(), 30, 370);
         //setPaintOrder(Hitbox.class, SliderObject.class, Slider.class, Island.class, Player.class, Enemy.class);
@@ -160,12 +162,6 @@ public class SimulationWorld extends World
         }
         
         scroller.scroll(getWidth()/2-player.getX(), getHeight()/2-player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
-    }
-
-    /** returns the lives counter object */
-    public Lives getLivesCounter()
-    {
-        return lives;
     }
 
     public Scroller getScroller(){

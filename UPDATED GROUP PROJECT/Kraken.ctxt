@@ -1,6 +1,10 @@
 #BlueJ class context
 comment0.target=Kraken
+<<<<<<< Updated upstream
 comment0.text=\n\ Represents\ the\ Kraken\ enemy.\n\ \n\ @author\ \n\ @version\ \n
+=======
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Kraken\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+>>>>>>> Stashed changes
 comment1.params=
 comment1.target=Kraken()
 comment2.params=
