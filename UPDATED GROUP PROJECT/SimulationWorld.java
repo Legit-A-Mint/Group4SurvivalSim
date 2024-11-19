@@ -70,8 +70,8 @@ public class SimulationWorld extends World
         slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540);
         addObject(slider, 155, 540);
         
-        lives = new Lives(maxLives);
-        addObject(lives, 300, 300);
+        lives = new Lives("Heart", 512, 60, maxLives);
+        addObject(lives, WIDTH/2, 100);
 
         // addObject(new MiniMap(), 30, 370);
         //setPaintOrder(Hitbox.class, SliderObject.class, Slider.class, Island.class, Player.class, Enemy.class);
