@@ -99,7 +99,6 @@ public class SimulationWorld extends World
 
     public void act()
     {
-        /*
         actCount++;
         
         switch(waveCount) {
@@ -143,7 +142,7 @@ public class SimulationWorld extends World
             delay = 30;
             countOnce = true;
         }
-        */
+        
        
         // Pause scenerio
         if (Greenfoot.mouseClicked(pauseButton))

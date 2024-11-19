@@ -10,9 +10,12 @@ import java.util.ArrayList;
 public class Kraken extends Enemy
 {
     private boolean isInitialized;
+    private boolean createdHitbox;
+    private Hitbox hitbox;
     public Kraken(){
         super();
         img = new GreenfootImage[12];
+        createdHitbox = false;
         isMovable = false;
         hp = 100;
         damage = 5;
@@ -38,7 +41,7 @@ public class Kraken extends Enemy
 
             // Generate a random angle in radians
             double angle = Math.random() * 2 * Math.PI;
-            
+
             double distance = 100 + (Math.random() * (175)); //Inner and outer spawn radius
 
             int spawnX = getX() + (int)(distance * Math.cos(angle));
@@ -56,6 +59,15 @@ public class Kraken extends Enemy
 
     private void aoeAttack(){
 
+    }
+
+    @Override
+    protected void createHitbox(){
+        if(!createdHitbox){
+            hitbox = new Hitbox((int)(img[0].getWidth()/2), (int)(img[0].getHeight()/2), 2.5);
+            getWorld().addObject(hitbox, this.getX() - 7, this.getY());
+            createdHitbox = true;
+        }
     }
 
     @Override

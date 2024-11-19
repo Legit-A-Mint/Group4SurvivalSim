@@ -39,24 +39,22 @@ public abstract class Enemy extends Effects
     protected abstract void attackAnimation();
 
     public void act(){
+        createHitbox();
+        
         if (SimulationWorld.isActing())
         {
             //System.out.println(this + " myHp: " + hitpoints);
 
-            if(!createdHitbox){
-                hitbox = new EnemyHitbox(img[0].getWidth() - 30, img[0].getHeight()/2, 0, 0, this, 2.5);
-                getWorld().addObject(hitbox, 0, 0);
-                createdHitbox = true;
-            }   
             // Find object player
             if(!foundPlayer){
                 if(getWorld().getObjects(Player.class) != null){
                     player = getWorld().getObjects(Player.class).get(0);
                 }
 
-                if(this.hp == 0){
+                if(this.hp <= 0){
                     getWorld().removeObject(hitbox);
                     getWorld().removeObject(this);
+                    return;
                 }
             }
 
@@ -87,6 +85,14 @@ public abstract class Enemy extends Effects
                 }
             }
         }
+    }
+
+    protected void createHitbox(){
+        if(!createdHitbox){
+            hitbox = new EnemyHitbox(img[0].getWidth() - 30, img[0].getHeight()/2, 0, 0, this, 2.5);
+            getWorld().addObject(hitbox, 0, 0);
+            createdHitbox = true;
+        }   
     }
 
     protected boolean getPlayerCollision(){

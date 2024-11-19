@@ -27,9 +27,9 @@ public class Projectile extends Effects{
     /** temp constructor to do testing with */
     // Please use contructors in subclasses in real version
     public Projectile(){
-        speed = 1.45;
+        speed = 6;
         lifeSpan = 350;
-        damage = 1;
+        damage = 1000;
 
         fadeLength = 100;
     }
