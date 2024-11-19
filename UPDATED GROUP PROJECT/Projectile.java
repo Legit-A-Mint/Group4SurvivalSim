@@ -24,12 +24,12 @@ public class Projectile extends Effects{
     protected int damage;
     protected int fadeLength;
 
-    /** temp constructor to do testing with */
-    // Please use contructors in subclasses in real version
-    public Projectile(){
+    public Projectile(String img){
         speed = 6;
         lifeSpan = 350;
         damage = 1000;
+        
+        this.img = new GreenfootImage(img);
 
         fadeLength = 100;
     }
@@ -77,8 +77,6 @@ public class Projectile extends Effects{
     public void targeting (){
         double closestTargetDistance = 0;
         double distanceToActor;
-        // Get a list of all Flowers in the World, cast it to ArrayList
-        // for easy management
 
         enemies = (ArrayList<Enemy>)getObjectsInRange(40, Enemy.class);
 

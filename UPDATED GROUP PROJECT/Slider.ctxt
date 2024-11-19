@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Slider
-comment0.text=\n\ Slider\ class\n\ Create\ a\ slider\ class\ by\ creating\ an\ object.\n\ You\ may\ give\ the\ constructor\ image\ files\ in\ the\ form\ of\ a\ string\ or\ leave\ it\n\ empty\ to\ use\ a\ default\ slider.\n\ SliderObject\ is\ inherited\ from\ Slider\n\ \n\ @lumilk\n\ @version\ 1.0.0\n
+comment0.text=\r\n\ Slider\ class\r\n\ Create\ a\ slider\ class\ by\ creating\ an\ object.\r\n\ You\ may\ give\ the\ constructor\ image\ files\ in\ the\ form\ of\ a\ string\ or\ leave\ it\r\n\ empty\ to\ use\ a\ default\ slider.\r\n\ SliderObject\ is\ inherited\ from\ Slider\r\n\ \r\n\ @lumilk\r\n\ @version\ 1.0.0\r\n
 comment1.params=name\ image\ sliderImage\ scale\ offset\ myX\ myY
 comment1.target=Slider(java.lang.String,\ java.lang.String,\ java.lang.String,\ double,\ int,\ int,\ int)
 comment2.params=

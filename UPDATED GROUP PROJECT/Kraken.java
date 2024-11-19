@@ -30,8 +30,15 @@ public class Kraken extends Enemy
 
     public void act()
     {
+
+        if(getPlayerNearby()){
+            if(getWorld().getObjects(Tentacle.class).isEmpty()){
+                tentacleAttack();
+            }   
+        }
+
+        
         super.act();
-        System.out.println(this.getX()+ ", " + this.getY());
         animate(this, img, img[0].getWidth(), img[0].getHeight(), 24, 1);
     }
 
@@ -52,7 +59,9 @@ public class Kraken extends Enemy
             getWorld().addObject(tentacle, spawnX, spawnY);
         }
     }
-
+    public boolean getPlayerNearby(){
+        return (getObjectsInRange(250, Player.class) != null);
+    }
     private void summonAttack(){
 
     }

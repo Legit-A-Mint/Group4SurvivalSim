@@ -24,13 +24,13 @@ public class SimulationWorld extends World
     private int delay;
 
     private double exactY, exactX;
-    
+
     private Button pauseButton;
     private static boolean acting;
 
     // https://pixabay.com/sound-effects/gentle-ocean-waves-fizzing-bubbles-64980/
     public static GreenfootSound ambientSound = new GreenfootSound("gentle_Ocean.mp3");
-    
+
     public SimulationWorld(String playerModel)
     {
         super(1024, 576, 1, false);
@@ -40,7 +40,7 @@ public class SimulationWorld extends World
         actCount = 0;
         spawnOnce = true;
         delay = 30;
-        
+
         acting = true;
 
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
@@ -61,14 +61,14 @@ public class SimulationWorld extends World
         //addObject(new Hitbox(200, 200), 600, 900);
 
         addObject(new Kraken(), getScroller().getScrollWidth()/2 - getScroller().getScrolledX(), getScroller().getScrollHeight()/2 - getScroller().getScrolledY());
-        
+
         // GUI
         pauseButton = new Button("PauseButton", new String[] {"db_1.png", "db_2.png", "db_3.png"}, true, 1, 55, 35);
         addObject(pauseButton, 55, 35);
-        
+
         Slider slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540);
         addObject(slider, 155, 540);
-        
+
         //addObject(lives = new Lives(), 50, 20);
 
         // addObject(new MiniMap(), 30, 370);
@@ -92,7 +92,7 @@ public class SimulationWorld extends World
         // Stops playing the ambient noises when simulation is paused
         ambientSound.pause();
     }
-    
+
     public void addObject(Actor a){
 
     }
@@ -100,7 +100,7 @@ public class SimulationWorld extends World
     public void act()
     {
         actCount++;
-        
+
         switch(waveCount) {
                 case(0):
 
@@ -113,11 +113,15 @@ public class SimulationWorld extends World
                             Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
                         addObject(new Shark(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
                             Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
+                            //temp spawnbs APUT IN LATER WAVES
+                        addObject(new Whale(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
+                            Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
+                        addObject(new Swordfish(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
+                            Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
                     }
-
                 }
                 break;
-                
+
                 case(1):
                 delay--;
                 if(delay == 0 && countOnce){
@@ -135,15 +139,14 @@ public class SimulationWorld extends World
                 break;
 
         }
-        
+
         if(actCount == 400 || (getObjects(Enemy.class).isEmpty() && countOnce == false)){
             waveCount++;
             actCount = 0;
             delay = 30;
             countOnce = true;
         }
-        
-       
+
         // Pause scenerio
         if (Greenfoot.mouseClicked(pauseButton))
         {
@@ -158,7 +161,7 @@ public class SimulationWorld extends World
                 ambientSound.playLoop();
             }
         }
-        
+
         scroller.scroll(getWidth()/2-player.getX(), getHeight()/2-player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
     }
 
@@ -207,7 +210,7 @@ public class SimulationWorld extends World
     public double exactX(){
         return exactY;
     }
-    
+
     // Check if simulation is acting (false if "paused")
     public static boolean isActing()
     {

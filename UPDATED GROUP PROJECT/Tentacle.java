@@ -24,7 +24,6 @@ public class Tentacle extends Kraken
         animate(this, img, img[0].getWidth(), img[0].getHeight(), 24, 1);
         if(getPlayerCollision()){
             getPlayer().damageMe(damage);
-            
             System.out.println("test");
         }
     }

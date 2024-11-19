@@ -59,8 +59,6 @@ public class Player extends Effects {
             handleMovement();
             handleInputs();
             updateHitboxPosition();
-
-            System.out.println(hp);
         }
     }
     
@@ -80,13 +78,6 @@ public class Player extends Effects {
             playerImage[0] = tempImg;
         }
         setImage(playerImg);
-    }
-
-    // Add an item to the inventory
-    public void addItem(Object item) {
-        inventory.add(item);
-        System.out.println("Item added to inventory: " + item.getClass().getSimpleName());
-
     }
 
     // Get the player's inventory
@@ -184,7 +175,7 @@ public class Player extends Effects {
 
     // Add projectile to player's position
     private void shoot() {
-        getWorld().addObject(new Projectile(), getX(), getY());
+        getWorld().addObject(new Projectile("SharkF1.png"), getX(), getY());
     }
 
     public void damageMe(int damage) {
