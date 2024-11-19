@@ -3,6 +3,7 @@ import greenfoot.*;
 
 public class Player extends Effects {
     private GreenfootImage[] playerImage = new GreenfootImage[1];
+    private GreenfootImage[] floatyImage = new GreenfootImage[3];
     private double speed;
     private double dx = 0, dy = 0;
     private int hp, maxhp;
@@ -18,12 +19,21 @@ public class Player extends Effects {
     private int collisionCounter = 0;
     private final int MAX_COLLISION_ATTEMPTS = 3;
 
+    // Which floating device is player using (0 = floaty, 1 = wood raft, 2 = metal boat)
+    private GreenfootImage playerImg;
+    private GreenfootImage tempImg;
+    private int floatyNum = 0;
+    
     // Direction variables for animation
     private int direction;
 
     public Player(String playerModel) {
-        playerImage[0] = new GreenfootImage(playerModel);
-        setImage(playerModel);
+        floatyImage[0] = new GreenfootImage("floaty.png");
+        floatyImage[1] = new GreenfootImage("wood.png");
+        floatyImage[2] = new GreenfootImage("metal.png");
+        playerImg = new GreenfootImage(playerModel);
+        setRaft();
+        
         speed = 7;
         weaponCooldown = 10;
         createdHitbox = false;
@@ -52,6 +62,24 @@ public class Player extends Effects {
 
             System.out.println(hp);
         }
+    }
+    
+    public void setRaft() {
+        if (floatyNum == 0)
+        {
+            // if your not on a raft, the floaty has to be drawn on top of you
+            tempImg = new GreenfootImage(playerImg);
+            tempImg.drawImage(floatyImage[floatyNum], 0, 0);
+            playerImage[0] = tempImg;
+        }
+        else
+        {
+            // otherwise draw player ontop of raft
+            tempImg = new GreenfootImage(floatyImage[floatyNum]);
+            tempImg.drawImage(playerImg, 0, 0);
+            playerImage[0] = tempImg;
+        }
+        setImage(playerImg);
     }
 
     // Add an item to the inventory
