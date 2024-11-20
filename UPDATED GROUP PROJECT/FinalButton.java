@@ -17,7 +17,7 @@ public class FinalButton extends DisplayCharacter
     {
         if (Greenfoot.mouseClicked(this))
         {
-            Greenfoot.setWorld(new SimulationWorld(getPlayerModel()));
+            Greenfoot.setWorld(new SimulationWorld(getPlayerModel(), 10));
             SimulationWorld.ambientSound.playLoop();
         }
     }
