@@ -59,13 +59,13 @@ public class StatsEditor extends World
     
     public void act()
     {
-        if (Greenfoot.mouseClicked(leftHealth)||Greenfoot.isKeyDown("left"))
+        if (Greenfoot.mouseClicked(leftHealth))
         {
             if (health > 1)
                 health--;
             healthTxt.setImage(new GreenfootImage("Health: " + Integer.toString(health), 100, Color.WHITE, Color.BLACK));
         }
-        if (Greenfoot.mouseClicked(rightHealth)||Greenfoot.isKeyDown("right"))
+        if (Greenfoot.mouseClicked(rightHealth))
         {
             health++;
             healthTxt.setImage(new GreenfootImage("Health: " + Integer.toString(health), 100, Color.WHITE, Color.BLACK));

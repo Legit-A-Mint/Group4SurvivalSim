@@ -195,9 +195,4 @@ public class Player extends Effects {
     public Hitbox getHitbox() {
         return this.hitbox;
     }
-    
-    public void setFloaty(int num)
-    {
-        floatyNum = num;
-    }
 }
