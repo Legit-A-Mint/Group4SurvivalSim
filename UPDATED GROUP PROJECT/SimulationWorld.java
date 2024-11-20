@@ -19,6 +19,7 @@ public class SimulationWorld extends World
     private int waveCount, actCount;
     private boolean spawnOnce, countOnce;
     public static int killCount;
+    public static double diffMulti;
 
     private static final int MAX_SPAWN_DISTANCE = 200;
     private static final int WIDTH = 2000, height = 2000;
@@ -44,6 +45,8 @@ public class SimulationWorld extends World
         delay = 30;
 
         acting = true;
+        
+        diffMulti = difficulty;
 
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
         addObject(player = new Player(playerModel, speed), this.getWidth()/2, this.getHeight()/2);

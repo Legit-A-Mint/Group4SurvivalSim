@@ -16,7 +16,7 @@ public class StatsEditor extends World
     
     // Multiplier for each difficulty
     private String[] diffName = {"EASY","MEDIUM","HARD","IMPOSSIBLE"};
-    private double[] diffMulti = {0.7, 1, 1.3, 2};
+    private double[] diffMulti = {0.3, 1, 1.3, 3};
     
     private GreenfootImage temp;
     StatsLabel healthTxt;
