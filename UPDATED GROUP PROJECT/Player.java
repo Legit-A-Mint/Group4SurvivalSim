@@ -32,13 +32,15 @@ public class Player extends Effects {
 
     // Direction variables for animation
     private int direction;
+    
+    SimulationWorld world;
 
     public Player(String playerModel, int speed) {
         floatyImage[0] = new GreenfootImage("floaty.png");
         floatyImage[1] = new GreenfootImage("wood.png");
         floatyImage[2] = new GreenfootImage("metal.png");
         playerImg = new GreenfootImage(playerModel);
-        setRaft();
+        setRaft(0);
 
         this.speed = speed;
         
@@ -55,7 +57,7 @@ public class Player extends Effects {
 
         if (SimulationWorld.isActing())
         {
-            animate(this, playerImage, playerImage[0].getWidth(), playerImage[0].getHeight(), 16, direction);
+            //animate(this, playerImage[0], playerImage[0].getWidth(), playerImage[0].getHeight(), 16, direction);
 
             if (shootCounter > 0) {
                 shootCounter--;
@@ -68,10 +70,11 @@ public class Player extends Effects {
             handleMovement();
             handleInputs();
             updateHitboxPosition();
+            setRaft(world.getKillCount());
         }
     }
 
-    public void setRaft() {
+    public void setRaft(int num) {
         if (floatyNum == 0)
         {
             // if your not on a raft, the floaty has to be drawn on top of you
@@ -82,11 +85,11 @@ public class Player extends Effects {
         else
         {
             // otherwise draw player ontop of raft
-            tempImg = new GreenfootImage(floatyImage[floatyNum]);
+            tempImg = new GreenfootImage(floatyImage[num]);
             tempImg.drawImage(playerImg, 0, 0);
             playerImage[0] = tempImg;
         }
-        setImage(playerImg);
+        setImage(playerImage[0]);
     }
 
     // Create the player's hitbox
@@ -102,10 +105,20 @@ public class Player extends Effects {
         dy = 0;
 
         // Input-based movement
-        if (Greenfoot.isKeyDown("a")) dx -= speed;
-        if (Greenfoot.isKeyDown("d")) dx += speed;
-        if (Greenfoot.isKeyDown("w")) dy -= speed;
-        if (Greenfoot.isKeyDown("s")) dy += speed;
+        if (Greenfoot.isKeyDown("a")) {
+            dx -= speed;
+            direction = 3; // Left
+        }
+        if (Greenfoot.isKeyDown("d")) {
+            dx += speed;
+            direction = 1; // Right
+        }
+        if (Greenfoot.isKeyDown("w")) {
+            dy -= speed;
+        }
+        if (Greenfoot.isKeyDown("s")) {
+            dy += speed;
+        }
 
         handleCollision(dx, dy);
     }
