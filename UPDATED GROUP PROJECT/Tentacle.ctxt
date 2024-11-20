@@ -11,4 +11,6 @@ comment4.params=
 comment4.target=void\ createHitbox()
 comment5.params=damage
 comment5.target=void\ damageMe(int)
-numComments=6
+comment6.params=
+comment6.target=boolean\ getPlayerCollision()
+numComments=7

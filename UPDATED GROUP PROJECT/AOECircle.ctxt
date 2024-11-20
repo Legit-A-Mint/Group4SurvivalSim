@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=AOECircle
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Kraken\ here.\r\n\ \r\n\ @lumilk\r\n\ @1.0.0\r\n
+comment1.params=initialRadius\ maxRadius\ growthSpeed\ damage
+comment1.target=AOECircle(int,\ int,\ int,\ int)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ updateImage()
+comment4.params=
+comment4.target=void\ dealDamage()
+comment5.params=
+comment5.target=void\ triggerExplosion()
+comment6.params=
+comment6.target=void\ performExplosionAnimation()
+numComments=7

@@ -1,6 +1,14 @@
 import java.util.ArrayList;
 import greenfoot.*;
 
+
+/**
+ * Write a description of class Kraken here.
+ * 
+ * @lumilk
+ * @1.0.0
+ */
+
 public class Player extends Effects {
     private GreenfootImage[] playerImage = new GreenfootImage[1];
     private GreenfootImage[] floatyImage = new GreenfootImage[3];
@@ -37,13 +45,14 @@ public class Player extends Effects {
         speed = 7;
         weaponCooldown = 10;
         createdHitbox = false;
-        maxhp = 20;
+        maxhp = 999999999;
         hp = maxhp;
         coins = 0; // Initialize coins
         inventory = new ArrayList<>(); // Initialize inventory
     }
 
     public void act() {
+        //System.out.println("Player: (" + (getX() - ((SimulationWorld)getWorld()).getScroller().getScrolledX()) + ", " + (getY() - ((SimulationWorld)getWorld()).getScroller().getScrolledY()) + ")");
         if (SimulationWorld.isActing())
         {
             animate(this, playerImage, playerImage[0].getWidth(), playerImage[0].getHeight(), 16, direction);
@@ -171,6 +180,7 @@ public class Player extends Effects {
     public void damageMe(int damage) {
         if (hp > 0) {
             hp -= damage;
+            System.out.println("PLAYER HP: " + hp);
         }
     }
 

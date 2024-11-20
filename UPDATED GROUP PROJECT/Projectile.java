@@ -27,8 +27,8 @@ public class Projectile extends Effects{
     public Projectile(String img){
         speed = 6;
         lifeSpan = 350;
-        damage = 1000;
-        
+        damage = 100;
+
         this.img = new GreenfootImage(img);
 
         fadeLength = 100;
@@ -45,29 +45,32 @@ public class Projectile extends Effects{
                 targeting();
             }
             else if(enemy != null){
-                if(lifeSpan > 0) move(speed);
+                
+                if(lifeSpan > 0){
+                    move(speed);
+                }
                 else if(lifeSpan == 0){ 
                     getWorld().removeObject(this);
                     return;
                 }
 
-                if(enemy.getHitbox() != null){
-                    try{
-                        if(getOneIntersectingObject(Enemy.class) != null){
-                            hitEnemy = (Enemy) getOneIntersectingObject(Enemy.class);
-                            hitEnemy.damageMe(damage);
-                            getWorld().removeObject(this);
-                        }
-                        /**
-                        if(this.intersects(enemy.getHitbox())){
-                        enemy.damageMe(damage);
+                try{
+                    if(getOneIntersectingObject(Enemy.class) != null){
+                        hitEnemy = (Enemy) getOneIntersectingObject(Enemy.class);
+                        hitEnemy.damageMe(damage);
+                        //System.out.println("Hit: " + hitEnemy);
                         getWorld().removeObject(this);
-                        }
-                         */
-                    }catch(Exception e){
-
                     }
+                    /**
+                    if(this.intersects(enemy.getHitbox())){
+                    enemy.damageMe(damage);
+                    getWorld().removeObject(this);
+                    }
+                     */
+                }catch(Exception e){
+
                 }
+
             }
 
             move(speed);

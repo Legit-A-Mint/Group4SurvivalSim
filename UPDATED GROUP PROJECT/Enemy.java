@@ -50,14 +50,14 @@ public abstract class Enemy extends Effects
                 if(getWorld().getObjects(Player.class) != null){
                     player = getWorld().getObjects(Player.class).get(0);
                 }
+            }
 
-                if(this.hp <= 0){
+            if(this.hp <= 0){
                     getWorld().removeObject(hitbox);
                     getWorld().removeObject(this);
                     return;
                 }
-            }
-
+            
             if(isMovable){
 
                 lookForTarget();
