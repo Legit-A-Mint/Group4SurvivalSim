@@ -151,6 +151,9 @@ public class Player extends Effects {
             System.out.println("Spent " + amount + " coins. Remaining: " + coins);
         } else {
             System.out.println("Not enough coins! Required: " + amount + ", Available: " + coins);
+        }
+    }
+
     // Get current coins
     public int getCoins() {
         return coins;
@@ -163,21 +166,6 @@ public class Player extends Effects {
         createdHitbox = true;
     }
 
-    // Handle player movement and collisions
-    private void handleMovement() {
-        dx = 0;
-        dy = 0;
-
-        // Input-based movement
-        if (Greenfoot.isKeyDown("a")) {
-            dx -= speed;
-            direction = 3; // Left
-        }
-        if (Greenfoot.isKeyDown("d")) {
-            dx += speed;
-            direction = 1; // Right
-        }
-        handleCollision(dx, dy);
     // Handle movement with collision detection
     private void handleCollision(double dx, double dy) {
         double futureX = getX() + dx;
