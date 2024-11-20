@@ -91,16 +91,6 @@ public class Player extends Effects {
         System.out.println("Added " + amount + " coins. Total: " + coins);
     }
 
-    // Spend coins
-    public void spendCoins(int amount) {
-        if (coins >= amount) {
-            coins -= amount;
-            System.out.println("Spent " + amount + " coins. Remaining: " + coins);
-        } else {
-            System.out.println("Not enough coins! Required: " + amount + ", Available: " + coins);
-        }
-    }
-
     // Get current coins
     public int getCoins() {
         return coins;

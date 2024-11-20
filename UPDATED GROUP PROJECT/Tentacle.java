@@ -56,6 +56,6 @@ public class Tentacle extends Kraken
     @Override
     public void damageMe(int damage){
         this.hp -= damage;
-        System.out.println("damaged for: " + damage);
+        //System.out.println("damaged for: " + damage);
     }
 }

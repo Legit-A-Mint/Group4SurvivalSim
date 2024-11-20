@@ -12,6 +12,7 @@ public class Lives extends Interface
     private String name;
     private int currentHp; // the value
     private int maxValue; // the value
+    private int myX, myY;
     
     private GreenfootImage hearts;
     private GreenfootImage storeHearts;
@@ -21,6 +22,8 @@ public class Lives extends Interface
     public Lives(String name, int myX, int myY, int max){
         super(name, myX, myY);
         
+        this.myX = myX;
+        this.myY = myY;
         hearts = new GreenfootImage("pixel_Heart.png");
         maxValue = max;
         currentHp = maxValue;
@@ -35,8 +38,9 @@ public class Lives extends Interface
     
     private void updateDisplay() {
         hearts = new GreenfootImage("pixel_Heart.png");
-        storeHearts = new GreenfootImage(Integer.toString(currentHp), 150, Color.WHITE, heartRed);
-        hearts.drawImage(storeHearts, 175, 125);
+        storeHearts = new GreenfootImage("test", 150, Color.WHITE, Color.BLACK);
+        //storeHearts = new GreenfootImage(Integer.toString(currentHp), 150, Color.WHITE, heartRed);
+        hearts.drawImage(storeHearts, myX, myY);
         hearts.scale(100, 100);
         setImage(hearts);
     }
