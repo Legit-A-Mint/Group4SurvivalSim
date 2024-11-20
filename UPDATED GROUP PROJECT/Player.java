@@ -29,8 +29,6 @@ public class Player extends Effects {
     private GreenfootImage playerImg;
     private GreenfootImage tempImg;
     private int floatyNum = 0;
-    // This tempnum is used to avoid redrawing player each act
-    private int tempNum = -1;
 
     // Direction variables for animation
     private int direction;
@@ -42,7 +40,7 @@ public class Player extends Effects {
         floatyImage[1] = new GreenfootImage("wood.png");
         floatyImage[2] = new GreenfootImage("metal.png");
         playerImg = new GreenfootImage(playerModel);
-        setRaft();
+        setRaft(0);
 
         this.speed = speed;
         
@@ -59,8 +57,7 @@ public class Player extends Effects {
 
         if (SimulationWorld.isActing())
         {
-            setRaft();
-            animate(this, playerImage, playerImage[0].getWidth(), playerImage[0].getHeight(), 16, direction);
+            //animate(this, playerImage[0], playerImage[0].getWidth(), playerImage[0].getHeight(), 16, direction);
 
             if (shootCounter > 0) {
                 shootCounter--;
@@ -73,11 +70,29 @@ public class Player extends Effects {
             handleMovement();
             handleInputs();
             updateHitboxPosition();
+            setRaft(world.getKillCount());
+            collectCoins();
+        }
+    }
+    
+    private void collectCoins() {
+        Actor coin = getOneIntersectingObject(Coins.class);
+        if (coin != null) {
+            Coins c = (Coins) coin;
+            addCoins(c.COIN_VALUE);  // Add coins to player
+            getWorld().removeObject(c);  // Remove coin from world
         }
     }
 
-    public void setRaft() {
-        floatyNum = world.getKillCount();
+    public void addCoins(int amount) {
+        coins += amount;
+    }
+    
+    public int getCoins() {
+        return coins;
+    }
+    
+    public void setRaft(int num) {
         if (floatyNum == 0)
         {
             // if your not on a raft, the floaty has to be drawn on top of you
@@ -88,16 +103,11 @@ public class Player extends Effects {
         else
         {
             // otherwise draw player ontop of raft
-            tempImg = new GreenfootImage(floatyImage[floatyNum]);
+            tempImg = new GreenfootImage(floatyImage[num]);
             tempImg.drawImage(playerImg, 0, 0);
             playerImage[0] = tempImg;
         }
-        if (tempNum != floatyNum)
-        {
-            // avoid redrawing player each act
-            tempNum = floatyNum;
-            setImage(playerImage[0]);
-        }
+        setImage(playerImage[0]);
     }
 
     // Create the player's hitbox
@@ -157,6 +167,7 @@ public class Player extends Effects {
         }
     }
 
+
     // Handle shooting inputs
     private void handleInputs() {
         if (shootCounter == 0 && !getWorld().getObjects(Enemy.class).isEmpty()) {
@@ -168,7 +179,7 @@ public class Player extends Effects {
     }
 
     // Add projectile to player's position
-    private void shoot() {
+    protected void shoot() {
         getWorld().addObject(new Projectile("arrow.png"), getX(), getY());
     }
 

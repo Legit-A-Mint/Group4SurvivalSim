@@ -39,11 +39,7 @@ public class Lives extends Interface
         hearts.scale(150, 150);
         //storeHearts = new GreenfootImage("test", 150, Color.WHITE, Color.BLACK);
         storeHearts = new GreenfootImage(Integer.toString(currentHp), 50, Color.WHITE, null);
-        if (currentHp >= 1000)
-        {
-            hearts.drawImage(storeHearts, hearts.getWidth()/2 - 43, hearts.getHeight()/2 - 15);
-        }
-        else if(currentHp >= 100)
+        if (currentHp >= 100)
         {
             hearts.drawImage(storeHearts, hearts.getWidth()/2 - 33, hearts.getHeight()/2 - 15);
         }
