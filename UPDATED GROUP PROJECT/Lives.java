@@ -19,11 +19,13 @@ public class Lives extends Interface
     
     Color heartRed = new Color(247,5,1,255);
     
-    public Lives(String name, int myX, int myY, int max){
+    public Lives(String name, int myX, int myY, int max, boolean fadesAway){
         super(name, myX, myY);
         
         this.myX = myX;
         this.myY = myY;
+        this.fadesAway = fadesAway;
+        
         hearts = new GreenfootImage("pixel_Heart.png");
         maxValue = max;
         currentHp = maxValue;

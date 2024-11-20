@@ -42,7 +42,7 @@ public class Kraken extends Enemy
         createHitbox();
 
         // Attack radius of kraken
-        if(!getObjectsInRange(250, Player.class).isEmpty()){
+        if(!getObjectsInRange(350, Player.class).isEmpty()){
 
             if(attackTimer == 0){
                 doRandomAttack();
