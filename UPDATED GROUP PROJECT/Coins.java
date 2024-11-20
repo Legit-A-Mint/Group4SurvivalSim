@@ -1,9 +1,9 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-public class Coins extends Actor
+public class Coins extends Effects
 {
     protected static final int COIN_VALUE = 10; // Coins add 10 each when collected
-
+    
     public Coins() {
         GreenfootImage coinImage = new GreenfootImage("coin.png"); // Placeholder for coin image
         setImage(coinImage);

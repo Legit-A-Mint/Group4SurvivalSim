@@ -17,10 +17,10 @@ public class shopUI extends UI
     }
 
     public void act() {
-        // Display the shop background
+        // Display the shop background and buttons
         drawShopUI();
 
-        // Display the player's coin count
+        // Display the player's coin count on the shop UI
         showCoins();
 
         // Check if the player wants to buy the first item
@@ -35,14 +35,18 @@ public class shopUI extends UI
     }
 
     private void drawShopUI() {
+        // Draw the shop UI background and buttons
         getWorld().getBackground().drawImage(shopBackground, 100, 100);
         getWorld().getBackground().drawImage(buttonBuy1, 100, 150);  // Draw first buy button
         getWorld().getBackground().drawImage(buttonBuy2, 100, 250);  // Draw second buy button
     }
 
     private void showCoins() {
-        GreenfootImage coinText = new GreenfootImage("Coins: " + player.getCoins(), 50, Color.WHITE, null);
-        getWorld().getBackground().drawImage(coinText, 800, 0);
+        // Create a new image with the coin count text
+        GreenfootImage coinText = new GreenfootImage("Coins: " + player.getCoins(), 50, Color.WHITE, Color.BLACK);
+
+        // Position the coin text on the screen (you can adjust this for better positioning)
+        getWorld().getBackground().drawImage(coinText, 100, 100);  // Display in the top-right corner
     }
 
     private boolean isMouseOverButton(int x, int y, GreenfootImage buttonImage) {
