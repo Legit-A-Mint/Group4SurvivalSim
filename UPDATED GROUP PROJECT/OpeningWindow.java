@@ -14,7 +14,7 @@ public class OpeningWindow extends World
     {    
         //create an unbounded world
         super(1024, 576, 1, false); 
-        addObject(new StartScreen(), 512, 288);
+        addObject(new Background(), 512, 288);
         addObject(new Title(), 512, 180);
         addObject(start = new NextButton(0), 512, 300);
     }

@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class DisplayCharacter extends CharacterSelect
+public class DisplayCharacter extends UI
 {
     public void setCharImg(String img)
     {

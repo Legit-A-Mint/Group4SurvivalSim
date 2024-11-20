@@ -20,7 +20,7 @@ public class Character extends World
     {    
         //create an unbounded world 
         super(1024, 576, 1, false);
-        addObject(new CharacterSelect(), 512, 288);
+        addObject(new Background(), 512, 288);
         addObject(display = new DisplayCharacter(), 512, 288);
         addObject(left = new LeftButton(), 362, 288);
         addObject(right = new RightButton(), 662, 288);

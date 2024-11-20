@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class NextButton extends StartScreen
+public class NextButton extends UI
 {
     // 0 = first screen, 1 = second ...cont...
     private String[] buttons = {"PlayButton.png","PlayButton.png","PlayButton.png"};
