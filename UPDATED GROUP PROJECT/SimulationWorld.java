@@ -103,68 +103,68 @@ public class SimulationWorld extends World
     public void act()
     {
         actCount++;
-    /*
+        /*
         switch(waveCount) {
-                case(0):
+        case(0):
 
-                // Manual wave simulator
+        // Manual wave simulator
 
-                if(spawnOnce){
-                    spawnOnce = false;
-                    for(int i = 0; i < 3; i++){
-                        addObject(new Bass(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
-                            Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
-                        addObject(new Shark(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
-                            Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
-                        addObject(new Whale(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
-                            Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
-                        addObject(new Swordfish(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
-                            Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
-                    }
+        if(spawnOnce){
+        spawnOnce = false;
+        for(int i = 0; i < 3; i++){
+        addObject(new Bass(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
+        Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
+        addObject(new Shark(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
+        Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
+        addObject(new Whale(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
+        Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
+        addObject(new Swordfish(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
+        Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
+        }
 
-                }
-                break;
+        }
+        break;
 
-                case(1):
-                delay--;
-                if(delay == 0 && countOnce){
-                    spawnOnce = true;
-                    countOnce = false;
-                }
+        case(1):
+        delay--;
+        if(delay == 0 && countOnce){
+        spawnOnce = true;
+        countOnce = false;
+        }
 
-                if(spawnOnce){
-                    spawnOnce = false;
-                    for(int i = 0; i < 5; i++){
-                        addObject(new Shark(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
-                            Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
-                    }
-                }
-                break;
+        if(spawnOnce){
+        spawnOnce = false;
+        for(int i = 0; i < 5; i++){
+        addObject(new Shark(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
+        Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
+        }
+        }
+        break;
 
         }
 
         if(actCount == 400 || (getObjects(Enemy.class).isEmpty() && countOnce == false)){
-            waveCount++;
-            actCount = 0;
-            delay = 30;
-            countOnce = true;
+        waveCount++;
+        actCount = 0;
+        delay = 30;
+        countOnce = true;
         }
 
         // Pause scenerio
         if (Greenfoot.mouseClicked(pauseButton))
         {
-            if (acting)
-            {
-                acting = false;
-                ambientSound.pause();
-            }
-            else
-            {
-                acting = true;
-                ambientSound.playLoop();
-            }
+        if (acting)
+        {
+        acting = false;
+        ambientSound.pause();
         }
-    */
+        else
+        {
+        acting = true;
+        ambientSound.playLoop();
+        }
+        }
+         */
         scroller.scroll(getWidth()/2-player.getX(), getHeight()/2-player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
     }
 
@@ -213,15 +213,27 @@ public class SimulationWorld extends World
     {
         return acting;
     }
-    
+
     public static void addkillCount()
     {
+        System.out.println("+1");
         killCount++;
     }
-    
+
     public static int getKillCount()
     {
-        return killCount;
+        if (killCount < 5)
+        {
+            return 0;
+        }
+        else if (killCount < 25)
+        {
+            return 1;
+        }
+        else
+        {
+            return 2;
+        }
     }
 }
 
