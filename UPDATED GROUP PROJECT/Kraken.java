@@ -12,13 +12,15 @@ public class Kraken extends Enemy
     private boolean createdHitbox;
     private Hitbox hitbox;
 
+    // Set max amount of krakites available to spawn
+    private static final int MAX_KRAKITE_SPAWN = 15;
     public Kraken(){
         super();
         img = new GreenfootImage[12];
         createdHitbox = false;
         hp = 10000;
         damage = 5;
-        attackCooldown = 300;
+        attackCooldown = 100;
         attackTimer = 0;
 
         // Inherited from superclass, ensure to not get pushed around or track player
@@ -116,6 +118,7 @@ public class Kraken extends Enemy
         }
     }
 
+    // Can only execute a method that has not been executed in this attack sequence
     private void performAnotherAttack(int option1, int option2) {
         int secondaryAttack = Greenfoot.getRandomNumber(2) == 0 ? option1 : option2;
         switch (secondaryAttack) {
@@ -142,23 +145,27 @@ public class Kraken extends Enemy
         int numEnemies = Greenfoot.getRandomNumber(3) + 3; // Randomly summon 3 to 5 enemies
         int summonRadius = 200;
 
-        for (int i = 0; i < numEnemies; i++) {
+        // Only summon if there are less than 20 Krakite instances
+        if(getWorld().getObjects(Krakite.class).size() < MAX_KRAKITE_SPAWN){
+            for (int i = 0; i < numEnemies; i++) {
 
-            // Generate a random angle in radians
-            double angle = Math.random() * 2 * Math.PI;
+                // Generate a random angle in radians
+                double angle = Math.random() * 2 * Math.PI;
 
-            // Maximum summon radius
-            double distance = Math.random() * summonRadius;
+                // Maximum summon radius
+                double distance = Math.random() * summonRadius;
 
-            // Get spawnlocation seperatly for X and Y
-            int spawnX = getX() + (int)(distance * Math.cos(angle));
-            int spawnY = getY() + (int)(distance * Math.sin(angle));
+                // Get spawnlocation seperatly for X and Y
+                int spawnX = getX() + (int)(distance * Math.cos(angle));
+                int spawnY = getY() + (int)(distance * Math.sin(angle));
 
-            // Spawn in enemies
-            Enemy enemy = new Krakite(); 
-            getWorld().addObject(enemy, spawnX, spawnY);
+                // Spawn in enemies
+                Enemy enemy = new Krakite(); 
+                getWorld().addObject(enemy, spawnX, spawnY);
 
+            }  
         }
+
     }
 
     public void aoeAttack(){
