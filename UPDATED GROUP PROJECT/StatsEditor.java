@@ -81,12 +81,14 @@ public class StatsEditor extends World
         }
         if (Greenfoot.mouseClicked(leftDifficulty))
         {
-            difficulty--;
+            if (difficulty > 0)
+                difficulty--;
             diffTxt.setImage(new GreenfootImage(getDifficultyText(difficulty), 100, Color.WHITE, Color.BLACK));
         }
         if (Greenfoot.mouseClicked(rightDifficulty))
         {
-            difficulty++;
+            if (difficulty < 3)
+                difficulty++;
             diffTxt.setImage(new GreenfootImage(getDifficultyText(difficulty), 100, Color.WHITE, Color.BLACK));
         }
         if (Greenfoot.mouseClicked(start))
@@ -98,16 +100,6 @@ public class StatsEditor extends World
     
     public String getDifficultyText(int difficulty)
     {
-        if (difficulty > 3)
-        {
-            this.difficulty = 0;
-            return diffName[0];
-        }
-        if (difficulty < 0)
-        {
-            this.difficulty = 3;
-            return diffName[3];
-        }
         return diffName[difficulty];
     }
 }
