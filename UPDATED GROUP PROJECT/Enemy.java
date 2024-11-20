@@ -18,6 +18,9 @@ public abstract class Enemy extends Effects
     protected double speed;
     protected boolean isMovable;
 
+    // Multiplier for difficulty
+    protected double diffMulti;
+
     // Once per instance
     protected Player player;
     private boolean foundPlayer;
@@ -225,5 +228,10 @@ public abstract class Enemy extends Effects
 
     protected Player getPlayer(){
         return player;
+    }
+    
+    public void setDifficultyMultiplier(double diffMulti)
+    {
+        this.diffMulti = diffMulti;
     }
 }
