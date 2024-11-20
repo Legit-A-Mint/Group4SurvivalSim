@@ -2,59 +2,56 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 
 /**
- * World where the game simulation takes place.
- * This world handles spawning coins, player, enemies, islands, and more.
+ * Write a description of class MyWorld here.
+ * 
+ * @Andrew
+ * @Darius
+ * @Jonathan
+ * @Logan
+ *
+ * @1.2.7
  */
 public class SimulationWorld extends World
 {
-    // Game objects and variables
-    private Scroller scroller; // Scroll controller
+    public Scroller scroller; // Scroll controller
     private Player player; // Main actor
     private Lives lives;
-    private Button pauseButton;
-    private Slider slider;
-    
-    private int coinSpawnDelay;  // Timer for spawning coins (in frames)
-    private static final int SPAWN_INTERVAL = 30 * 60; // 30 seconds in frames (assuming 60 FPS)
-    
-    private static final int MAX_SPAWN_DISTANCE = 200;
-    private static final int WIDTH = 2000, height = 2000;
-    
-    private int waveCount, actCount, delay;
+    private int waveCount, actCount;
     private boolean spawnOnce, countOnce;
     public static int killCount;
     public static double diffMulti;
 
+    private static final int MAX_SPAWN_DISTANCE = 200;
+    private static final int WIDTH = 2000, height = 2000;
+    private int delay;
+
     private double exactY, exactX;
+
+    private Button pauseButton;
+    private Slider slider;
     private static boolean acting;
 
+    // https://pixabay.com/sound-effects/gentle-ocean-waves-fizzing-bubbles-64980/
     public static GreenfootSound ambientSound = new GreenfootSound("gentle_Ocean.mp3");
-
+    
     public SimulationWorld(String playerModel, int maxLives, int speed, double difficulty)
     {
         super(1024, 576, 1, false);
+        // settings
 
-        // Initialize variables
         waveCount = 0;
         actCount = 0;
         spawnOnce = true;
         delay = 30;
-        coinSpawnDelay = SPAWN_INTERVAL;  // Initialize coin spawn delay
 
         acting = true;
-<<<<<<< Updated upstream
         
         diffMulti = difficulty;
 
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
-=======
-
-        // Add background and player
-        scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height);
->>>>>>> Stashed changes
         addObject(player = new Player(playerModel, speed), this.getWidth()/2, this.getHeight()/2);
 
-        // Add borders and islands
+        //border hitbox
         addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH/2, height);
         addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH/2, 0);
         addObject(new Hitbox(100, height, 2.5), WIDTH, height/2);
@@ -65,11 +62,11 @@ public class SimulationWorld extends World
         addObject(new Island(new GreenfootImage("island.png")), 1750 - getScroller().getScrolledX(), 900 - getScroller().getScrolledY());
         addObject(new Island(new GreenfootImage("island.png")), 1500 - getScroller().getScrolledX(), 250 - getScroller().getScrolledY());
         addObject(new Island(new GreenfootImage("island.png")), 1200 - getScroller().getScrolledX(), 1500 - getScroller().getScrolledY());
+        //addObject(new Hitbox(200, 200), 275, 400);
+        //addObject(new Hitbox(200, 200), 600, 900);
 
-        // Add enemies
         addObject(new Kraken(), getScroller().getScrollWidth()/2 - getScroller().getScrolledX(), getScroller().getScrollHeight()/2 - getScroller().getScrolledY());
 
-<<<<<<< Updated upstream
         // GUI
         addObject(pauseButton = new Button("PauseButton", new String[] {"db_1.png", "db_2.png", "db_3.png"}, true, 1, 55, 35), 55, 35);
 
@@ -80,47 +77,32 @@ public class SimulationWorld extends World
         // addObject(new MiniMap(), 30, 370);
         //setPaintOrder(Hitbox.class, SliderObject.class, Slider.class, Island.class, Player.class, Enemy.class);
     }
-
-    public void addedToWorld ()
-=======
-        // GUI Elements
-        pauseButton = new Button("PauseButton", new String[] {"db_1.png", "db_2.png", "db_3.png"}, true, 1, 55, 35);
-        addObject(pauseButton, 55, 35);
-        
-        slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540);
-        addObject(slider, 155, 540);
-        
-        lives = new Lives("Heart", 512, 60, maxLives);
-        addObject(lives, WIDTH/2, 100);
-
-        shopUI shop = new shopUI(player);
-        addObject(shop, 400, 300);
-    }
     
-    // Plays ambient sound when the world is added to the simulation
-    public void addedToWorld() 
->>>>>>> Stashed changes
+    public void addedToWorld ()
     {
+        // Plays the ambient noise in a loop
         ambientSound.playLoop();
     }
 
-    // Called when the simulation starts
-    public void started() 
+    public void started ()
     {
+        // Plays the ambient noise in a loop
         ambientSound.playLoop();
     }
 
-    // Stops playing the ambient noises when simulation is paused
-    public void stopped() 
+    public void stopped ()
     {
+        // Stops playing the ambient noises when simulation is paused
         ambientSound.pause();
     }
 
-    // Called on every act cycle
-    public void act()
+    public void addObject(Actor a){
+
+    }
+    
+     public void act()
     {
         actCount++;
-<<<<<<< Updated upstream
         /*
         switch(waveCount) {
         case(0):
@@ -158,32 +140,17 @@ public class SimulationWorld extends World
         }
         }
         break;
-=======
->>>>>>> Stashed changes
 
-        // Decrease the coin spawn timer
-        if (coinSpawnDelay > 0) {
-            coinSpawnDelay--;
         }
 
-<<<<<<< Updated upstream
         if(actCount == 400 || (getObjects(Enemy.class).isEmpty() && countOnce == false)){
         waveCount++;
         actCount = 0;
         delay = 30;
         countOnce = true;
-=======
-        // Check if it's time to spawn coins (every 30 seconds)
-        if (coinSpawnDelay == 0) {
-            spawnCoins();  // Spawn the coins
-            coinSpawnDelay = SPAWN_INTERVAL;  // Reset the timer
->>>>>>> Stashed changes
         }
 
-        // Other actions like scrolling the world based on player position
-        scroller.scroll(getWidth()/2 - player.getX(), getHeight()/2 - player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
-
-        // Handle pausing the game
+        // Pause scenerio
         if (Greenfoot.mouseClicked(pauseButton))
         {
         if (acting)
@@ -191,7 +158,6 @@ public class SimulationWorld extends World
         acting = false;
         ambientSound.pause();
         }
-<<<<<<< Updated upstream
         else
         {
         acting = true;
@@ -200,25 +166,25 @@ public class SimulationWorld extends World
         }
          */
         scroller.scroll(getWidth()/2-player.getX(), getHeight()/2-player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
-=======
->>>>>>> Stashed changes
+    }
+    
+    public Scroller getScroller(){
+        return scroller;
     }
 
-    // Spawns 5 coins at random locations within the world
-    private void spawnCoins() 
+    public void addObject(Actor object, double x, double y){
+        super.addObject(object, (int)(x + 0.5), (int)(y + 0.5));
+    }
+
+    /** prevents restarting after game over (called by greenfoot framework) 
+
+    public void started()
     {
-        for (int i = 0; i < 5; i++) {
-            // Random position within the world bounds
-            int randomX = Greenfoot.getRandomNumber(getWidth());
-            int randomY = Greenfoot.getRandomNumber(getHeight());
-            
-            // Create a new coin and add it to the world at the random position
-            Coins coin = new Coins();
-            addObject(coin, randomX, randomY);
-        }
+    if (!getObjects(GameOver.class).isEmpty()) Greenfoot.stop();
     }
 
-    // Additional methods...
+     */
+
     public static double getDistance (Actor a, Actor b)
     {
         return Math.hypot (a.getX() - b.getX(), a.getY() - b.getY());
@@ -229,22 +195,20 @@ public class SimulationWorld extends World
         return exactY;
     }
 
-    public double exactY() 
-    {
+    public double exactY(){
         return exactY;
     }
 
     public double getPreciseX() 
     {
-        return exactX;
+        return exactY;
     }
 
-    public double exactX() 
-    {
-        return exactX;
+    public double exactX(){
+        return exactY;
     }
-
-    // Check if simulation is active (false if "paused")
+    
+    // Check if simulation is acting (false if "paused")
     public static boolean isActing()
     {
         return acting;
@@ -270,11 +234,5 @@ public class SimulationWorld extends World
         {
             return 2;
         }
-    }
-
-    // New method to get the scroller object
-    public Scroller getScroller() 
-    {
-        return scroller;
     }
 }
