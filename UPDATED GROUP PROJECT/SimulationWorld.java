@@ -44,7 +44,7 @@ public class SimulationWorld extends World
         delay = 30;
 
         acting = true;
-
+        
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
         addObject(player = new Player(playerModel, speed), this.getWidth()/2, this.getHeight()/2);
 
@@ -73,11 +73,14 @@ public class SimulationWorld extends World
 
         lives = new Lives("Heart", 512, 60, maxLives);
         addObject(lives, WIDTH/2, 100);
+        
+        shopUI shop = new shopUI(player);
+        addObject(shop, 400, 300);
 
         // addObject(new MiniMap(), 30, 370);
         //setPaintOrder(Hitbox.class, SliderObject.class, Slider.class, Island.class, Player.class, Enemy.class);
     }
-
+    
     public void addedToWorld ()
     {
         // Plays the ambient noise in a loop

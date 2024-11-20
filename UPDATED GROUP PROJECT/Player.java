@@ -71,9 +71,27 @@ public class Player extends Effects {
             handleInputs();
             updateHitboxPosition();
             setRaft(world.getKillCount());
+            collectCoins();
+        }
+    }
+    
+    private void collectCoins() {
+        Actor coin = getOneIntersectingObject(Coins.class);
+        if (coin != null) {
+            Coins c = (Coins) coin;
+            addCoins(c.COIN_VALUE);  // Add coins to player
+            getWorld().removeObject(c);  // Remove coin from world
         }
     }
 
+    public void addCoins(int amount) {
+        coins += amount;
+    }
+    
+    public int getCoins() {
+        return coins;
+    }
+    
     public void setRaft(int num) {
         if (floatyNum == 0)
         {
@@ -149,6 +167,7 @@ public class Player extends Effects {
         }
     }
 
+
     // Handle shooting inputs
     private void handleInputs() {
         if (shootCounter == 0 && !getWorld().getObjects(Enemy.class).isEmpty()) {
@@ -160,7 +179,7 @@ public class Player extends Effects {
     }
 
     // Add projectile to player's position
-    private void shoot() {
+    protected void shoot() {
         getWorld().addObject(new Projectile("arrow.png"), getX(), getY());
     }
 
