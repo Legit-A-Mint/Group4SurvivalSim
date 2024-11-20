@@ -50,8 +50,8 @@ public class StatsEditor extends World
         addObject(leftDifficulty = new LeftButton(), getWidth()/4, 350);
         addObject(rightDifficulty = new RightButton(), getWidth()/4*3, 350);
         
-        addObject(healthTxt = new StatsLabel(new GreenfootImage(Integer.toString(health), 100, Color.WHITE, Color.BLACK)), getWidth()/2, 100);
-        addObject(SpeedTxt = new StatsLabel(new GreenfootImage(Integer.toString(speed), 100, Color.WHITE, Color.BLACK)), getWidth()/2, 225);
+        addObject(healthTxt = new StatsLabel(new GreenfootImage("Health: " + Integer.toString(health), 100, Color.WHITE, Color.BLACK)), getWidth()/2, 100);
+        addObject(SpeedTxt = new StatsLabel(new GreenfootImage("Speed: " + Integer.toString(speed), 100, Color.WHITE, Color.BLACK)), getWidth()/2, 225);
         addObject(diffTxt = new StatsLabel(new GreenfootImage(getDifficultyText(difficulty), 100, Color.WHITE, Color.BLACK)), getWidth()/2, 350);
         
         addObject(start = new NextButton(0), 512, 475);
@@ -63,24 +63,24 @@ public class StatsEditor extends World
         {
             if (health > 1)
                 health--;
-            healthTxt.setImage(new GreenfootImage(Integer.toString(health), 100, Color.WHITE, Color.BLACK));
+            healthTxt.setImage(new GreenfootImage("Health: " + Integer.toString(health), 100, Color.WHITE, Color.BLACK));
         }
         if (Greenfoot.mouseClicked(rightHealth))
         {
             health++;
-            healthTxt.setImage(new GreenfootImage(Integer.toString(health), 100, Color.WHITE, Color.BLACK));
+            healthTxt.setImage(new GreenfootImage("Health: " + Integer.toString(health), 100, Color.WHITE, Color.BLACK));
         }
         if (Greenfoot.mouseClicked(leftSpeed))
         {
             if (speed > 1)
                 speed--;
-            SpeedTxt.setImage(new GreenfootImage(Integer.toString(speed), 100, Color.WHITE, Color.BLACK));
+            SpeedTxt.setImage(new GreenfootImage("Speed: " + Integer.toString(speed), 100, Color.WHITE, Color.BLACK));
         }
         if (Greenfoot.mouseClicked(rightSpeed))
         {
             if (speed < 20)
                 speed++;
-            SpeedTxt.setImage(new GreenfootImage(Integer.toString(speed), 100, Color.WHITE, Color.BLACK));
+            SpeedTxt.setImage(new GreenfootImage("Speed: " + Integer.toString(speed), 100, Color.WHITE, Color.BLACK));
         }
         if (Greenfoot.mouseClicked(leftDifficulty))
         {
