@@ -41,7 +41,7 @@ public class shopUI extends UI
     }
 
     private void showCoins() {
-        GreenfootImage coinText = new GreenfootImage("Coins: " + player.getCoins(), 50, Color.WHITE, Color.BLACK);
+        GreenfootImage coinText = new GreenfootImage("Coins: " + player.getCoins(), 50, Color.WHITE, null);
         getWorld().getBackground().drawImage(coinText, 800, 0);
     }
 

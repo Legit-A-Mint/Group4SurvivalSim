@@ -8,7 +8,7 @@ import java.util.*;
  * @Andrew
  * @version (a version number or a date)
  */
-public class Scroller extends SuperSmoothMover
+public class Scroller extends Actor
 {
     private World scrollWorld;
     private GreenfootImage[][] scrollImages;
