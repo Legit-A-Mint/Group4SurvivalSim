@@ -6,20 +6,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Right extends DisplayCharacter
+public class RightButton extends UI
 {
-    public Right ()
+    public RightButton ()
     {
         setImage("charArror.png");
         getImage().mirrorHorizontally();
         getImage().scale(50,100);
-    }
-    public void act()
-    {
-        if (Greenfoot.mouseClicked(this))
-        {
-            characterNum++;
-            setDisplay();
-        }
     }
 }
