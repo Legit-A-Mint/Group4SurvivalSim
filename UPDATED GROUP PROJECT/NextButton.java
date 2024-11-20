@@ -6,18 +6,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class StartButton extends StartScreen
+public class NextButton extends UI
 {
-    public StartButton()
+    // 0 = first screen, 1 = second ...cont...
+    private String[] buttons = {"PlayButton.png","PlayButton.png","PlayButton.png"};
+    
+    public NextButton(int num)
     {
-        setImage("PlayButton.png");
+        setImage(buttons[num]);
         getImage().scale(393, 159);
-    }
-    public void act()
-    {
-        if (Greenfoot.mouseClicked(this))
-        {
-            Greenfoot.setWorld(new SelectCharacter());
-        }
     }
 }

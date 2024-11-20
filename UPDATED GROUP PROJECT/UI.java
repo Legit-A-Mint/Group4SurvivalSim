@@ -1,18 +1,17 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Title here.
+ * Write a description of class UI here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Title extends UI
+public class UI extends Actor
 {
-    public Title()
-    {
-        setImage("OceanSurvival.png");
-        //getImage().scale();
-    }
+    /**
+     * Act - do whatever the UI wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
     public void act()
     {
         // Add your action code here.
