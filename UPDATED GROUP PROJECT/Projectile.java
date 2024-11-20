@@ -1,14 +1,8 @@
 import greenfoot.*;
 import java.util.ArrayList;
 
-/**
- * Write a description of class Projectile here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class Projectile extends Effects{
-    protected Actor origin, target; 
+public class Projectile extends Effects {
+    protected Actor origin, target;
     protected GreenfootImage img;
     protected boolean targetFound = false;
 
@@ -24,105 +18,85 @@ public class Projectile extends Effects{
     protected int damage;
     protected int fadeLength;
 
-    /** temp constructor to do testing with */
-    // Please use contructors in subclasses in real version
-    public Projectile(){
+    // Constructor to initialize default values
+    public Projectile() {
         speed = 6;
         lifeSpan = 350;
         damage = 1000;
-
         fadeLength = 100;
     }
 
-    public void act(){
-        if (SimulationWorld.isActing())
-        {
-            if(lifeSpan > 0) lifeSpan--;
+    public void act() {
+        if (SimulationWorld.isActing()) {
+            if (lifeSpan > 0) lifeSpan--; // Decrease lifespan
+            fade(this, lifeSpan, fadeLength); // Handle fade effect
 
-            fade(this, lifeSpan, fadeLength);
-
-            if(enemy == null){
+            // If the target is set, move towards it
+            if (target != null) {
+                moveTowardsTarget();
+            } 
+            // If no target, try to find an enemy to target
+            else {
                 targeting();
             }
-            else if(enemy != null){
-                if(lifeSpan > 0) move(speed);
-                else if(lifeSpan == 0){ 
-                    getWorld().removeObject(this);
-                    return;
-                }
 
-                if(enemy.getHitbox() != null){
-                    try{
-                        if(getOneIntersectingObject(Enemy.class) != null){
-                            hitEnemy = (Enemy) getOneIntersectingObject(Enemy.class);
-                            hitEnemy.damageMe(damage);
-                            getWorld().removeObject(this);
-                        }
-                        /**
-                        if(this.intersects(enemy.getHitbox())){
-                        enemy.damageMe(damage);
-                        getWorld().removeObject(this);
-                        }
-                         */
-                    }catch(Exception e){
-
-                    }
-                }
+            // Remove the projectile when its lifespan ends
+            if (lifeSpan == 0) {
+                getWorld().removeObject(this);
             }
-
-            move(speed);
         }
     }
 
-    public void targeting (){
+    // Method to set the target directly (e.g., called from Player)
+    public void setTarget(Actor target) {
+        this.target = target;
+    }
+
+    // Move the projectile towards the current target
+    public void moveTowardsTarget() {
+        if (target != null) {
+            turnTowards(target);
+            move(speed); // Move the projectile in the direction of the target
+            checkHit(); // Check if it hits an enemy
+        }
+    }
+
+    // Search for the nearest enemy in range and set it as the target
+    public void targeting() {
         double closestTargetDistance = 0;
         double distanceToActor;
-        // Get a list of all Flowers in the World, cast it to ArrayList
-        // for easy management
 
-        enemies = (ArrayList<Enemy>)getObjectsInRange(40, Enemy.class);
-
-        int range = 150;
-        int maxRange =  500;
-        while(enemies.size() == 0 && range <= maxRange){
-            if (enemies.size() == 0){
-                enemies = (ArrayList<Enemy>)getObjectsInRange(range, Enemy.class);
-                range += 50;
-            } 
-            if (enemies.size() != 0){
-                break;
-            }
-        }
-
-        if (enemies.size() > 0)
-        {
-            // set the first one as my target
+        enemies = (ArrayList<Enemy>) getObjectsInRange(500, Enemy.class); // Get all enemies within range
+        if (enemies.size() > 0) {
+            // Find the closest enemy
             enemy = enemies.get(0);
-            // Use method to get distance to target. This will be used
-            // to check if any other targets are closer
-            closestTargetDistance = SimulationWorld.getDistance (this, enemy);
+            closestTargetDistance = SimulationWorld.getDistance(this, enemy);
 
-            // Loop through the objects in the ArrayList to find the closest target
-            for (Enemy o : enemies)
-            {
-                // Cast for use in generic method
-                //Actor a = (Actor) o;
-                // Measure distance from me
+            for (Enemy o : enemies) {
                 distanceToActor = SimulationWorld.getDistance(this, o);
-                // If I find a Enemy closer than my current target, I will change
-                // targets
-                if (distanceToActor < closestTargetDistance)
-                {
-                    enemy = o;
+                if (distanceToActor < closestTargetDistance) {
+                    enemy = o; // Set the closer enemy as the target
                     closestTargetDistance = distanceToActor;
                 }
             }
 
+            // If a target is found, start moving towards it
+            target = enemy;
             targetFound = true;
-            turnTowards(enemy);
+            turnTowards(enemy); // Adjust orientation towards the target
+        }
+    }
 
-            //speedX = (((enemy.getX() - getX())/closestTargetDistance)*speedMulti);
-            //speedY = (((enemy.getY() - getY())/closestTargetDistance)*speedMulti);
+    // Check if the projectile hits the target
+    public void checkHit() {
+        if (target != null) {
+            if (this.intersects(target)) { // Check if the projectile collides with the target
+                if (target instanceof Enemy) {
+                    hitEnemy = (Enemy) target;
+                    hitEnemy.damageMe(damage); // Damage the enemy
+                }
+                getWorld().removeObject(this); // Remove the projectile after hitting the target
+            }
         }
     }
 }
