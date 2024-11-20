@@ -32,7 +32,7 @@ public class SimulationWorld extends World
     // https://pixabay.com/sound-effects/gentle-ocean-waves-fizzing-bubbles-64980/
     public static GreenfootSound ambientSound = new GreenfootSound("gentle_Ocean.mp3");
 
-    public SimulationWorld(String playerModel, int maxLives)
+    public SimulationWorld(String playerModel, int maxLives, int speed, double difficulty)
     {
         super(1024, 576, 1, false);
         // settings
