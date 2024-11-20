@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Character extends World
 {
-    DisplayCharacter display;
+    Image display;
     
     LeftButton left;
     RightButton right;
@@ -21,7 +21,7 @@ public class Character extends World
         //create an unbounded world 
         super(1024, 576, 1, false);
         addObject(new Background(), 512, 288);
-        addObject(display = new DisplayCharacter(), 512, 288);
+        addObject(display = new Image(getPlayerModel(), 300, 300), 512, 288);
         addObject(left = new LeftButton(), 362, 288);
         addObject(right = new RightButton(), 662, 288);
         addObject(finish = new NextButton(1), 512, 475);
@@ -44,7 +44,7 @@ public class Character extends World
             Greenfoot.setWorld(new SimulationWorld(getPlayerModel(), 10));
             SimulationWorld.ambientSound.playLoop();
         }
-        display.setCharImg(getPlayerModel());
+        display.changeImg(getPlayerModel(), 300, 300);
     }
     
     public void setDisplay()
