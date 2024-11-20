@@ -45,7 +45,7 @@ public class SimulationWorld extends World
         acting = true;
 
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
-        addObject(player = new Player(playerModel, speed), this.getWidth()/2, this.getHeight()/2);
+        addObject(player = new Player(playerModel), this.getWidth()/2, this.getHeight()/2);
 
         //border hitbox
         addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH/2, height);
