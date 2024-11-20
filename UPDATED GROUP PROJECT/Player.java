@@ -1,9 +1,7 @@
 import java.util.ArrayList;
 import greenfoot.*;
 
-
 /**
- * Write a description of class Kraken here.
  * 
  * @lumilk
  * @1.0.0
@@ -31,21 +29,22 @@ public class Player extends Effects {
     private GreenfootImage playerImg;
     private GreenfootImage tempImg;
     private int floatyNum = 0;
-    
+
     // Direction variables for animation
     private int direction;
 
-    public Player(String playerModel) {
+    public Player(String playerModel, int speed) {
         floatyImage[0] = new GreenfootImage("floaty.png");
         floatyImage[1] = new GreenfootImage("wood.png");
         floatyImage[2] = new GreenfootImage("metal.png");
         playerImg = new GreenfootImage(playerModel);
         setRaft();
+
+        this.speed = speed;
         
-        speed = 7;
         weaponCooldown = 10;
         createdHitbox = false;
-        maxhp = 999999999;
+        maxhp = 10000;
         hp = maxhp;
         coins = 0; // Initialize coins
         inventory = new ArrayList<>(); // Initialize inventory
@@ -53,6 +52,7 @@ public class Player extends Effects {
 
     public void act() {
         //System.out.println("Player: (" + (getX() - ((SimulationWorld)getWorld()).getScroller().getScrolledX()) + ", " + (getY() - ((SimulationWorld)getWorld()).getScroller().getScrolledY()) + ")");
+
         if (SimulationWorld.isActing())
         {
             animate(this, playerImage, playerImage[0].getWidth(), playerImage[0].getHeight(), 16, direction);
@@ -70,7 +70,7 @@ public class Player extends Effects {
             updateHitboxPosition();
         }
     }
-    
+
     public void setRaft() {
         if (floatyNum == 0)
         {
@@ -89,22 +89,6 @@ public class Player extends Effects {
         setImage(playerImg);
     }
 
-    // Get the player's inventory
-    public ArrayList<Object> getInventory() {
-        return inventory;
-    }
-
-    // Add coins
-    public void addCoins(int amount) {
-        coins += amount;
-        System.out.println("Added " + amount + " coins. Total: " + coins);
-    }
-
-    // Get current coins
-    public int getCoins() {
-        return coins;
-    }
-
     // Create the player's hitbox
     private void createHitbox() {
         hitbox = new Hitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight() / 2, 0, 0, this, 2.5);
@@ -118,20 +102,10 @@ public class Player extends Effects {
         dy = 0;
 
         // Input-based movement
-        if (Greenfoot.isKeyDown("a")) {
-            dx -= speed;
-            direction = 3; // Left
-        }
-        if (Greenfoot.isKeyDown("d")) {
-            dx += speed;
-            direction = 1; // Right
-        }
-        if (Greenfoot.isKeyDown("w")) {
-            dy -= speed;
-        }
-        if (Greenfoot.isKeyDown("s")) {
-            dy += speed;
-        }
+        if (Greenfoot.isKeyDown("a")) dx -= speed;
+        if (Greenfoot.isKeyDown("d")) dx += speed;
+        if (Greenfoot.isKeyDown("w")) dy -= speed;
+        if (Greenfoot.isKeyDown("s")) dy += speed;
 
         handleCollision(dx, dy);
     }
@@ -165,7 +139,7 @@ public class Player extends Effects {
     // Handle shooting inputs
     private void handleInputs() {
         if (shootCounter == 0 && !getWorld().getObjects(Enemy.class).isEmpty()) {
-            if (Greenfoot.isKeyDown("e")) {
+            if (Greenfoot.isKeyDown("space")) {
                 shootCounter = weaponCooldown;
                 shoot();
             }
@@ -174,9 +148,10 @@ public class Player extends Effects {
 
     // Add projectile to player's position
     private void shoot() {
-        getWorld().addObject(new Projectile("SharkF1.png"), getX(), getY());
+        getWorld().addObject(new Projectile("arrow.png"), getX(), getY());
     }
 
+    // Damage the player
     public void damageMe(int damage) {
         if (hp > 0) {
             hp -= damage;
