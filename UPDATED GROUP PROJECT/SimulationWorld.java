@@ -102,7 +102,7 @@ public class SimulationWorld extends World
     public void act()
     {
         actCount++;
-
+    /*
         switch(waveCount) {
                 case(0):
 
@@ -163,7 +163,7 @@ public class SimulationWorld extends World
                 ambientSound.playLoop();
             }
         }
-
+    */
         scroller.scroll(getWidth()/2-player.getX(), getHeight()/2-player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
     }
 

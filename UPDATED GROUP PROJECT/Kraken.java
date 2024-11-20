@@ -4,45 +4,64 @@ import java.util.ArrayList;
 /**
  * Write a description of class Kraken here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @lumilk
+ * @1.0.0
  */
 public class Kraken extends Enemy
 {
-    private boolean isInitialized;
     private boolean createdHitbox;
     private Hitbox hitbox;
+
     public Kraken(){
         super();
         img = new GreenfootImage[12];
         createdHitbox = false;
-        isMovable = false;
-        hp = 100;
+        hp = 10000;
         damage = 5;
+        attackCooldown = 300;
+        attackTimer = 0;
 
+        // Inherited from superclass, ensure to not get pushed around or track player
+        isMovable = false;
+
+        // Setimages for each position in array
         img[0] = new GreenfootImage("KrakenF1.png");
-        //Set the array size to 5 so animation works
         for(int i = 0; i < img.length; i++){
             img[i] = new GreenfootImage("KrakenF" + (i+1) + ".png");
         }
-        isInitialized = false;
     }
 
     public void act()
     {
-        createHitbox();
-        // Only spawns in tentacles if player is in a certain range
-        if(!getObjectsInRange(250, Player.class).isEmpty()){
-            if(getWorld().getObjects(Tentacle.class).isEmpty()){
-                tentacleAttack();
-            }   
+        if(attackTimer > 0){
+            attackTimer--;
         }
+        // Create a hitbox for me if haven't already
+        createHitbox();
 
+        // Attack radius of kraken
+        if(!getObjectsInRange(250, Player.class).isEmpty()){
+
+            if(attackTimer == 0){
+                doRandomAttack();
+                attackTimer = attackCooldown;
+            }
+
+        }
+        // Remove me and related objects when I reach 0 or less HP
         if(this.hp <= 0){
+            // Remove any remaining tentacles by creating an arraylist and iterating through each object
+            ArrayList<Tentacle> tentacles = (ArrayList<Tentacle>)(getWorld().getObjects(Tentacle.class));
+            for(Tentacle t: tentacles){
+                t.damageMe(999999);
+            }
+
+            // Remove related objects to me
             getWorld().removeObject(hitbox);
             getWorld().removeObject(this);
-            return;
         }        
+
+        // Idle animation
         animate(this, img, img[0].getWidth(), img[0].getHeight(), 24, 1);
     }
 
@@ -53,8 +72,10 @@ public class Kraken extends Enemy
             // Generate a random angle in radians
             double angle = Math.random() * 2 * Math.PI;
 
-            double distance = 100 + (Math.random() * (175)); //Inner and outer spawn radius
+            // Inner and outer spawn radius
+            double distance = 100 + (Math.random() * (175));
 
+            // Get spawnlocations seperatly for X and Y
             int spawnX = getX() + (int)(distance * Math.cos(angle));
             int spawnY = getY() + (int)(distance * Math.sin(angle));
 
@@ -63,14 +84,90 @@ public class Kraken extends Enemy
             getWorld().addObject(tentacle, spawnX, spawnY);
         }
     }
-    private void summonAttack(){
 
+    public void doRandomAttack(){
+        int randomNumber = Greenfoot.getRandomNumber(3); // Generate a number from 0 - 2 (inclusive)
+        boolean doDoubleAttack = Greenfoot.getRandomNumber(100) < 50; // 50% chance for double attack
+
+        // Handle each case seperatly
+        switch(randomNumber) {
+            case 0:
+                if (getWorld().getObjects(Tentacle.class).isEmpty()) {
+                    tentacleAttack();
+                    if (doDoubleAttack) {
+                        performAnotherAttack(1, 2); // Perform a second attack (summon or aoe)
+                    }
+                }
+                break;
+
+            case 1:
+                summonAttack();
+                if (doDoubleAttack) {
+                    performAnotherAttack(0, 2); // Perform a second attack (tentacle or aoe)
+                }
+                break;
+
+            case 2:
+                aoeAttack();
+                if (doDoubleAttack) {
+                    performAnotherAttack(0, 1); // Perform a second attack (tentacle or summon)
+                }
+                break;
+        }
     }
 
-    private void aoeAttack(){
+    private void performAnotherAttack(int option1, int option2) {
+        int secondaryAttack = Greenfoot.getRandomNumber(2) == 0 ? option1 : option2;
+        switch (secondaryAttack) {
+            case 0:
 
+                if (getWorld().getObjects(Tentacle.class).isEmpty()) {
+                    tentacleAttack();
+                }
+                break;
+
+            case 1:
+
+                summonAttack();
+                break;
+
+            case 2:
+
+                aoeAttack();
+                break;
+        }
     }
 
+    public void summonAttack(){
+        int numEnemies = Greenfoot.getRandomNumber(3) + 3; // Randomly summon 3 to 5 enemies
+        int summonRadius = 200;
+
+        for (int i = 0; i < numEnemies; i++) {
+
+            // Generate a random angle in radians
+            double angle = Math.random() * 2 * Math.PI;
+
+            // Maximum summon radius
+            double distance = Math.random() * summonRadius;
+
+            // Get spawnlocation seperatly for X and Y
+            int spawnX = getX() + (int)(distance * Math.cos(angle));
+            int spawnY = getY() + (int)(distance * Math.sin(angle));
+
+            // Spawn in enemies
+            Enemy enemy = new Krakite(); 
+            getWorld().addObject(enemy, spawnX, spawnY);
+
+        }
+    }
+
+    public void aoeAttack(){
+        // Create the AOE Circle and add it to the world
+        AOECircle aoe = new AOECircle(0, 500, 5, 1000); 
+        getWorld().addObject(aoe, getX() - 7, getY());
+    }
+
+    // Override superclass methods
     @Override
     protected void createHitbox(){
         if(!createdHitbox){

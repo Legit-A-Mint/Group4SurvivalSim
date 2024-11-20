@@ -4,24 +4,24 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * Write a description of class Bass here.
  * 
  * @lumilk
- * @version (a version number or a date)
+ * @1.0.0
  */
-public class Swordfish extends Enemy
+public class Krakite extends Enemy
 {
     private int speedCooldown;
-    private static final int speedCooldownMax = 300;
+    private static final int speedCooldownMax = 200;
     private boolean stopped;
-    public Swordfish(){
+
+    public Krakite(){
         super();
         img = new GreenfootImage[1];
-        speed = 8;
-        hp = 3;
-        damage = 10;
-        attackCooldown = 60;
-        speedCooldown = 0;
+        speed = 6;
+        hp = 300;
+        damage = 5;
+        attackCooldown = 200;
         isMovable = true;
-
-        img[0] = new GreenfootImage("SwordFish.png");
+        // vfx
+        img[0] = new GreenfootImage("Krakite.png");
 
         setImage(img[0]);
     }
