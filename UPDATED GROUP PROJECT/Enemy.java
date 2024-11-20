@@ -17,6 +17,7 @@ public abstract class Enemy extends Effects
     protected int attackTimer;
     protected double speed;
     protected boolean isMovable;
+    protected int killCount;
 
     // Once per instance
     protected Player player;
@@ -55,6 +56,7 @@ public abstract class Enemy extends Effects
             if(this.hp <= 0){
                     getWorld().removeObject(hitbox);
                     getWorld().removeObject(this);
+                    killCount ++;
                     return;
                 }
             
@@ -83,6 +85,18 @@ public abstract class Enemy extends Effects
                 } finally {
                     // Optionally place any cleanup code here if needed
                 }
+            }
+            if (killCount <= 3)
+            {
+                player.setFloaty(0);
+            }
+            else if (killCount <= 10)
+            {
+                player.setFloaty(1);
+            }
+            else
+            {
+                player.setFloaty(2);
             }
         }
     }
