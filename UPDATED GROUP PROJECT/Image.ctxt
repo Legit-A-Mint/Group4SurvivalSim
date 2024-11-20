@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=Image
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ DisplayCharacter\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=img\ x\ y
+comment1.target=Image(java.lang.String,\ int,\ int)
+comment2.params=img\ x\ y
+comment2.target=void\ changeImg(java.lang.String,\ int,\ int)
+numComments=3

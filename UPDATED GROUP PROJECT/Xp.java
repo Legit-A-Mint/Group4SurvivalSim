@@ -13,7 +13,6 @@ public class Xp extends Enemy {
      * Constructor for objects of class Coin.
      */
     public Xp() {
-        
         // Set the image for the coin
         GreenfootImage coinImage = new GreenfootImage("coin.png"); // Ensure "coin.png" is in the project folder
         setImage(coinImage);

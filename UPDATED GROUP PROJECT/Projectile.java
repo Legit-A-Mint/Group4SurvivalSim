@@ -1,8 +1,14 @@
 import greenfoot.*;
 import java.util.ArrayList;
 
-public class Projectile extends Effects {
-    protected Actor origin, target;
+/**
+ * Write a description of class Projectile here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class Projectile extends Effects{
+    protected Actor origin, target; 
     protected GreenfootImage img;
     protected boolean targetFound = false;
 
@@ -18,85 +24,103 @@ public class Projectile extends Effects {
     protected int damage;
     protected int fadeLength;
 
-    // Constructor to initialize default values
-    public Projectile() {
+    public Projectile(String img){
         speed = 6;
         lifeSpan = 350;
         damage = 1000;
+        
+        this.img = new GreenfootImage(img);
+
         fadeLength = 100;
     }
 
-    public void act() {
-        if (SimulationWorld.isActing()) {
-            if (lifeSpan > 0) lifeSpan--; // Decrease lifespan
-            fade(this, lifeSpan, fadeLength); // Handle fade effect
+    public void act(){
+        if (SimulationWorld.isActing())
+        {
+            if(lifeSpan > 0) lifeSpan--;
 
-            // If the target is set, move towards it
-            if (target != null) {
-                moveTowardsTarget();
-            } 
-            // If no target, try to find an enemy to target
-            else {
+            fade(this, lifeSpan, fadeLength);
+
+            if(enemy == null){
                 targeting();
             }
+            else if(enemy != null){
+                if(lifeSpan > 0) move(speed);
+                else if(lifeSpan == 0){ 
+                    getWorld().removeObject(this);
+                    return;
+                }
 
-            // Remove the projectile when its lifespan ends
-            if (lifeSpan == 0) {
-                getWorld().removeObject(this);
+                if(enemy.getHitbox() != null){
+                    try{
+                        if(getOneIntersectingObject(Enemy.class) != null){
+                            hitEnemy = (Enemy) getOneIntersectingObject(Enemy.class);
+                            hitEnemy.damageMe(damage);
+                            getWorld().removeObject(this);
+                        }
+                        /**
+                        if(this.intersects(enemy.getHitbox())){
+                        enemy.damageMe(damage);
+                        getWorld().removeObject(this);
+                        }
+                         */
+                    }catch(Exception e){
+
+                    }
+                }
             }
+
+            move(speed);
         }
     }
 
-    // Method to set the target directly (e.g., called from Player)
-    public void setTarget(Actor target) {
-        this.target = target;
-    }
-
-    // Move the projectile towards the current target
-    public void moveTowardsTarget() {
-        if (target != null) {
-            turnTowards(target);
-            move(speed); // Move the projectile in the direction of the target
-            checkHit(); // Check if it hits an enemy
-        }
-    }
-
-    // Search for the nearest enemy in range and set it as the target
-    public void targeting() {
+    public void targeting (){
         double closestTargetDistance = 0;
         double distanceToActor;
 
-        enemies = (ArrayList<Enemy>) getObjectsInRange(500, Enemy.class); // Get all enemies within range
-        if (enemies.size() > 0) {
-            // Find the closest enemy
-            enemy = enemies.get(0);
-            closestTargetDistance = SimulationWorld.getDistance(this, enemy);
+        enemies = (ArrayList<Enemy>)getObjectsInRange(40, Enemy.class);
 
-            for (Enemy o : enemies) {
+        int range = 150;
+        int maxRange =  500;
+        while(enemies.size() == 0 && range <= maxRange){
+            if (enemies.size() == 0){
+                enemies = (ArrayList<Enemy>)getObjectsInRange(range, Enemy.class);
+                range += 50;
+            } 
+            if (enemies.size() != 0){
+                break;
+            }
+        }
+
+        if (enemies.size() > 0)
+        {
+            // set the first one as my target
+            enemy = enemies.get(0);
+            // Use method to get distance to target. This will be used
+            // to check if any other targets are closer
+            closestTargetDistance = SimulationWorld.getDistance (this, enemy);
+
+            // Loop through the objects in the ArrayList to find the closest target
+            for (Enemy o : enemies)
+            {
+                // Cast for use in generic method
+                //Actor a = (Actor) o;
+                // Measure distance from me
                 distanceToActor = SimulationWorld.getDistance(this, o);
-                if (distanceToActor < closestTargetDistance) {
-                    enemy = o; // Set the closer enemy as the target
+                // If I find a Enemy closer than my current target, I will change
+                // targets
+                if (distanceToActor < closestTargetDistance)
+                {
+                    enemy = o;
                     closestTargetDistance = distanceToActor;
                 }
             }
 
-            // If a target is found, start moving towards it
-            target = enemy;
             targetFound = true;
-            turnTowards(enemy); // Adjust orientation towards the target
-        }
-    }
+            turnTowards(enemy);
 
-    // Check if the projectile hits the target
-    public void checkHit() {
-        if (target != null) {
-            if (this.intersects(target)) { // Check if the projectile collides with the target
-                if (target instanceof Enemy) {
-                    hitEnemy = (Enemy) target;
-                    hitEnemy.damageMe(damage); // Damage the enemy
-                }
-                getWorld().removeObject(this); // Remove the projectile after hitting the target
-            }
+            //speedX = (((enemy.getX() - getX())/closestTargetDistance)*speedMulti);
+            //speedY = (((enemy.getY() - getY())/closestTargetDistance)*speedMulti);
         }
     }
 }

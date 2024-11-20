@@ -30,8 +30,19 @@ public class Kraken extends Enemy
 
     public void act()
     {
-        super.act();
-        System.out.println(this.getX()+ ", " + this.getY());
+        createHitbox();
+        // Only spawns in tentacles if player is in a certain range
+        if(!getObjectsInRange(250, Player.class).isEmpty()){
+            if(getWorld().getObjects(Tentacle.class).isEmpty()){
+                tentacleAttack();
+            }   
+        }
+
+        if(this.hp <= 0){
+            getWorld().removeObject(hitbox);
+            getWorld().removeObject(this);
+            return;
+        }        
         animate(this, img, img[0].getWidth(), img[0].getHeight(), 24, 1);
     }
 
@@ -52,7 +63,6 @@ public class Kraken extends Enemy
             getWorld().addObject(tentacle, spawnX, spawnY);
         }
     }
-
     private void summonAttack(){
 
     }
