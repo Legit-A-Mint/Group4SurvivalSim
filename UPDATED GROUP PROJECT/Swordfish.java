@@ -3,7 +3,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class Bass here.
  * 
- * @author (your name) 
+ * @lumilk
  * @version (a version number or a date)
  */
 public class Swordfish extends Enemy
@@ -36,6 +36,7 @@ public class Swordfish extends Enemy
         }
         if(speedCooldown == 0){
             this.speed = 8;
+            stopped = false;
         }
 
         if(getPlayerCollision()){
@@ -47,7 +48,6 @@ public class Swordfish extends Enemy
                 this.speed = 0;
                 stopped = true;
                 speedCooldown = speedCooldownMax; 
-
             }
         }
         else{
