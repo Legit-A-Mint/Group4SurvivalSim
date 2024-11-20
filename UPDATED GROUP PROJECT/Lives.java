@@ -38,10 +38,10 @@ public class Lives extends Interface
     
     private void updateDisplay() {
         hearts = new GreenfootImage("pixel_Heart.png");
-        storeHearts = new GreenfootImage("test", 150, Color.WHITE, Color.BLACK);
-        //storeHearts = new GreenfootImage(Integer.toString(currentHp), 150, Color.WHITE, heartRed);
-        hearts.drawImage(storeHearts, myX, myY);
-        hearts.scale(100, 100);
+        hearts.scale(150, 150);
+        //storeHearts = new GreenfootImage("test", 150, Color.WHITE, Color.BLACK);
+        storeHearts = new GreenfootImage(Integer.toString(currentHp), 50, Color.WHITE, heartRed);
+        hearts.drawImage(storeHearts, 50, 50);
         setImage(hearts);
     }
     

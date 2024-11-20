@@ -41,8 +41,7 @@ public class Character extends World
         }
         if (Greenfoot.mouseClicked(finish))
         {
-            Greenfoot.setWorld(new SimulationWorld(getPlayerModel(), 10));
-            SimulationWorld.ambientSound.playLoop();
+            Greenfoot.setWorld(new StatsEditor(getPlayerModel()));
         }
         display.changeImg(getPlayerModel(), 300, 300);
     }

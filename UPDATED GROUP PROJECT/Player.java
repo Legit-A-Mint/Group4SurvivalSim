@@ -1,9 +1,7 @@
 import java.util.ArrayList;
 import greenfoot.*;
 
-
 /**
- * Write a description of class Kraken here.
  * 
  * @lumilk
  * @1.0.0
@@ -27,22 +25,27 @@ public class Player extends Effects {
     private int collisionCounter = 0;
     private final int MAX_COLLISION_ATTEMPTS = 3;
 
+    // AI movement variables
+    private int aiMoveTimer = 0;
+    private int aiMoveDuration = 30; // Time steps to continue a movement direction
+    private int aiDirection; // Randomly chosen direction
+
     // Which floating device is player using (0 = floaty, 1 = wood raft, 2 = metal boat)
     private GreenfootImage playerImg;
     private GreenfootImage tempImg;
     private int floatyNum = 0;
-    
+
     // Direction variables for animation
     private int direction;
 
-    public Player(String playerModel) {
+    public Player(String playerModel, int speed) {
         floatyImage[0] = new GreenfootImage("floaty.png");
         floatyImage[1] = new GreenfootImage("wood.png");
         floatyImage[2] = new GreenfootImage("metal.png");
         playerImg = new GreenfootImage(playerModel);
         setRaft();
-        
-        speed = 7;
+
+        this.speed = speed;
         weaponCooldown = 10;
         createdHitbox = false;
         maxhp = 999999999;
@@ -53,8 +56,8 @@ public class Player extends Effects {
 
     public void act() {
         //System.out.println("Player: (" + (getX() - ((SimulationWorld)getWorld()).getScroller().getScrolledX()) + ", " + (getY() - ((SimulationWorld)getWorld()).getScroller().getScrolledY()) + ")");
-        if (SimulationWorld.isActing())
-        {
+
+        if (SimulationWorld.isActing()) {
             animate(this, playerImage, playerImage[0].getWidth(), playerImage[0].getHeight(), 16, direction);
 
             if (shootCounter > 0) {
@@ -65,28 +68,69 @@ public class Player extends Effects {
                 createHitbox();
             }
 
-            handleMovement();
+            //handleAIMovement(); // Replaced input-based movement with AI
             handleInputs();
             updateHitboxPosition();
         }
     }
-    
+
     public void setRaft() {
-        if (floatyNum == 0)
-        {
+        if (floatyNum == 0) {
             // if your not on a raft, the floaty has to be drawn on top of you
             tempImg = new GreenfootImage(playerImg);
             tempImg.drawImage(floatyImage[floatyNum], 0, 0);
             playerImage[0] = tempImg;
-        }
-        else
-        {
+        } else {
             // otherwise draw player ontop of raft
             tempImg = new GreenfootImage(floatyImage[floatyNum]);
             tempImg.drawImage(playerImg, 0, 0);
             playerImage[0] = tempImg;
         }
         setImage(playerImg);
+    }
+
+    // AI-controlled random movement
+    private void handleAIMovement() {
+        if (aiMoveTimer == 0) {
+            // Choose a random direction: 0 = up, 1 = right, 2 = down, 3 = left
+            aiDirection = Greenfoot.getRandomNumber(4);
+            aiMoveTimer = aiMoveDuration;
+        }
+
+        dx = 0;
+        dy = 0;
+
+        // Set movement direction based on AI decision
+        switch (aiDirection) {
+            case 0: // Move up
+                dy -= speed;
+                direction = 0; // Set animation direction
+                break;
+            case 1: // Move right
+                dx += speed;
+                direction = 1; // Set animation direction
+                break;
+            case 2: // Move down
+                dy += speed;
+                direction = 2; // Set animation direction
+                break;
+            case 3: // Move left
+                dx -= speed;
+                direction = 3; // Set animation direction
+                break;
+        }
+
+        // Handle collisions and apply movement
+        handleCollision(dx, dy);
+
+        // Decrement the AI timer
+        aiMoveTimer--;
+    }
+
+    // Add an item to the inventory
+    public void addItem(Object item) {
+        inventory.add(item);
+        System.out.println("Item added to inventory: " + item.getClass().getSimpleName());
     }
 
     // Get the player's inventory
@@ -100,6 +144,13 @@ public class Player extends Effects {
         System.out.println("Added " + amount + " coins. Total: " + coins);
     }
 
+    // Spend coins
+    public void spendCoins(int amount) {
+        if (coins >= amount) {
+            coins -= amount;
+            System.out.println("Spent " + amount + " coins. Remaining: " + coins);
+        } else {
+            System.out.println("Not enough coins! Required: " + amount + ", Available: " + coins);
     // Get current coins
     public int getCoins() {
         return coins;
@@ -126,16 +177,7 @@ public class Player extends Effects {
             dx += speed;
             direction = 1; // Right
         }
-        if (Greenfoot.isKeyDown("w")) {
-            dy -= speed;
-        }
-        if (Greenfoot.isKeyDown("s")) {
-            dy += speed;
-        }
-
         handleCollision(dx, dy);
-    }
-
     // Handle movement with collision detection
     private void handleCollision(double dx, double dy) {
         double futureX = getX() + dx;
@@ -148,7 +190,6 @@ public class Player extends Effects {
             collisionCounter = 0; // Reset collision counter
         } else {
             resetHitboxPosition();
-            handleRepel("horizontal");
         }
 
         // Handle vertical movement
@@ -158,25 +199,39 @@ public class Player extends Effects {
             collisionCounter = 0; // Reset collision counter
         } else {
             resetHitboxPosition();
-            handleRepel("vertical");
         }
     }
 
-    // Handle shooting inputs
     private void handleInputs() {
-        if (shootCounter == 0 && !getWorld().getObjects(Enemy.class).isEmpty()) {
-            if (Greenfoot.isKeyDown("e")) {
-                shootCounter = weaponCooldown;
-                shoot();
-            }
+        
+        
+        // Optional: Add AI-based shooting logic here
+    }
+
+    
+      // Handle player movement and collisions
+    private void handleMovement() {
+        dx = 0;
+        dy = 0;
+
+        // Input-based movement
+        if (Greenfoot.isKeyDown("a")) {
+            dx -= speed;
+            direction = 3; // Left
         }
-    }
+        if (Greenfoot.isKeyDown("d")) {
+            dx += speed;
+            direction = 1; // Right
+        }
+        if (Greenfoot.isKeyDown("w")) {
+            dy -= speed;
+        }
+        if (Greenfoot.isKeyDown("s")) {
+            dy += speed;
+        }
 
-    // Add projectile to player's position
-    private void shoot() {
-        getWorld().addObject(new Projectile("SharkF1.png"), getX(), getY());
+        handleCollision(dx, dy);
     }
-
     public void damageMe(int damage) {
         if (hp > 0) {
             hp -= damage;
@@ -184,30 +239,14 @@ public class Player extends Effects {
         }
     }
 
-    // Repel the player upon collision
-    private void handleRepel(String direction) {
-        collisionCounter++;
-        if (collisionCounter >= MAX_COLLISION_ATTEMPTS) {
-            if (direction.equals("horizontal")) {
-                setLocation(getX() - dx * 2, getY());
-            } else if (direction.equals("vertical")) {
-                setLocation(getX(), getY() - dy * 2);
-            }
-            collisionCounter = 0; // Reset collision counter
-        }
-    }
-
-    // Update the hitbox position to align with the player
     private void updateHitboxPosition() {
         hitbox.setLocation(getX(), getY());
     }
 
-    // Reset hitbox position to match the player
     private void resetHitboxPosition() {
         hitbox.setLocation(getX(), getY());
     }
 
-    // Check if the hitbox is colliding with other objects
     private boolean isCollidingWithHitbox() {
         for (Hitbox other : hitbox.getIntersectingHitboxes()) {
             if (other != hitbox && other.checkCollision(hitbox)) {
