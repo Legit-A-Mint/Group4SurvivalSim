@@ -103,6 +103,7 @@ public class Button extends Interface
             checkClicked();
         }
     }
+    
     @Override
     protected boolean isUserInteracting() {
         return Greenfoot.mouseMoved(this);
