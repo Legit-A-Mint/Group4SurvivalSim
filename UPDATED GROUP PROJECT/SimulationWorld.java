@@ -22,7 +22,8 @@ public class SimulationWorld extends World
     private static boolean acting;
 
     private int coinSpawnTimer;  // Timer to track coin spawning time
-
+    private int coinDisplay;
+    
     // https://pixabay.com/sound-effects/gentle-ocean-waves-fizzing-bubbles-64980/
     public static GreenfootSound ambientSound = new GreenfootSound("gentle_Ocean.mp3");
     
@@ -63,7 +64,7 @@ public class SimulationWorld extends World
         addObject(pauseButton = new Button("PauseButton", new String[] {"db_1.png", "db_2.png", "db_3.png"}, true, 1, 55, 35), 55, 35);
 
         addObject(slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540), 155, 540);
-
+    
         addObject(lives = new Lives("Heart", 512, 60, maxLives), WIDTH/2, 100);
     }
     
