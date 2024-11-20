@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.target=Player
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ Kraken\ here.\r\n\ \r\n\ @lumilk\r\n\ @1.0.0\r\n
-comment1.params=playerModel
-comment1.target=Player(java.lang.String)
+comment1.params=playerModel\ speed
+comment1.target=Player(java.lang.String,\ int)
 comment10.params=
 comment10.target=void\ handleInputs()
 comment11.params=

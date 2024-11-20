@@ -35,14 +35,14 @@ public class Player extends Effects {
     // Direction variables for animation
     private int direction;
 
-    public Player(String playerModel) {
+    public Player(String playerModel, int speed) {
         floatyImage[0] = new GreenfootImage("floaty.png");
         floatyImage[1] = new GreenfootImage("wood.png");
         floatyImage[2] = new GreenfootImage("metal.png");
         playerImg = new GreenfootImage(playerModel);
         setRaft();
         
-        speed = 7;
+        this.speed = speed;
         weaponCooldown = 10;
         createdHitbox = false;
         maxhp = 999999999;
