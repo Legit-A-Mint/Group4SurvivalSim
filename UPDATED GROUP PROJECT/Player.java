@@ -186,7 +186,7 @@ public class Player extends Effects {
     // Damage the player
     public void damageMe(int damage) {
         if (hp > 0) {
-            hp -= damage;
+            hp -= damage*world.diffMulti;
             System.out.println("PLAYER HP: " + hp);
         }
     }

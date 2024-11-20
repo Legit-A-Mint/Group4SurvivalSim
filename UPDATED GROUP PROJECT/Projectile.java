@@ -27,7 +27,7 @@ public class Projectile extends Effects{
     public Projectile(String img){
         speed = 6;
         lifeSpan = 350;
-        damage = 100;
+        damage = 10;
 
         this.img = new GreenfootImage(img);
 
