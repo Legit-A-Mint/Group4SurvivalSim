@@ -61,7 +61,8 @@ public class StatsEditor extends World
     {
         if (Greenfoot.mouseClicked(leftHealth))
         {
-            health--;
+            if (health > 1)
+                health--;
             healthTxt.setImage(new GreenfootImage(Integer.toString(health), 100, Color.WHITE, Color.BLACK));
         }
         if (Greenfoot.mouseClicked(rightHealth))
@@ -71,12 +72,14 @@ public class StatsEditor extends World
         }
         if (Greenfoot.mouseClicked(leftSpeed))
         {
-            speed--;
+            if (speed > 1)
+                speed--;
             SpeedTxt.setImage(new GreenfootImage(Integer.toString(speed), 100, Color.WHITE, Color.BLACK));
         }
         if (Greenfoot.mouseClicked(rightSpeed))
         {
-            speed++;
+            if (speed < 20)
+                speed++;
             SpeedTxt.setImage(new GreenfootImage(Integer.toString(speed), 100, Color.WHITE, Color.BLACK));
         }
         if (Greenfoot.mouseClicked(leftDifficulty))
