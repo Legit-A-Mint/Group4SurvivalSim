@@ -38,6 +38,9 @@ public class Player extends Effects {
 
     private Actor target;  // Target for AI-controlled player to move towards
 
+    // Define SAFE_DISTANCE constant
+    private static final double SAFE_DISTANCE = 150.0; // Example value, adjust as needed
+
     public Player(String playerModel, int speed) {
         floatyImage[0] = new GreenfootImage("floaty.png");
         floatyImage[1] = new GreenfootImage("wood.png");
@@ -121,30 +124,57 @@ public class Player extends Effects {
     // AI-controlled movement
     private void aiMove() {
         if (target != null) {
-            // Get the target's position
+            // Get the target's position (whether it's an enemy or coin)
             double targetX = target.getX();
             double targetY = target.getY();
-            
-            // Calculate direction vector
+    
+            // Calculate direction vector to the target
             double deltaX = targetX - getX();
             double deltaY = targetY - getY();
             double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            
-            // Normalize the direction vector to get the movement direction
-            double directionX = deltaX / distance;
-            double directionY = deltaY / distance;
-            
-            // Move towards the target
-            dx = directionX * speed;
-            dy = directionY * speed;
-
-            handleCollision(dx, dy);  // Handle collision detection while moving
-
-            // If the target is an enemy and is within shooting range, shoot at it
+    
+            // Check if the target is an enemy and the distance is within the "safe zone"
+            if (target instanceof Enemy && distance < SAFE_DISTANCE) {
+                // If too close, move away from the enemy
+                avoidEnemy(deltaX, deltaY, distance);
+            } else {
+                // Normal movement towards the target
+                moveTowardsTarget(deltaX, deltaY);
+            }
+    
+            // If the target is an enemy and within shooting range, shoot at it
             if (target instanceof Enemy && distance < 500) {  // 500 is the shooting range
                 shootWithDelay();  // Ensure shooting with a delay
             }
         }
+    }
+
+    // Avoid the enemy by moving away from it
+    private void avoidEnemy(double deltaX, double deltaY, double distance) {
+        // Normalize the direction vector to move away from the enemy
+        double directionX = -deltaX / distance;
+        double directionY = -deltaY / distance;
+
+        // Adjust the player's movement to move away from the enemy
+        dx = directionX * speed;
+        dy = directionY * speed;
+
+        // Handle collision detection while moving away
+        handleCollision(dx, dy);
+    }
+
+    // Move towards the target normally
+    private void moveTowardsTarget(double deltaX, double deltaY) {
+        // Normalize the direction vector to get the movement direction
+        double directionX = deltaX / Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        double directionY = deltaY / Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        // Move towards the target
+        dx = directionX * speed;
+        dy = directionY * speed;
+
+        // Handle collision detection while moving
+        handleCollision(dx, dy);
     }
 
     // Set the target to the nearest coin or enemy
