@@ -1,148 +1,181 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.util.*;
+import greenfoot.*;  // Import Greenfoot classes for world, actors, images, and sound
+import java.util.*;  // Import utility classes such as List
+
+/*
+ * Full SimulationWorld
+ * @Darius
+ * @Logan
+ * @Jonathan
+ */
 
 public class SimulationWorld extends World {
-    public Scroller scroller; // Scroll controller
-    private Player player; // Main actor
-    private Lives lives;
-    private int waveCount, actCount;
-    private boolean spawnOnce, countOnce;
-    public static int killCount;
-    public static double diffMulti;
+    // Declaration of instance variables
+    public Scroller scroller; // The scroll controller to manage the background
+    private Player player; // This is the player actor
+    private Lives lives; // This displays the amount of lives you have
+    private int waveCount, actCount; // Tracks and counts the number of waves and actions
+    private boolean spawnOnce, countOnce; // Used for one-time actions
+    public static int killCount; // Counts for the kills across the game
+    public static double diffMulti; // This multiplies the difficulty of the simulation
 
+    // Used for the world size and maximum spawn distance
     private static final int MAX_SPAWN_DISTANCE = 200;
     private static final int WIDTH = 2000, height = 2000;
-    private int delay;
+    private int delay; // This is used to delay variables
 
-    private double exactY, exactX;
+    private double exactY, exactX; // This tracks the exact coordinate
 
-    private Button pauseButton;
-    private Slider slider;
-    private static boolean acting;
+    // UI elements
+    private Button pauseButton; // The pause button for the gameplay
+    private Slider slider; // The slider shown on the bottom left
+    private static boolean acting; // Used to check if the game is active and running
 
     private int coinSpawnTimer;  // Timer to track coin spawning time
-    private int coinDisplay;
+    private int coinDisplay; // Used to track how many coins to display
 
+    // Background ambient sound
     public static GreenfootSound ambientSound = new GreenfootSound("gentle_Ocean.mp3");
 
-    private Label waveLabel; 
-    private boolean createdKraken;
+    private Label waveLabel; // Label to display the current wave number
+    private boolean createdKraken; // The flag for Kraken 
 
+    // Constructor for the world, initializes objects
     public SimulationWorld(String playerModel, int maxLives, int speed, double difficulty) {
-        super(1024, 576, 1, false);
+        super(1024, 576, 1, false); // Create world with size 1024x576 pixels
 
-        waveCount = 0;  // Initialize wave count
-        actCount = 0;
-        spawnOnce = true;
-        delay = 30;
+        // Initialize game variables
+        waveCount = 0;  // Start at wave 0
+        actCount = 0; // Start at action count 0
+        spawnOnce = true; // The flag for spawning 
+        delay = 30; // The delay variable
 
-        acting = true;
+        acting = true; // Set the game to be active and running
 
-        coinSpawnTimer = 0;  // Initialize the coin spawn timer
+        coinSpawnTimer = 0;  // Initialize coin spawn timer
 
-        diffMulti = difficulty;
+        diffMulti = difficulty; // Set difficulty multiplier
 
+        // Add lives display at top of screen
         addObject(lives = new Lives("Heart", 512, 60, maxLives), WIDTH / 2, 100);
+        // Add scroller for background movement
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
+        // Add player to the center of the screen
         addObject(player = new Player(playerModel, speed, lives), this.getWidth() / 2, this.getHeight() / 2);
 
-        // border hitbox
-        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH / 2, height);
-        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH / 2, 0);
-        addObject(new Hitbox(100, height, 2.5), WIDTH, height / 2);
-        addObject(new Hitbox(100, height, 2.5), 0, height / 2);
+        // Add border hitboxes to prevent the player from going outside the world
+        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH / 2, height); // Bottom border
+        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH / 2, 0); // Top border
+        addObject(new Hitbox(100, height, 2.5), WIDTH, height / 2); // Right border
+        addObject(new Hitbox(100, height, 2.5), 0, height / 2); // Left border
 
+        // Add islands to the world
         addObject(new Island(new GreenfootImage("island.png")), 500 - getScroller().getScrolledX(), 500 - getScroller().getScrolledY());
         addObject(new Island(new GreenfootImage("island.png")), 600 - getScroller().getScrolledX(), 1750 - getScroller().getScrolledY());
         addObject(new Island(new GreenfootImage("island.png")), 1750 - getScroller().getScrolledX(), 900 - getScroller().getScrolledY());
         addObject(new Island(new GreenfootImage("island.png")), 1500 - getScroller().getScrolledX(), 250 - getScroller().getScrolledY());
         addObject(new Island(new GreenfootImage("island.png")), 1200 - getScroller().getScrolledX(), 1500 - getScroller().getScrolledY());
 
-        // GUI
+        // Add GUI elements like pause button and slider
         addObject(pauseButton = new Button("PauseButton", new String[] {"db_1.png", "db_2.png", "db_3.png"}, true, 1, 55, 35), 55, 35);
         addObject(slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540), 155, 540);
 
-        waveLabel = new Label("Wave " + (waveCount + 1), 40);  // Initial label will display "Wave 1"
-        addObject(waveLabel, 200, 25);  // Position it on the screen
+        // Add a label to display the wave number
+        waveLabel = new Label("Wave " + (waveCount + 1), 40);  // Initialize label to show "Wave 1"
+        addObject(waveLabel, 200, 25);  // Position the wave label on the screen
     }
 
+    // Method that gets called when the world is added to the Greenfoot environment
     public void addedToWorld() {
-        // Plays the ambient noise in a loop
+        // Start the ambient sound in a loop when the world is active
         ambientSound.playLoop();
     }
 
+    // Method that gets called when the world starts
     public void started() {
-        // Plays the ambient noise in a loop
+        // Start the ambient sound in a loop when the game starts
         ambientSound.playLoop();
     }
 
+    // Method that gets called when the world stops / is paused
     public void stopped() {
-        // Stops playing the ambient noises when simulation is paused
+        // Stop the ambient sound when the game is paused
         ambientSound.pause();
     }
 
+    // Empty addObject method
     public void addObject(Actor a) {
+        // This empty method prevents other addObject calls from being overrid
     }
 
+    // Main act method that runs on every frame of the game
     public void act() {
         if (acting) {
-            actCount++;
+            actCount++;  // The increment action count
 
             // Update coin spawn timer
             coinSpawnTimer++;
 
-            // Every 30 seconds, spawn 5 coins at random locations
-            if (coinSpawnTimer >= 450) {  // 900 ticks = 30 seconds (assuming 30 FPS)
+            // If 30 seconds (900 ticks) have passed, spawn 5 coins
+            if (coinSpawnTimer >= 450) {  // 450 ticks = 15 seconds
                 spawnCoins();
-                coinSpawnTimer = 0;  // Reset the timer after spawning coins
+                coinSpawnTimer = 0;  // Reset coin spawn timer after spawning coins
             }
 
             // Handle enemy waves
             handleWaves();
 
-            // Check if the player should buy the Spear UI or Raft UI based on coins
+            // Check if the player has enough coins to unlock new items (Spear or Raft)
             checkForPurchases();
 
+            // Scroll the background to follow the player
             scroller.scroll(getWidth() / 2 - player.getX(), getHeight() / 2 - player.getY(), this, (ArrayList<SuperSmoothMover>) (getObjects(SuperSmoothMover.class)));
         }
 
+        // Check if the pause button is clicked
         if (Greenfoot.mouseClicked(pauseButton)) {
-            acting = !acting;
+            acting = !acting;  // Toggle the game state between active and paused
             if (acting) {
-                ambientSound.playLoop();
+                ambientSound.playLoop();  // Resume ambient sound
             } else {
-                ambientSound.pause();
+                ambientSound.pause();  // Pause ambient sound
             }
         }
     }
 
+    // Method to check if the player has enough coins to buy certain items
     private void checkForPurchases() {
         if (player.getCoins() >= 100 && !player.hasSpear()) {
-            player.unlockSpearUI();  // Unlock the Spear UI
+            player.unlockSpearUI();  // Unlock the Spear UI if the player has 100 coins
         }
         if (player.getCoins() >= 200 && !player.hasRaft()) {
-            player.unlockRaftUI();   // Unlock the Raft UI
+            player.unlockRaftUI();   // Unlock the Raft UI if the player has 200 coins
         }
         if (player.getHp() < 50 && player.getCoins() >= 50 && !player.hasHeal()) {
-            player.buyHeal();  // Heal the player if they have enough coins
+            player.buyHeal();  // Heal the player if they have less than 50 HP and at least 50 coins
         }
     }
 
-    // Handle the spawning of enemies for each wave
+    // Handle the spawning of enemies based on the wave count
     private void handleWaves() {
-        // Check if all enemies have been defeated before starting a new wave
+        // If no enemies are left, increment the wave count and spawn new enemies
         if (getObjects(Enemy.class).isEmpty()) {
             waveCount++;  // Increment the wave count
-            spawnEnemiesForWave(waveCount);  // Spawn enemies based on the wave count
+            spawnEnemiesForWave(waveCount);  // Spawn enemies based on the current wave count
 
-            // Update the wave label to display the new wave count
+            // Check if it's wave 15, and spawn the Kraken if it is
+            if (waveCount == 14 && !createdKraken) {  // Wave 15 is waveCount 14 (0-based)
+                spawnKraken();  // Spawn the Kraken
+                createdKraken = true;  // Set flag to prevent Kraken from spawning again
+            }
+
+            // Update the wave label on the screen
             waveLabel.setText("Wave " + (waveCount + 1));  
         }
     }
 
-    // Method to spawn enemies based on the current wave
+    // Spawn enemies for the current wave
     private void spawnEnemiesForWave(int wave) {
-        // For each wave, spawn one more enemy from each enemy class
+        // For each wave, spawn additional enemies from different types
         for (int i = 0; i < wave; i++) {
             spawnEnemy(Bass.class);
             spawnEnemy(Shark.class);
@@ -151,65 +184,77 @@ public class SimulationWorld extends World {
         }
     }
 
-    // Method to spawn a single enemy at a random location
+    // Method to spawn a single enemy at a random location in the world
     private void spawnEnemy(Class<? extends Actor> enemyClass) {
-        int randomX = Greenfoot.getRandomNumber(WIDTH);
-        int randomY = Greenfoot.getRandomNumber(height);
+        int randomX = Greenfoot.getRandomNumber(WIDTH); // Random X position within the world width
+        int randomY = Greenfoot.getRandomNumber(height); // Random Y position within the world height
         try {
-            Actor enemy = enemyClass.getDeclaredConstructor().newInstance();  // Create a new instance of the enemy class
-            addObject(enemy, randomX, randomY);  // Add the enemy to the world at a random location
+            Actor enemy = enemyClass.getDeclaredConstructor().newInstance();  // Create a new instance of the enemy
+            addObject(enemy, randomX, randomY);  // Add the enemy to the world at the random location
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Print any exceptions if the enemy can't be spawned
         }
     }
 
-    // Method to spawn 5 coins at random locations within the world
+    // Method to spawn 5 coins at random locations
     private void spawnCoins() {
         for (int i = 0; i < 5; i++) {
-            // Ensure that coins are within the visible world area (1024x576)
-            int randomX = Greenfoot.getRandomNumber(getWidth());  // Random X position within the visible world width (1024)
-            int randomY = Greenfoot.getRandomNumber(getHeight()); // Random Y position within the visible world height (576)
-            addObject(new Coins(), randomX, randomY);  // Add the coin to the world
+            // Ensure coins are within the visible world area
+            int randomX = Greenfoot.getRandomNumber(getWidth());
+            int randomY = Greenfoot.getRandomNumber(getHeight());
+            addObject(new Coins(), randomX, randomY); // Add coin to the world
         }
     }
 
+    // Method to spawn the Kraken at the center of the world or randomly
+    private void spawnKraken() {
+        int randomX = Greenfoot.getRandomNumber(WIDTH);  // Random X position within the world width
+        int randomY = Greenfoot.getRandomNumber(height);  // Random Y position within the world height
+        try {
+            Actor kraken = new Kraken();  // Create a new Kraken instance
+            addObject(kraken, randomX, randomY);  // Add Kraken to the world at a random position
+        } catch (Exception e) {
+            e.printStackTrace();  // Print any exceptions if the Kraken can't be spawned
+        }
+    }
+
+    // Getter for the scroller
     public Scroller getScroller() {
         return scroller;
     }
 
+    // Override to add objects with precise coordinates (not currently used)
     public void addObject(Actor object, double x, double y) {
         super.addObject(object, (int) (x + 0.5), (int) (y + 0.5));
     }
 
+    // Static method to calculate the distance between two actors
     public static double getDistance(Actor a, Actor b) {
         return Math.hypot(a.getX() - b.getX(), a.getY() - b.getY());
     }
 
+    // Getter for the Y-coordinate precision
     public double getPreciseY() {
         return exactY;
     }
 
-    public double exactY() {
-        return exactY;
-    }
-
+    // Getter for the X-coordinate precision
     public double getPreciseX() {
-        return exactY;
+        return exactX;
     }
 
-    public double exactX() {
-        return exactY;
-    }
-
+    // Static method to check if the game is acting (active)
     public static boolean isActing() {
         return acting;
     }
 
+    // Increment the kill count and print a message
     public static void addkillCount() {
         System.out.println("+1");
         killCount++;
     }
 
+    // Method to get the current kill count based on certain thresholds
     public static int getKillCount() {
         if (killCount < 5) {
             return 0;

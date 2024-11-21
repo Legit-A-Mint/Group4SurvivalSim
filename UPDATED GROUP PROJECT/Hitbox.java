@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Full hitbox class
  * 
- * @lumilk
+ * @Logan
  * @1.0.0
  */
 public class Hitbox extends SuperSmoothMover

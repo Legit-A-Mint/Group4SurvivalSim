@@ -1,5 +1,8 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+/*
+ * Full Coin Class
+ * @Darius
+ */
 public class Coins extends Effects
 {
     protected static final int COIN_VALUE = 10; // Coins add 10 each when collected
