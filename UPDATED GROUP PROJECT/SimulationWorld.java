@@ -1,8 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 
-public class SimulationWorld extends World
-{
+public class SimulationWorld extends World {
     public Scroller scroller; // Scroll controller
     private Player player; // Main actor
     private Lives lives;
@@ -23,13 +22,12 @@ public class SimulationWorld extends World
 
     private int coinSpawnTimer;  // Timer to track coin spawning time
     private int coinDisplay;
-    
+
     public static GreenfootSound ambientSound = new GreenfootSound("gentle_Ocean.mp3");
 
     private Label waveLabel; 
 
-    public SimulationWorld(String playerModel, int maxLives, int speed, double difficulty)
-    {
+    public SimulationWorld(String playerModel, int maxLives, int speed, double difficulty) {
         super(1024, 576, 1, false);
 
         waveCount = 0;  // Initialize wave count
@@ -43,16 +41,18 @@ public class SimulationWorld extends World
 
         diffMulti = difficulty;
 
-        addObject(lives = new Lives("Heart", 512, 60, maxLives), WIDTH/2, 100);
+        // Add objects to the world
+        addObject(lives = new Lives("Heart", 512, 60, maxLives), WIDTH / 2, 100);
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
-        addObject(player = new Player(playerModel, speed, lives), this.getWidth()/2, this.getHeight()/2);
+        addObject(player = new Player(playerModel, speed, lives), this.getWidth() / 2, this.getHeight() / 2);
 
-        // border hitbox
-        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH/2, height);
-        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH/2, 0);
-        addObject(new Hitbox(100, height, 2.5), WIDTH, height/2);
-        addObject(new Hitbox(100, height, 2.5), 0, height/2);
+        // Add border hitboxes
+        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH / 2, height);
+        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH / 2, 0);
+        addObject(new Hitbox(100, height, 2.5), WIDTH, height / 2);
+        addObject(new Hitbox(100, height, 2.5), 0, height / 2);
 
+        // Add islands to the world
         addObject(new Island(new GreenfootImage("island.png")), 500 - getScroller().getScrolledX(), 500 - getScroller().getScrolledY());
         addObject(new Island(new GreenfootImage("island.png")), 600 - getScroller().getScrolledX(), 1750 - getScroller().getScrolledY());
         addObject(new Island(new GreenfootImage("island.png")), 1750 - getScroller().getScrolledX(), 900 - getScroller().getScrolledY());
@@ -62,49 +62,46 @@ public class SimulationWorld extends World
         // GUI
         addObject(pauseButton = new Button("PauseButton", new String[] {"db_1.png", "db_2.png", "db_3.png"}, true, 1, 55, 35), 55, 35);
         addObject(slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540), 155, 540);
-    
+
         waveLabel = new Label("Wave " + (waveCount + 1), 40);  // Initial label will display "Wave 1"
         addObject(waveLabel, 200, 25);  // Position it on the screen
     }
 
-    public void addedToWorld ()
-    {
+    public void addedToWorld() {
         // Plays the ambient noise in a loop
         ambientSound.playLoop();
     }
 
-    public void started ()
-    {
-        // Plays the ambient noise in a loop
+    public void started() {
+        // Plays the ambient noise in a loop when the world starts
         ambientSound.playLoop();
     }
 
-    public void stopped ()
-    {
-        // Stops playing the ambient noises when simulation is paused
+    public void stopped() {
+        // Stops the ambient noise when the simulation is paused
         ambientSound.pause();
     }
 
-    public void addObject(Actor a){
+    public void addObject(Actor a) {
     }
 
-    public void act()
-    {
-        actCount++;
+    public void act() {
+        actCount++;  // Increment the act count (used to track simulation steps)
 
         // Update coin spawn timer
         coinSpawnTimer++;
 
         // Every 30 seconds, spawn 5 coins at random locations
         if (coinSpawnTimer >= 900) {  // 900 ticks = 30 seconds (assuming 30 FPS)
-            spawnCoins();
+            spawnCoins();  // Spawn coins
             coinSpawnTimer = 0;  // Reset the timer after spawning coins
         }
 
-        // Handle enemy waves
+        // Handle enemy waves (spawn new enemies if all are defeated)
         handleWaves();
 
-        scroller.scroll(getWidth()/2 - player.getX(), getHeight()/2 - player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
+        // Scroll the world to follow the player
+        scroller.scroll(getWidth() / 2 - player.getX(), getHeight() / 2 - player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
     }
 
     // Handle the spawning of enemies for each wave
@@ -124,6 +121,7 @@ public class SimulationWorld extends World
         // For each wave, spawn one more enemy from each enemy class
         for (int i = 0; i < wave; i++) {
             spawnEnemy(Bass.class);
+            spawnEnemy(Kraken.class);
             spawnEnemy(Krakite.class);
             spawnEnemy(Shark.class);
             spawnEnemy(Swordfish.class);
@@ -154,60 +152,49 @@ public class SimulationWorld extends World
         }
     }
 
-    public Scroller getScroller(){
+    public Scroller getScroller() {
         return scroller;
     }
 
-    public void addObject(Actor object, double x, double y){
+    public void addObject(Actor object, double x, double y) {
         super.addObject(object, (int)(x + 0.5), (int)(y + 0.5));
     }
 
-    public static double getDistance (Actor a, Actor b)
-    {
-        return Math.hypot (a.getX() - b.getX(), a.getY() - b.getY());
+    public static double getDistance(Actor a, Actor b) {
+        return Math.hypot(a.getX() - b.getX(), a.getY() - b.getY());
     }
 
-    public double getPreciseY() 
-    {
+    public double getPreciseY() {
         return exactY;
     }
 
-    public double exactY(){
+    public double exactY() {
         return exactY;
     }
 
-    public double getPreciseX() 
-    {
+    public double getPreciseX() {
         return exactY;
     }
 
-    public double exactX(){
+    public double exactX() {
         return exactY;
     }
 
-    public static boolean isActing()
-    {
+    public static boolean isActing() {
         return acting;
     }
 
-    public static void addkillCount()
-    {
+    public static void addkillCount() {
         System.out.println("+1");
         killCount++;
     }
 
-    public static int getKillCount()
-    {
-        if (killCount < 5)
-        {
+    public static int getKillCount() {
+        if (killCount < 5) {
             return 0;
-        }
-        else if (killCount < 25)
-        {
+        } else if (killCount < 25) {
             return 1;
-        }
-        else
-        {
+        } else {
             return 2;
         }
     }
