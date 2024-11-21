@@ -8,15 +8,20 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class EndScreen extends World
 {
-
-    /**
-     * Constructor for objects of class EndScreen.
-     * 
-     */
+    private NextButton restart;
+    private StatsLabel dead;
+    
     public EndScreen()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1); 
-
+        super(1024, 576, 1, false);
+        
+        GreenfootImage background = new GreenfootImage(getWidth(), getHeight());
+        background.setColor(Color.BLACK);
+        background.fill();
+        setBackground(background);
+        
+        addObject(dead = new StatsLabel(new GreenfootImage("GAME OVER", 100, Color.WHITE, null)), getWidth()/2, 200);
+        
+        addObject(restart = new NextButton(1), 512, 400);
     }
 }
