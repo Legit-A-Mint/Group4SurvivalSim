@@ -10,8 +10,8 @@ public class SliderObject extends Interface
 {
     private GreenfootImage img;
     private int maxOffset;
-    private int refX, refY; //refers to the reference point of Slider
-
+    private int refX, refY; 
+    
     public SliderObject(String name, int max, int refX, String image, double scale, int myX, int myY){
         super(name, myX, myY);
         

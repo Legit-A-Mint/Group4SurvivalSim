@@ -46,8 +46,8 @@ public class Hitbox extends SuperSmoothMover
         this.offsetY = offsetY;
     }
     
-    public void act()
-    {
+    // Ensure hitbox always stays with owner
+    public void act(){
         if(owner != null){
             moveWithOwner();
         }
@@ -58,10 +58,11 @@ public class Hitbox extends SuperSmoothMover
         setLocation(owner.getX() + offsetX, owner.getY() + offsetY);
     }
     
+    // Return a list of all hitboxes that intersect this hitbox
     public List<Hitbox> getIntersectingHitboxes() {
-            List<Hitbox> hitboxes = (List<Hitbox>) getIntersectingObjects(Hitbox.class);
-            return hitboxes;
-        }
+        List<Hitbox> hitboxes = (List<Hitbox>) getIntersectingObjects(Hitbox.class);
+        return hitboxes;
+    }
         
     public boolean checkCollision(Hitbox otherHitbox) {
         //get boundaries of this hitbox

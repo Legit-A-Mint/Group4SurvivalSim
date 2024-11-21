@@ -6,6 +6,7 @@ import java.util.*;
  * Write a description of class Scroller here.
  * 
  * @Andrew
+ * @lumilk
  * @version (a version number or a date)
  */
 public class Scroller extends Actor

@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * A class to represent the player's health bar (lives) and handle game over logic.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Jonathan
+ * @1.0.0
  */
 public class Lives extends Interface {    
     private String name;
