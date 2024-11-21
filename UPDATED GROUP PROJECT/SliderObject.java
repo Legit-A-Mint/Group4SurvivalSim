@@ -12,8 +12,9 @@ public class SliderObject extends Interface
     private int maxOffset;
     private int refX, refY; //refers to the reference point of Slider
 
-    public SliderObject(String name, int max, int refX, String image, double scale, int myX, int myY){
+    public SliderObject(String name, int max, int refX, String image, double scale, int myX, int myY, boolean fadesAway){
         super(name, myX, myY);
+        this.fadesAway = fadesAway;
         
         img = new GreenfootImage(image);
         setImage(img);

@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.target=Lives
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ HpBar\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-comment1.params=name\ myX\ myY\ max
-comment1.target=Lives(java.lang.String,\ int,\ int,\ int)
+comment1.params=name\ myX\ myY\ max\ fadesAway
+comment1.target=Lives(java.lang.String,\ int,\ int,\ int,\ boolean)
 comment2.params=
 comment2.target=void\ act()
 comment3.params=
