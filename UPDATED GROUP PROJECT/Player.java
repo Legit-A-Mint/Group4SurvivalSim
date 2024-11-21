@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import greenfoot.*;
 
 /**
- * 
  * @lumilk
  * @1.0.0
  */
@@ -20,6 +19,11 @@ public class Player extends Effects {
     private ArrayList<Object> inventory;
     private int coins;
 
+    // UI variables
+    private boolean hasSpearUI = false;
+    private boolean hasRaftUI = false;
+    private boolean hasHeal = false;
+
     // Hitbox variables
     private Hitbox hitbox;
     private boolean createdHitbox;
@@ -33,15 +37,25 @@ public class Player extends Effects {
 
     // Direction variables for animation
     private int direction;
-    
-    SimulationWorld world;
 
+    SimulationWorld world;
+    Lives lives;
+
+    
+    // Effects
+    private int poisonCounter;
+    private int poisonDamage;
+    private boolean poisoned;
+    private static final int POISONTICKS = 60;
+    
     private Actor target;  // Target for AI-controlled player to move towards
 
     // Define SAFE_DISTANCE constant
-    private static final double SAFE_DISTANCE = 100.0; // Example value, adjust as needed
+    private static final double SAFE_DISTANCE = 175.0; // Example value, adjust as needed
+    
+    
 
-    public Player(String playerModel, int speed) {
+    public Player(String playerModel, int speed, Lives lives) {
         floatyImage[0] = new GreenfootImage("floaty.png");
         floatyImage[1] = new GreenfootImage("wood.png");
         floatyImage[2] = new GreenfootImage("metal.png");
@@ -49,16 +63,20 @@ public class Player extends Effects {
         setRaft(0);
 
         this.speed = speed;
-        
-        weaponCooldown = 15;  // Cooldown in terms of ticks, 60 ticks = 1 second
+        this.lives = lives;
+
+        weaponCooldown = 10;  // Cooldown in terms of ticks, 60 ticks = 1 second
         createdHitbox = false;
-        maxhp = 10000;
+        maxhp = lives.getValue();
         hp = maxhp;
         coins = 0; // Initialize coins
         inventory = new ArrayList<>(); // Initialize inventory
     }
 
     public void act() {
+        //Keep this here
+        //System.out.println("(" + (this.getX() - ((SimulationWorld)getWorld()).getScroller().getScrolledX()) + ", " + (this.getY() - ((SimulationWorld)getWorld()).getScroller().getScrolledY()) + ")");
+
         if (SimulationWorld.isActing()) {
             if (shootCounter > 0) {
                 shootCounter--; // Decrease shoot counter to create a delay
@@ -69,16 +87,18 @@ public class Player extends Effects {
             }
 
             // AI-controlled movement
-            setTargetToNearestCoinOrEnemy();  // Set target to the nearest coin or enemy
-            aiMove();
+            //setTargetToNearestCoinOrEnemy();  // Set target to the nearest coin or enemy
+            //aiMove();
 
+            handleMovement();        
             handleInputs();  // Handle player shooting
             updateHitboxPosition();
             setRaft(world.getKillCount());
             collectCoins();
+            checkEffects();
         }
     }
-    
+
     private void collectCoins() {
         Actor coin = getOneIntersectingObject(Coins.class);
         if (coin != null) {
@@ -91,11 +111,53 @@ public class Player extends Effects {
     public void addCoins(int amount) {
         coins += amount;
     }
-    
+
     public int getCoins() {
         return coins;
     }
-    
+
+    // Unlock Spear UI
+    public void unlockSpearUI() {
+        if (!hasSpearUI) {
+            hasSpearUI = true;
+            System.out.println("Spear UI Unlocked!");
+            // Show Spear UI on the screen (optional)
+        }
+    }
+
+    // Unlock Raft UI
+    public void unlockRaftUI() {
+        if (!hasRaftUI) {
+            hasRaftUI = true;
+            System.out.println("Raft UI Unlocked!");
+            // Show Raft UI on the screen (optional)
+        }
+    }
+
+    // Buy Heal
+    public void buyHeal() {
+        if (coins >= 50 && hp < maxhp) {
+            coins -= 50;  // Deduct coins for the healing
+            hp = maxhp;   // Heal the player to full health
+            lives.updateValue(hp);  // Update the health display
+            hasHeal = true;
+            System.out.println("Heal Purchased and Health Restored!");
+        }
+    }
+
+    // Getter methods to check if items are purchased
+    public boolean hasSpear() {
+        return hasSpearUI;
+    }
+
+    public boolean hasRaft() {
+        return hasRaftUI;
+    }
+
+    public boolean hasHeal() {
+        return hasHeal;
+    }
+
     public void setRaft(int num) {
         if (floatyNum == 0)
         {
@@ -127,12 +189,12 @@ public class Player extends Effects {
             // Get the target's position (whether it's an enemy or coin)
             double targetX = target.getX();
             double targetY = target.getY();
-    
+
             // Calculate direction vector to the target
             double deltaX = targetX - getX();
             double deltaY = targetY - getY();
             double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-    
+
             // Check if the target is an enemy and the distance is within the "safe zone"
             if (target instanceof Enemy && distance < SAFE_DISTANCE) {
                 // If too close, move away from the enemy
@@ -141,7 +203,7 @@ public class Player extends Effects {
                 // Normal movement towards the target
                 moveTowardsTarget(deltaX, deltaY);
             }
-    
+
             // If the target is an enemy and within shooting range, shoot at it
             if (target instanceof Enemy && distance < 500) {  // 500 is the shooting range
                 shootWithDelay();  // Ensure shooting with a delay
@@ -181,7 +243,7 @@ public class Player extends Effects {
     private void setTargetToNearestCoinOrEnemy() {
         Actor nearestTarget = null;
         double nearestDistance = Double.MAX_VALUE;
-        
+
         // Check for coins and enemies
         List<Actor> objectsInWorld = getWorld().getObjects(Actor.class);  // Use List<Actor>
         for (Actor obj : objectsInWorld) {
@@ -190,7 +252,7 @@ public class Player extends Effects {
                 double deltaX = obj.getX() - getX();
                 double deltaY = obj.getY() - getY();
                 double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-                
+
                 // Find the nearest object
                 if (distance < nearestDistance) {
                     nearestDistance = distance;
@@ -198,7 +260,7 @@ public class Player extends Effects {
                 }
             }
         }
-        
+
         // Set the nearest object as the target
         target = nearestTarget;
     }
@@ -253,7 +315,7 @@ public class Player extends Effects {
         }
     }
 
-    // Handle shooting inputs with a 1-second delay
+    // Handle shooting inputs with a 1 second delay
     private void handleInputs() {
         if (shootCounter == 0 && !getWorld().getObjects(Enemy.class).isEmpty()) {
             if (Greenfoot.isKeyDown("space")) {
@@ -266,15 +328,74 @@ public class Player extends Effects {
     protected void shootWithDelay() {
         if (shootCounter <= 0) {
             shootCounter = weaponCooldown; // Reset shoot cooldown
-            getWorld().addObject(new Projectile("arrow.png"), getX(), getY());
+            spawnProjectile(3);
         }
     }
 
-    // Damage the player
+    // Shoot player weapon, each case is a different weapon
+    private void spawnProjectile(int type){
+        switch(type){
+                case(0):
+
+                // Damage 3, speed 6
+                getWorld().addObject(new Projectile("Proj1.png", 3, 6), getX(), getY());
+                break;
+
+                case(1):
+
+                // Damage 12, speed 7
+                getWorld().addObject(new Projectile("Proj2.png", 12, 7), getX(), getY());
+                break;
+
+                case(2):
+
+                // Damage 50, speed 5
+                getWorld().addObject(new Projectile("Proj3.png", 50, 5), getX(), getY());
+                break;
+
+                case(3):
+
+                // Damage 75, speed 6
+                getWorld().addObject(new Projectile("Proj4.png", 75, 6), getX(), getY());
+                break;
+
+        }
+    }
+
+    // Damage the player and update the Lives display
     public void damageMe(int damage) {
         if (hp > 0) {
             hp -= damage * world.diffMulti;
+            lives.updateValue(hp); // Update the Lives display
             System.out.println("PLAYER HP: " + hp);
+        }
+    }
+
+    public void poisonMe(int damage, int ticks){        
+        poisonCounter = ticks * POISONTICKS;
+        poisoned = true;
+        poisonDamage = damage;
+    }
+
+    public void checkEffects(){
+        // Check if player is poisoned or not
+        if(poisoned){
+            // Decrease poison counter
+            poisonCounter--;
+            
+            // Ensure to only poison if poison counter is > 0
+            if(poisonCounter > 0){
+                // Every 20th act inflict poison damage
+                if(poisonCounter % POISONTICKS == 0){
+                    damageMe(poisonDamage);
+                }
+            }
+            else{
+                // Set poison counter to unreachable state
+                poisonCounter = -1;
+                // Reset poison
+                poisoned = false;
+            }
         }
     }
 
@@ -319,7 +440,7 @@ public class Player extends Effects {
     public void setTarget(Actor target) {
         this.target = target;
     }
-    
+
     public void addInventory(String item) {
         inventory.add(item);  // Adds item to the player's inventory
     }
@@ -327,8 +448,8 @@ public class Player extends Effects {
     public void addHp(int amount) {
         hp = Math.min(hp + amount, maxhp);  // Increase HP but not exceeding max HP
     }
-    
-     public int getHp() {
+
+    public int getHp() {
         return hp;
     }
 }

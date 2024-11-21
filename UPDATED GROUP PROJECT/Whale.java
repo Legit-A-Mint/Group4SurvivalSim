@@ -13,7 +13,7 @@ public class Whale extends Enemy
         img = new GreenfootImage[2];
         speed = 1.0;
         hp = 50;
-        damage = 20;
+        damage = 10;
         attackCooldown = 60;
         isMovable = true;
         // vfx

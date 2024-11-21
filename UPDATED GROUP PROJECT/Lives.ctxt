@@ -1,14 +1,16 @@
 #BlueJ class context
 comment0.target=Lives
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ HpBar\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ A\ class\ to\ represent\ the\ player's\ health\ bar\ (lives)\ and\ handle\ game\ over\ logic.\r\n\ \r\n\ @Jonathan\r\n\ @1.0.0\r\n
 comment1.params=name\ myX\ myY\ max
 comment1.target=Lives(java.lang.String,\ int,\ int,\ int)
 comment2.params=
 comment2.target=void\ act()
-comment3.params=
-comment3.target=void\ updateDisplay()
+comment3.params=newValue
+comment3.target=void\ updateValue(int)
 comment4.params=
-comment4.target=int\ getValue()
+comment4.target=void\ updateDisplay()
 comment5.params=
-comment5.target=boolean\ isUserInteracting()
-numComments=6
+comment5.target=int\ getValue()
+comment6.params=
+comment6.target=boolean\ isUserInteracting()
+numComments=7

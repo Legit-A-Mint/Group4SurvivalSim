@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class Counter here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @lumilk 
+ * @1.0.0
  */
 
 public class Counter extends Interface
@@ -21,10 +21,8 @@ public class Counter extends Interface
         setCount();
     }
 
-    public Counter(String name, String image, double scale, boolean isDouble, int myX, int myY, boolean fadesAway){
+    public Counter(String name, String image, double scale, boolean isDouble, int myX, int myY){
         super(name, myX, myY);
-        
-        this.fadesAway = fadesAway;
         
         myImage = image;
         imgBase = new GreenfootImage(image);
@@ -32,12 +30,14 @@ public class Counter extends Interface
         imgBase.scale((int)(imgBase.getWidth() * scale), (int)(imgBase.getHeight() * scale)); 
         setImage(imgBase);
     }
-
+    
+    // Increment by abritrary number
     public void setCount(double count){
         this.count = count;
         updateImage();
     }
 
+    // Count increment by 1
     public void setCount(){
         this.count++;
         updateImage();

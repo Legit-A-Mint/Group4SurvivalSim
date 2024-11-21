@@ -20,7 +20,7 @@ public class Kraken extends Enemy
         super();
         img = new GreenfootImage[12];
         createdHitbox = false;
-        hp = 1000;
+        hp = 10000;
         damage = 5;
         attackCooldown = 100;
         attackTimer = 0;

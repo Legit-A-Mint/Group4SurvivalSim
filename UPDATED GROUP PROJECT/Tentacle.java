@@ -1,3 +1,4 @@
+
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
@@ -13,8 +14,8 @@ public class Tentacle extends Kraken
     private boolean foundPlayer;
     private boolean createdHitbox;
     public Tentacle(){
-        hp = 50;
-        damage = 500;
+        hp = 300;
+        damage = 100;
         attackCooldown = 30;
         img = new GreenfootImage[3];
         createdHitbox = false;
@@ -44,10 +45,10 @@ public class Tentacle extends Kraken
             attackTimer--;
         }
         
-        // If colliding with player and attackTimer is 0, attack for a certain damage
+        // If colliding with player and attackTimer is 0, poison for a certain damage and # ticks
         if(getPlayerCollision()){
             if(attackTimer == 0){
-                getPlayer().damageMe(damage);
+                getPlayer().poisonMe(damage, 10);
                 attackTimer = attackCooldown;
             }
         }
@@ -77,7 +78,7 @@ public class Tentacle extends Kraken
 
     @Override
     public void damageMe(int damage){
-        getPlayer().damageMe(damage);
+        this.hp -= damage;
     }
 
     @Override

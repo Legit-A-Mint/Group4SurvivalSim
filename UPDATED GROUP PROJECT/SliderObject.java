@@ -10,11 +10,10 @@ public class SliderObject extends Interface
 {
     private GreenfootImage img;
     private int maxOffset;
-    private int refX, refY; //refers to the reference point of Slider
-
-    public SliderObject(String name, int max, int refX, String image, double scale, int myX, int myY, boolean fadesAway){
+    private int refX, refY; 
+    
+    public SliderObject(String name, int max, int refX, String image, double scale, int myX, int myY){
         super(name, myX, myY);
-        this.fadesAway = fadesAway;
         
         img = new GreenfootImage(image);
         setImage(img);
@@ -45,6 +44,8 @@ public class SliderObject extends Interface
                 setLocation(refX - maxOffset + 1, this.getY());
             }
         }
+        
+        SimulationWorld.ambientSound.setVolume((getX() - 26)*100/258);
     }
 
     public void setTransparency(double t){

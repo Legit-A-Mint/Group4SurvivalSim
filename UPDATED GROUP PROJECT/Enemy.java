@@ -4,8 +4,9 @@ import java.util.*;
 /**
  * Write a description of class Enemies here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @lumilk
+ * @Andrew
+ * @1.0.2
  */
 public abstract class Enemy extends Effects
 {
@@ -141,7 +142,7 @@ public abstract class Enemy extends Effects
     }
 
     public void damageMe(int damage){
-        this.hp -= (int)damage*world.diffMulti;
+        this.hp -= damage*world.diffMulti;
     }
 
     // Modified repel method
