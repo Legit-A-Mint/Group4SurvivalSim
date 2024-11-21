@@ -78,8 +78,8 @@ public class Player extends Effects {
             }
 
             // AI-controlled movement
-            //setTargetToNearestCoinOrEnemy();  // Set target to the nearest coin or enemy
-            //aiMove();
+            setTargetToNearestCoinOrEnemy();  // Set target to the nearest coin or enemy
+            aiMove();
             
             handleMovement();        
             handleInputs();  // Handle player shooting
