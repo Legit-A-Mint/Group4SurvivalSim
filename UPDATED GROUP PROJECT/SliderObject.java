@@ -44,6 +44,8 @@ public class SliderObject extends Interface
                 setLocation(refX - maxOffset + 1, this.getY());
             }
         }
+        
+        SimulationWorld.ambientSound.setVolume((getX() - 26)*100/258);
     }
 
     public void setTransparency(double t){

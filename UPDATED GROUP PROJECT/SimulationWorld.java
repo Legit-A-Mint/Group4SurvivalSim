@@ -23,7 +23,7 @@ public class SimulationWorld extends World
 
     private int coinSpawnTimer;  // Timer to track coin spawning time
     private int coinDisplay;
-    
+
     public static GreenfootSound ambientSound = new GreenfootSound("gentle_Ocean.mp3");
 
     private Label waveLabel; 
@@ -62,7 +62,7 @@ public class SimulationWorld extends World
         // GUI
         addObject(pauseButton = new Button("PauseButton", new String[] {"db_1.png", "db_2.png", "db_3.png"}, true, 1, 55, 35), 55, 35);
         addObject(slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540), 155, 540);
-    
+
         waveLabel = new Label("Wave " + (waveCount + 1), 40);  // Initial label will display "Wave 1"
         addObject(waveLabel, 200, 25);  // Position it on the screen
     }
@@ -90,21 +90,36 @@ public class SimulationWorld extends World
 
     public void act()
     {
-        actCount++;
+        if (acting)
+        {
+            actCount++;
 
-        // Update coin spawn timer
-        coinSpawnTimer++;
+            // Update coin spawn timer
+            coinSpawnTimer++;
 
-        // Every 30 seconds, spawn 5 coins at random locations
-        if (coinSpawnTimer >= 900) {  // 900 ticks = 30 seconds (assuming 30 FPS)
-            spawnCoins();
-            coinSpawnTimer = 0;  // Reset the timer after spawning coins
+            // Every 30 seconds, spawn 5 coins at random locations
+            if (coinSpawnTimer >= 900) {  // 900 ticks = 30 seconds (assuming 30 FPS)
+                spawnCoins();
+                coinSpawnTimer = 0;  // Reset the timer after spawning coins
+            }
+
+            // Handle enemy waves
+            handleWaves();
+
+            scroller.scroll(getWidth()/2 - player.getX(), getHeight()/2 - player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
         }
-
-        // Handle enemy waves
-        handleWaves();
-
-        scroller.scroll(getWidth()/2 - player.getX(), getHeight()/2 - player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
+        if (Greenfoot.mouseClicked(pauseButton))
+        {
+            acting = !acting;
+            if (acting)
+            {
+                ambientSound.playLoop();
+            }
+            else
+            {
+                ambientSound.pause();
+            }
+        }
     }
 
     // Handle the spawning of enemies for each wave
