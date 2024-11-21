@@ -162,8 +162,8 @@ public class SimulationWorld extends World {
             waveCount++;  // Increment the wave count
             spawnEnemiesForWave(waveCount);  // Spawn enemies based on the current wave count
 
-            // Check if it's wave 15, and spawn the Kraken if it is
-            if (waveCount == 14 && !createdKraken) {  // Wave 15 is waveCount 14 (0-based)
+            // Check if it's wave 5, and spawn the Kraken if it is
+            if (waveCount == 15 && !createdKraken) {  // Wave 5 is waveCount 4 (0-based)
                 spawnKraken();  // Spawn the Kraken
                 createdKraken = true;  // Set flag to prevent Kraken from spawning again
             }
@@ -181,48 +181,41 @@ public class SimulationWorld extends World {
             spawnEnemy(Shark.class);
             spawnEnemy(Swordfish.class);
             spawnEnemy(Whale.class);
+            spawnEnemy(Krakite.class);
         }
     }
 
-    // Method to spawn a single enemy at a random location in the world
-    private void spawnEnemy(Class<? extends Actor> enemyClass) {
-        int randomX = Greenfoot.getRandomNumber(WIDTH); // Random X position within the world width
-        int randomY = Greenfoot.getRandomNumber(height); // Random Y position within the world height
+    // Spawn an enemy of the given class type
+    private void spawnEnemy(Class<? extends Enemy> enemyClass) {
+        int x = Greenfoot.getRandomNumber(WIDTH);
+        int y = Greenfoot.getRandomNumber(height);
         try {
-            Actor enemy = enemyClass.getDeclaredConstructor().newInstance();  // Create a new instance of the enemy
-            addObject(enemy, randomX, randomY);  // Add the enemy to the world at the random location
+            // Spawn the enemy at a random location
+            addObject(enemyClass.getConstructor().newInstance(), x, y);
         } catch (Exception e) {
-            e.printStackTrace(); // Print any exceptions if the enemy can't be spawned
+            e.printStackTrace();
         }
     }
 
-    // Method to spawn 5 coins at random locations
+    // Method to spawn coins at random locations
     private void spawnCoins() {
-        for (int i = 0; i < 5; i++) {
-            // Ensure coins are within the visible world area
-            int randomX = Greenfoot.getRandomNumber(getWidth());
-            int randomY = Greenfoot.getRandomNumber(getHeight());
-            addObject(new Coins(), randomX, randomY); // Add coin to the world
-        }
+        int x = Greenfoot.getRandomNumber(WIDTH);
+        int y = Greenfoot.getRandomNumber(height);
+        addObject(new Coins(), x, y);  // Create a new coin at a random location
     }
 
-    // Method to spawn the Kraken at the center of the world or randomly
+    // Method to spawn the Kraken on wave 5
     private void spawnKraken() {
-        int randomX = Greenfoot.getRandomNumber(WIDTH);  // Random X position within the world width
-        int randomY = Greenfoot.getRandomNumber(height);  // Random Y position within the world height
-        try {
-            Actor kraken = new Kraken();  // Create a new Kraken instance
-            addObject(kraken, randomX, randomY);  // Add Kraken to the world at a random position
-        } catch (Exception e) {
-            e.printStackTrace();  // Print any exceptions if the Kraken can't be spawned
-        }
+        int x = Greenfoot.getRandomNumber(WIDTH);
+        int y = Greenfoot.getRandomNumber(height);
+        addObject(new Kraken(), x, y);  // Spawn the Kraken at a random location
     }
 
-    // Getter for the scroller
+    // Get the scroller instance for background movement
     public Scroller getScroller() {
         return scroller;
-    }
-
+    } 
+    
     // Override to add objects with precise coordinates (not currently used)
     public void addObject(Actor object, double x, double y) {
         super.addObject(object, (int) (x + 0.5), (int) (y + 0.5));
@@ -231,16 +224,6 @@ public class SimulationWorld extends World {
     // Static method to calculate the distance between two actors
     public static double getDistance(Actor a, Actor b) {
         return Math.hypot(a.getX() - b.getX(), a.getY() - b.getY());
-    }
-
-    // Getter for the Y-coordinate precision
-    public double getPreciseY() {
-        return exactY;
-    }
-
-    // Getter for the X-coordinate precision
-    public double getPreciseX() {
-        return exactX;
     }
 
     // Static method to check if the game is acting (active)
