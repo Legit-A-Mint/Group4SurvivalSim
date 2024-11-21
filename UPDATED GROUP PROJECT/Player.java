@@ -292,4 +292,16 @@ public class Player extends Effects {
     public void setTarget(Actor target) {
         this.target = target;
     }
+    
+    public void addInventory(String item) {
+        inventory.add(item);  // Adds item to the player's inventory
+    }
+
+    public void addHp(int amount) {
+        hp = Math.min(hp + amount, maxhp);  // Increase HP but not exceeding max HP
+    }
+    
+     public int getHp() {
+        return hp;
+    }
 }
