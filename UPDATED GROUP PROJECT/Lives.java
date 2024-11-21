@@ -57,11 +57,15 @@ public class Lives extends Interface
         {
             hearts.drawImage(storeHearts, hearts.getWidth()/2 - 10, hearts.getHeight()/2 - 15);
         }
+        if (currentHp <= 0)
+        {
+            Greenfoot.setWorld(new EndScreen());
+        }
         setImage(hearts);
     }
     
     public int getValue() {
-        return currentHp; 
+        return currentHp;
     }
     
     @Override

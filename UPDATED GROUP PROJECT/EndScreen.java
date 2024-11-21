@@ -8,8 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class EndScreen extends World
 {
-    private NextButton restart;
-    private StatsLabel dead;
+    NextButton restart;
+    StatsLabel dead;
     
     public EndScreen()
     {    
@@ -23,5 +23,13 @@ public class EndScreen extends World
         addObject(dead = new StatsLabel(new GreenfootImage("GAME OVER", 100, Color.WHITE, null)), getWidth()/2, 200);
         
         addObject(restart = new NextButton(1), 512, 400);
+    }
+    
+    public void act()
+    {
+        if (Greenfoot.mouseClicked(restart))
+        {
+            Greenfoot.setWorld(new OpeningWindow());
+        }
     }
 }
