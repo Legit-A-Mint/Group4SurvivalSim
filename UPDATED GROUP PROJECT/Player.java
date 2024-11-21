@@ -50,7 +50,7 @@ public class Player extends Effects {
 
         this.speed = speed;
         
-        weaponCooldown = 15;  // Cooldown in terms of ticks, 60 ticks = 1 second
+        weaponCooldown = 10;  // Cooldown in terms of ticks, 60 ticks = 1 second
         createdHitbox = false;
         maxhp = 10000;
         hp = maxhp;

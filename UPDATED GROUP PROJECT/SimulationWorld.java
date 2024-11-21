@@ -26,13 +26,16 @@ public class SimulationWorld extends World
     
     // https://pixabay.com/sound-effects/gentle-ocean-waves-fizzing-bubbles-64980/
     public static GreenfootSound ambientSound = new GreenfootSound("gentle_Ocean.mp3");
-    
+
+    // Declare waveLabel as an instance variable
+    private Label waveLabel; 
+
     public SimulationWorld(String playerModel, int maxLives, int speed, double difficulty)
     {
         super(1024, 576, 1, false);
         // settings
 
-        waveCount = 0;
+        waveCount = 0;  // Initialize wave count
         actCount = 0;
         spawnOnce = true;
         delay = 30;
@@ -40,13 +43,13 @@ public class SimulationWorld extends World
         acting = true;
 
         coinSpawnTimer = 0;  // Initialize the coin spawn timer
-        
+
         diffMulti = difficulty;
 
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
         addObject(player = new Player(playerModel, speed), this.getWidth()/2, this.getHeight()/2);
 
-        //border hitbox
+        // border hitbox
         addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH/2, height);
         addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH/2, 0);
         addObject(new Hitbox(100, height, 2.5), WIDTH, height/2);
@@ -57,17 +60,18 @@ public class SimulationWorld extends World
         addObject(new Island(new GreenfootImage("island.png")), 1750 - getScroller().getScrolledX(), 900 - getScroller().getScrolledY());
         addObject(new Island(new GreenfootImage("island.png")), 1500 - getScroller().getScrolledX(), 250 - getScroller().getScrolledY());
         addObject(new Island(new GreenfootImage("island.png")), 1200 - getScroller().getScrolledX(), 1500 - getScroller().getScrolledY());
-        
-        addObject(new Kraken(), getScroller().getScrollWidth()/2 - getScroller().getScrolledX(), getScroller().getScrollHeight()/2 - getScroller().getScrolledY());
 
         // GUI
         addObject(pauseButton = new Button("PauseButton", new String[] {"db_1.png", "db_2.png", "db_3.png"}, true, 1, 55, 35), 55, 35);
-
         addObject(slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540), 155, 540);
     
         addObject(lives = new Lives("Heart", 512, 60, maxLives), WIDTH/2, 100);
+
+        // Add the waveLabel to display the current wave count
+        waveLabel = new Label("Wave " + (waveCount + 1), 40);  // Initial label will display "Wave 1"
+        addObject(waveLabel, 200, 25);  // Position it on the screen
     }
-    
+
     public void addedToWorld ()
     {
         // Plays the ambient noise in a loop
@@ -88,7 +92,7 @@ public class SimulationWorld extends World
 
     public void addObject(Actor a){
     }
-    
+
     public void act()
     {
         actCount++;
@@ -102,7 +106,48 @@ public class SimulationWorld extends World
             coinSpawnTimer = 0;  // Reset the timer after spawning coins
         }
 
+        // Handle enemy waves
+        handleWaves();
+
         scroller.scroll(getWidth()/2 - player.getX(), getHeight()/2 - player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
+    }
+
+    // Handle the spawning of enemies for each wave
+    private void handleWaves() {
+        // Check if all enemies have been defeated before starting a new wave
+        if (getObjects(Enemy.class).isEmpty()) {
+            waveCount++;  // Increment the wave count
+            spawnEnemiesForWave(waveCount);  // Spawn enemies based on the wave count
+
+            // Update the wave label to display the new wave count
+            waveLabel.setText("Wave " + (waveCount + 1));  
+        }
+    }
+
+    // Method to spawn enemies based on the current wave
+    private void spawnEnemiesForWave(int wave) {
+        // For each wave, spawn one more enemy from each enemy class
+        for (int i = 0; i < wave; i++) {
+            spawnEnemy(Bass.class);
+            spawnEnemy(Kraken.class);
+            spawnEnemy(Krakite.class);
+            spawnEnemy(Shark.class);
+            spawnEnemy(Swordfish.class);
+            spawnEnemy(Whale.class);
+        }
+    }
+
+    // Method to spawn a single enemy at a random location
+    private void spawnEnemy(Class<? extends Actor> enemyClass) {
+        int randomX = Greenfoot.getRandomNumber(WIDTH);
+        int randomY = Greenfoot.getRandomNumber(height);
+
+        try {
+            Actor enemy = enemyClass.getDeclaredConstructor().newInstance();  // Create a new instance of the enemy class
+            addObject(enemy, randomX, randomY);  // Add the enemy to the world at a random location
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Method to spawn 5 coins at random locations within the world
@@ -114,7 +159,7 @@ public class SimulationWorld extends World
             addObject(new Coins(), randomX, randomY);  // Add the coin to the world
         }
     }
-    
+
     public Scroller getScroller(){
         return scroller;
     }
