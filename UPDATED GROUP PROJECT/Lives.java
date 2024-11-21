@@ -10,14 +10,12 @@ import greenfoot.GreenfootImage;
 public class Lives extends Interface
 {    
     private String name;
-    private static int currentHp; // the value
+    private int currentHp; // the value
     private int maxValue; // the value
     private int myX, myY;
     
     private GreenfootImage hearts;
     private GreenfootImage storeHearts;
-    
-    Player player;
     
     public Lives(String name, int myX, int myY, int max){
         super(name, myX, myY);
@@ -27,23 +25,21 @@ public class Lives extends Interface
         hearts = new GreenfootImage("pixel_Heart.png");
         maxValue = max;
         currentHp = maxValue;
-        updateDisplay(max);
+        updateDisplay();
     }
     
     public void act()
     {
         super.act();
+        updateDisplay();
     }
     
-    public void updateDisplay(int health) {
+    private void updateDisplay() {
         hearts = new GreenfootImage("pixel_Heart.png");
         hearts.scale(150, 150);
-        storeHearts = new GreenfootImage(Integer.toString(health), 50, Color.WHITE, null);
-        if (currentHp >= 1000)
-        {
-            hearts.drawImage(storeHearts, hearts.getWidth()/2 - 43, hearts.getHeight()/2 - 15);
-        }
-        else if (currentHp >= 100)
+        //storeHearts = new GreenfootImage("test", 150, Color.WHITE, Color.BLACK);
+        storeHearts = new GreenfootImage(Integer.toString(currentHp), 50, Color.WHITE, null);
+        if (currentHp >= 100)
         {
             hearts.drawImage(storeHearts, hearts.getWidth()/2 - 33, hearts.getHeight()/2 - 15);
         }
@@ -58,9 +54,8 @@ public class Lives extends Interface
         setImage(hearts);
     }
     
-    public void setHp(int hp) {
-        currentHp = hp;
-        updateDisplay(currentHp);
+    public int getValue() {
+        return currentHp; 
     }
     
     @Override

@@ -141,7 +141,7 @@ public abstract class Enemy extends Effects
     }
 
     public void damageMe(int damage){
-        player.damageMe(-(int)(damage*world.diffMulti));
+        this.hp -= (int)damage*world.diffMulti;
     }
 
     // Modified repel method
