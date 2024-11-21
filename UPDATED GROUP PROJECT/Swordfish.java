@@ -16,7 +16,7 @@ public class Swordfish extends Enemy
         img = new GreenfootImage[1];
         speed = 8;
         hp = 3;
-        damage = 10;
+        damage = 20;
         attackCooldown = 60;
         speedCooldown = 0;
         isMovable = true;
