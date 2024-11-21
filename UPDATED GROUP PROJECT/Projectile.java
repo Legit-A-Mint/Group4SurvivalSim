@@ -20,17 +20,17 @@ public class Projectile extends Effects{
 
     // Inherited Instance variables
     protected double speed;
-    protected int lifeSpan;
     protected int damage;
     protected int fadeLength;
+    
+    protected int lifeSpan = 350;
 
-    public Projectile(String img){
-        speed = 6;
-        lifeSpan = 350;
-        damage = 100;
-
+    public Projectile(String img, int damage, double speed){
+        this.speed = speed;
+        this.damage = damage;
         this.img = new GreenfootImage(img);
-
+        setImage(img);
+        
         fadeLength = 100;
     }
 
@@ -58,7 +58,7 @@ public class Projectile extends Effects{
                     if(getOneIntersectingObject(Enemy.class) != null){
                         hitEnemy = (Enemy) getOneIntersectingObject(Enemy.class);
                         hitEnemy.damageMe(damage);
-                        //System.out.println("Hit: " + hitEnemy);
+                        System.out.println("Hit: " + hitEnemy);
                         getWorld().removeObject(this);
                     }
                     /**

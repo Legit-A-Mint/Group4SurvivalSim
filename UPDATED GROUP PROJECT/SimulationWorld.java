@@ -27,6 +27,7 @@ public class SimulationWorld extends World
     public static GreenfootSound ambientSound = new GreenfootSound("gentle_Ocean.mp3");
 
     private Label waveLabel; 
+    private boolean createdKraken;
 
     public SimulationWorld(String playerModel, int maxLives, int speed, double difficulty)
     {
@@ -124,7 +125,6 @@ public class SimulationWorld extends World
         // For each wave, spawn one more enemy from each enemy class
         for (int i = 0; i < wave; i++) {
             spawnEnemy(Bass.class);
-            spawnEnemy(Krakite.class);
             spawnEnemy(Shark.class);
             spawnEnemy(Swordfish.class);
             spawnEnemy(Whale.class);
@@ -135,7 +135,6 @@ public class SimulationWorld extends World
     private void spawnEnemy(Class<? extends Actor> enemyClass) {
         int randomX = Greenfoot.getRandomNumber(WIDTH);
         int randomY = Greenfoot.getRandomNumber(height);
-
         try {
             Actor enemy = enemyClass.getDeclaredConstructor().newInstance();  // Create a new instance of the enemy class
             addObject(enemy, randomX, randomY);  // Add the enemy to the world at a random location

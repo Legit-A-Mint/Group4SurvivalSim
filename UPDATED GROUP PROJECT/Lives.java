@@ -24,7 +24,8 @@ public class Lives extends Interface
         this.myY = myY;
         hearts = new GreenfootImage("pixel_Heart.png");
         maxValue = max;
-        currentHp = maxValue;
+        currentHp = 1000000;
+        //currentHp = maxValue;
         updateDisplay();
     }
     

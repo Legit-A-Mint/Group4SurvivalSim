@@ -14,7 +14,7 @@ public class Tentacle extends Kraken
     private boolean foundPlayer;
     private boolean createdHitbox;
     public Tentacle(){
-        hp = 1;
+        hp = 50;
         damage = 500;
         attackCooldown = 30;
         img = new GreenfootImage[3];
@@ -78,7 +78,7 @@ public class Tentacle extends Kraken
 
     @Override
     public void damageMe(int damage){
-        getPlayer().damageMe(damage);
+        this.hp -= damage;
     }
 
     @Override

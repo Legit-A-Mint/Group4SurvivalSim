@@ -61,6 +61,11 @@ public class Player extends Effects {
     }
 
     public void act() {
+        //Keep this here
+        //System.out.println("(" + (this.getX() - ((SimulationWorld)getWorld()).getScroller().getScrolledX()) + ", " + (this.getY() - ((SimulationWorld)getWorld()).getScroller().getScrolledY()) + ")");
+        
+        
+        
         if (SimulationWorld.isActing()) {
             if (shootCounter > 0) {
                 shootCounter--; // Decrease shoot counter to create a delay
@@ -71,9 +76,10 @@ public class Player extends Effects {
             }
 
             // AI-controlled movement
-            setTargetToNearestCoinOrEnemy();  // Set target to the nearest coin or enemy
-            aiMove();
-
+            //setTargetToNearestCoinOrEnemy();  // Set target to the nearest coin or enemy
+            //aiMove();
+            
+            handleMovement();        
             handleInputs();  // Handle player shooting
             updateHitboxPosition();
             setRaft(world.getKillCount());
@@ -268,10 +274,35 @@ public class Player extends Effects {
     protected void shootWithDelay() {
         if (shootCounter <= 0) {
             shootCounter = weaponCooldown; // Reset shoot cooldown
-            getWorld().addObject(new Projectile("arrow.png"), getX(), getY());
+            spawnProjectile(1);
         }
     }
 
+    // Shoot player weapon, each case is a different weapon
+    private void spawnProjectile(int type){
+        switch(type){
+            case(0):
+                
+                // Damage 3, speed 6
+                getWorld().addObject(new Projectile("Projectile.png", 3, 6), getX(), getY());
+                break;
+            
+            case(1):
+            
+                // Damage 12, speed 7
+                getWorld().addObject(new Projectile("netProjectile.png", 12, 7), getX(), getY());
+                break;
+            
+            case(2):
+            
+                // Damage 50, speed 5
+                getWorld().addObject(new Projectile("arrow.png", 50, 5), getX(), getY());
+                break;
+            
+        }
+    }
+    
+    
     // Damage the player and update the Lives display
     public void damageMe(int damage) {
         if (hp > 0) {
