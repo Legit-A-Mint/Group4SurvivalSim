@@ -1,8 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 
-public class SimulationWorld extends World
-{
+public class SimulationWorld extends World {
     public Scroller scroller; // Scroll controller
     private Player player; // Main actor
     private Lives lives;
@@ -28,8 +27,7 @@ public class SimulationWorld extends World
 
     private Label waveLabel; 
 
-    public SimulationWorld(String playerModel, int maxLives, int speed, double difficulty)
-    {
+    public SimulationWorld(String playerModel, int maxLives, int speed, double difficulty) {
         super(1024, 576, 1, false);
 
         waveCount = 0;  // Initialize wave count
@@ -43,15 +41,15 @@ public class SimulationWorld extends World
 
         diffMulti = difficulty;
 
-        addObject(lives = new Lives("Heart", 512, 60, maxLives), WIDTH/2, 100);
+        addObject(lives = new Lives("Heart", 512, 60, maxLives), WIDTH / 2, 100);
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
-        addObject(player = new Player(playerModel, speed, lives), this.getWidth()/2, this.getHeight()/2);
+        addObject(player = new Player(playerModel, speed, lives), this.getWidth() / 2, this.getHeight() / 2);
 
         // border hitbox
-        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH/2, height);
-        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH/2, 0);
-        addObject(new Hitbox(100, height, 2.5), WIDTH, height/2);
-        addObject(new Hitbox(100, height, 2.5), 0, height/2);
+        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH / 2, height);
+        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH / 2, 0);
+        addObject(new Hitbox(100, height, 2.5), WIDTH, height / 2);
+        addObject(new Hitbox(100, height, 2.5), 0, height / 2);
 
         addObject(new Island(new GreenfootImage("island.png")), 500 - getScroller().getScrolledX(), 500 - getScroller().getScrolledY());
         addObject(new Island(new GreenfootImage("island.png")), 600 - getScroller().getScrolledX(), 1750 - getScroller().getScrolledY());
@@ -67,38 +65,33 @@ public class SimulationWorld extends World
         addObject(waveLabel, 200, 25);  // Position it on the screen
     }
 
-    public void addedToWorld ()
-    {
+    public void addedToWorld() {
         // Plays the ambient noise in a loop
         ambientSound.playLoop();
     }
 
-    public void started ()
-    {
+    public void started() {
         // Plays the ambient noise in a loop
         ambientSound.playLoop();
     }
 
-    public void stopped ()
-    {
+    public void stopped() {
         // Stops playing the ambient noises when simulation is paused
         ambientSound.pause();
     }
 
-    public void addObject(Actor a){
+    public void addObject(Actor a) {
     }
 
-    public void act()
-    {
-        if (acting)
-        {
+    public void act() {
+        if (acting) {
             actCount++;
 
             // Update coin spawn timer
             coinSpawnTimer++;
 
             // Every 30 seconds, spawn 5 coins at random locations
-            if (coinSpawnTimer >= 900) {  // 900 ticks = 30 seconds (assuming 30 FPS)
+            if (coinSpawnTimer >= 450) {  // 900 ticks = 30 seconds (assuming 30 FPS)
                 spawnCoins();
                 coinSpawnTimer = 0;  // Reset the timer after spawning coins
             }
@@ -106,19 +99,31 @@ public class SimulationWorld extends World
             // Handle enemy waves
             handleWaves();
 
-            scroller.scroll(getWidth()/2 - player.getX(), getHeight()/2 - player.getY(), this, (ArrayList<SuperSmoothMover>)(getObjects(SuperSmoothMover.class)));
+            // Check if the player should buy the Spear UI or Raft UI based on coins
+            checkForPurchases();
+
+            scroller.scroll(getWidth() / 2 - player.getX(), getHeight() / 2 - player.getY(), this, (ArrayList<SuperSmoothMover>) (getObjects(SuperSmoothMover.class)));
         }
-        if (Greenfoot.mouseClicked(pauseButton))
-        {
+
+        if (Greenfoot.mouseClicked(pauseButton)) {
             acting = !acting;
-            if (acting)
-            {
+            if (acting) {
                 ambientSound.playLoop();
-            }
-            else
-            {
+            } else {
                 ambientSound.pause();
             }
+        }
+    }
+
+    private void checkForPurchases() {
+        if (player.getCoins() >= 100 && !player.hasSpear()) {
+            player.unlockSpearUI();  // Unlock the Spear UI
+        }
+        if (player.getCoins() >= 200 && !player.hasRaft()) {
+            player.unlockRaftUI();   // Unlock the Raft UI
+        }
+        if (player.getHp() < 50 && player.getCoins() >= 50 && !player.hasHeal()) {
+            player.buyHeal();  // Heal the player if they have enough coins
         }
     }
 
@@ -169,60 +174,49 @@ public class SimulationWorld extends World
         }
     }
 
-    public Scroller getScroller(){
+    public Scroller getScroller() {
         return scroller;
     }
 
-    public void addObject(Actor object, double x, double y){
-        super.addObject(object, (int)(x + 0.5), (int)(y + 0.5));
+    public void addObject(Actor object, double x, double y) {
+        super.addObject(object, (int) (x + 0.5), (int) (y + 0.5));
     }
 
-    public static double getDistance (Actor a, Actor b)
-    {
-        return Math.hypot (a.getX() - b.getX(), a.getY() - b.getY());
+    public static double getDistance(Actor a, Actor b) {
+        return Math.hypot(a.getX() - b.getX(), a.getY() - b.getY());
     }
 
-    public double getPreciseY() 
-    {
+    public double getPreciseY() {
         return exactY;
     }
 
-    public double exactY(){
+    public double exactY() {
         return exactY;
     }
 
-    public double getPreciseX() 
-    {
+    public double getPreciseX() {
         return exactY;
     }
 
-    public double exactX(){
+    public double exactX() {
         return exactY;
     }
 
-    public static boolean isActing()
-    {
+    public static boolean isActing() {
         return acting;
     }
 
-    public static void addkillCount()
-    {
+    public static void addkillCount() {
         System.out.println("+1");
         killCount++;
     }
 
-    public static int getKillCount()
-    {
-        if (killCount < 5)
-        {
+    public static int getKillCount() {
+        if (killCount < 5) {
             return 0;
-        }
-        else if (killCount < 25)
-        {
+        } else if (killCount < 25) {
             return 1;
-        }
-        else
-        {
+        } else {
             return 2;
         }
     }

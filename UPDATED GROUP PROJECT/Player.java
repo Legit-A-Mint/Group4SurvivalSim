@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import greenfoot.*;
 
 /**
- * 
  * @lumilk
  * @1.0.0
  */
@@ -20,6 +19,11 @@ public class Player extends Effects {
     private ArrayList<Object> inventory;
     private int coins;
 
+    // UI variables
+    private boolean hasSpearUI = false;
+    private boolean hasRaftUI = false;
+    private boolean hasHeal = false;
+
     // Hitbox variables
     private Hitbox hitbox;
     private boolean createdHitbox;
@@ -33,7 +37,7 @@ public class Player extends Effects {
 
     // Direction variables for animation
     private int direction;
-    
+
     SimulationWorld world;
     Lives lives;
 
@@ -51,7 +55,7 @@ public class Player extends Effects {
 
         this.speed = speed;
         this.lives = lives;
-        
+
         weaponCooldown = 10;  // Cooldown in terms of ticks, 60 ticks = 1 second
         createdHitbox = false;
         maxhp = lives.getValue();
@@ -80,7 +84,7 @@ public class Player extends Effects {
             collectCoins();
         }
     }
-    
+
     private void collectCoins() {
         Actor coin = getOneIntersectingObject(Coins.class);
         if (coin != null) {
@@ -93,11 +97,53 @@ public class Player extends Effects {
     public void addCoins(int amount) {
         coins += amount;
     }
-    
+
     public int getCoins() {
         return coins;
     }
-    
+
+    // Unlock Spear UI
+    public void unlockSpearUI() {
+        if (!hasSpearUI) {
+            hasSpearUI = true;
+            System.out.println("Spear UI Unlocked!");
+            // Show Spear UI on the screen (optional)
+        }
+    }
+
+    // Unlock Raft UI
+    public void unlockRaftUI() {
+        if (!hasRaftUI) {
+            hasRaftUI = true;
+            System.out.println("Raft UI Unlocked!");
+            // Show Raft UI on the screen (optional)
+        }
+    }
+
+    // Buy Heal
+    public void buyHeal() {
+        if (coins >= 50 && hp < maxhp) {
+            coins -= 50;  // Deduct coins for the healing
+            hp = maxhp;   // Heal the player to full health
+            lives.updateValue(hp);  // Update the health display
+            hasHeal = true;
+            System.out.println("Heal Purchased and Health Restored!");
+        }
+    }
+
+    // Getter methods to check if items are purchased
+    public boolean hasSpear() {
+        return hasSpearUI;
+    }
+
+    public boolean hasRaft() {
+        return hasRaftUI;
+    }
+
+    public boolean hasHeal() {
+        return hasHeal;
+    }
+
     public void setRaft(int num) {
         if (floatyNum == 0)
         {
@@ -281,7 +327,6 @@ public class Player extends Effects {
         }
     }
 
-
     // Repel the player upon collision
     private void handleRepel(String direction) {
         collisionCounter++;
@@ -323,7 +368,7 @@ public class Player extends Effects {
     public void setTarget(Actor target) {
         this.target = target;
     }
-    
+
     public void addInventory(String item) {
         inventory.add(item);  // Adds item to the player's inventory
     }
@@ -331,8 +376,8 @@ public class Player extends Effects {
     public void addHp(int amount) {
         hp = Math.min(hp + amount, maxhp);  // Increase HP but not exceeding max HP
     }
-    
-     public int getHp() {
+
+    public int getHp() {
         return hp;
     }
 }
