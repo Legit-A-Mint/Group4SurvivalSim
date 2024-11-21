@@ -63,7 +63,7 @@ public class SimulationWorld extends World
         // GUI
         addObject(pauseButton = new Button("PauseButton", new String[] {"db_1.png", "db_2.png", "db_3.png"}, true, 1, 55, 35), 55, 35);
 
-        addObject(slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540), 155, 540);
+        addObject(slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540, true), 155, 540);
     
         addObject(lives = new Lives("Heart", 512, 60, maxLives), WIDTH/2, 100);
     }
