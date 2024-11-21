@@ -22,7 +22,7 @@ public class Lives extends Interface {
         this.myX = myX;
         this.myY = myY;
         hearts = new GreenfootImage("pixel_Heart.png"); // Load the heart image
-        maxValue = max; // Set max lives
+        maxValue = 9999999; // Set max lives
         currentHp = maxValue; // Initialize current lives
         updateDisplay(); // Update the display immediately
     }

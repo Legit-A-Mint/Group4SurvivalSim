@@ -68,8 +68,6 @@ public class Player extends Effects {
         //Keep this here
         //System.out.println("(" + (this.getX() - ((SimulationWorld)getWorld()).getScroller().getScrolledX()) + ", " + (this.getY() - ((SimulationWorld)getWorld()).getScroller().getScrolledY()) + ")");
         
-        
-        
         if (SimulationWorld.isActing()) {
             if (shootCounter > 0) {
                 shootCounter--; // Decrease shoot counter to create a delay
@@ -307,7 +305,7 @@ public class Player extends Effects {
         }
     }
 
-    // Handle shooting inputs with a 1-second delay
+    // Handle shooting inputs with a 1 second delay
     private void handleInputs() {
         if (shootCounter == 0 && !getWorld().getObjects(Enemy.class).isEmpty()) {
             if (Greenfoot.isKeyDown("space")) {
@@ -320,7 +318,7 @@ public class Player extends Effects {
     protected void shootWithDelay() {
         if (shootCounter <= 0) {
             shootCounter = weaponCooldown; // Reset shoot cooldown
-            spawnProjectile(1);
+            spawnProjectile(3);
         }
     }
 
@@ -330,19 +328,25 @@ public class Player extends Effects {
             case(0):
                 
                 // Damage 3, speed 6
-                getWorld().addObject(new Projectile("Projectile.png", 3, 6), getX(), getY());
+                getWorld().addObject(new Projectile("Proj1.png", 3, 6), getX(), getY());
                 break;
             
             case(1):
             
                 // Damage 12, speed 7
-                getWorld().addObject(new Projectile("netProjectile.png", 12, 7), getX(), getY());
+                getWorld().addObject(new Projectile("Proj2.png", 12, 7), getX(), getY());
                 break;
             
             case(2):
             
                 // Damage 50, speed 5
-                getWorld().addObject(new Projectile("arrow.png", 50, 5), getX(), getY());
+                getWorld().addObject(new Projectile("Proj3.png", 50, 5), getX(), getY());
+                break;
+                
+            case(3):
+            
+                // Damage 75, speed 6
+                getWorld().addObject(new Projectile("Proj4.png", 75, 6), getX(), getY());
                 break;
             
         }
