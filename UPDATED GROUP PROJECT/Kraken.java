@@ -172,7 +172,7 @@ public class Kraken extends Enemy
 
     public void aoeAttack(){
         // Create the AOE Circle and add it to the world
-        AOECircle aoe = new AOECircle(0, 500, 5, 1000); 
+        AOECircle aoe = new AOECircle(0, 500, 5, 20); 
         getWorld().addObject(aoe, getX() - 7, getY());
     }
 

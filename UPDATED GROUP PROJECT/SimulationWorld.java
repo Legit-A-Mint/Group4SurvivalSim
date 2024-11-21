@@ -44,8 +44,7 @@ public class SimulationWorld extends World
         diffMulti = difficulty;
 
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
-        addObject(player = new Player(playerModel, speed), this.getWidth()/2, this.getHeight()/2);
-
+        
         //border hitbox
         addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH/2, height);
         addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH/2, 0);
@@ -66,6 +65,8 @@ public class SimulationWorld extends World
         addObject(slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540), 155, 540);
     
         addObject(lives = new Lives("Heart", 512, 60, maxLives), WIDTH/2, 100);
+        
+        addObject(player = new Player(playerModel, speed, maxLives, lives), this.getWidth()/2, this.getHeight()/2);
     }
     
     public void addedToWorld ()
