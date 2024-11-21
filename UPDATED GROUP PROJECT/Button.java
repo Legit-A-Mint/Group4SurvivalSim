@@ -63,10 +63,12 @@ public class Button extends Interface
         
         setImage(img[0]);
     }
+    
     public void act(){
         super.act();
         doAnimation();
     }    
+    // Return true if mouse clicked
     public boolean checkClicked(){
         if(Greenfoot.mouseClicked(this)){
             return true;
@@ -75,18 +77,24 @@ public class Button extends Interface
             return false;
         }
     }
+    
+    // Hover animation - sets to another image and animate for click
     public void doAnimation(){
+        
+        // Ensure none out of bounds
         if(isAnimated && img.length == 3){
+            // Count down timer
             if(animTimer > 0){
                 animTimer--;
             }
+            // Reset time to idle state
             else if(animTimer == 0){
                 //reset animation
                 animTimer = -1;
                 setImage(img[1]);
             }
             
-            
+            // Hover animations with mouseinfo
             if (Greenfoot.mouseMoved(this)){
                 setImage(img[1]);
             }
@@ -94,6 +102,7 @@ public class Button extends Interface
                 setImage(img[0]);
             }
             
+            // Click animation, reset after certain period with timer
             if(checkClicked()){
                 animTimer = 15;
                 setImage(img[2]);
