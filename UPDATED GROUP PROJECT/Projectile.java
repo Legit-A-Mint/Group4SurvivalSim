@@ -84,11 +84,11 @@ public class Projectile extends Effects{
         enemies = (ArrayList<Enemy>)getObjectsInRange(40, Enemy.class);
 
         int range = 150;
-        int maxRange =  500;
+        int maxRange =  1250;
         while(enemies.size() == 0 && range <= maxRange){
             if (enemies.size() == 0){
                 enemies = (ArrayList<Enemy>)getObjectsInRange(range, Enemy.class);
-                range += 50;
+                range += 200;
             } 
             if (enemies.size() != 0){
                 break;
