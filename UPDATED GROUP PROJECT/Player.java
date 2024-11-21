@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.ArrayList;
 import greenfoot.*;
 
@@ -35,6 +36,8 @@ public class Player extends Effects {
     
     SimulationWorld world;
 
+    private Actor target;  // Target for AI-controlled player to move towards
+
     public Player(String playerModel, int speed) {
         floatyImage[0] = new GreenfootImage("floaty.png");
         floatyImage[1] = new GreenfootImage("wood.png");
@@ -44,7 +47,7 @@ public class Player extends Effects {
 
         this.speed = speed;
         
-        weaponCooldown = 10;
+        weaponCooldown = 15;  // Cooldown in terms of ticks, 60 ticks = 1 second
         createdHitbox = false;
         maxhp = 10000;
         hp = maxhp;
@@ -53,22 +56,20 @@ public class Player extends Effects {
     }
 
     public void act() {
-        //System.out.println("Player: (" + (getX() - ((SimulationWorld)getWorld()).getScroller().getScrolledX()) + ", " + (getY() - ((SimulationWorld)getWorld()).getScroller().getScrolledY()) + ")");
-
-        if (SimulationWorld.isActing())
-        {
-            //animate(this, playerImage[0], playerImage[0].getWidth(), playerImage[0].getHeight(), 16, direction);
-
+        if (SimulationWorld.isActing()) {
             if (shootCounter > 0) {
-                shootCounter--;
+                shootCounter--; // Decrease shoot counter to create a delay
             }
 
             if (!createdHitbox) {
                 createHitbox();
             }
 
-            handleMovement();
-            handleInputs();
+            // AI-controlled movement
+            setTargetToNearestCoinOrEnemy();  // Set target to the nearest coin or enemy
+            aiMove();
+
+            handleInputs();  // Handle player shooting
             updateHitboxPosition();
             setRaft(world.getKillCount());
             collectCoins();
@@ -95,14 +96,14 @@ public class Player extends Effects {
     public void setRaft(int num) {
         if (floatyNum == 0)
         {
-            // if your not on a raft, the floaty has to be drawn on top of you
+            // if you're not on a raft, the floaty has to be drawn on top of you
             tempImg = new GreenfootImage(playerImg);
             tempImg.drawImage(floatyImage[floatyNum], 0, 0);
             playerImage[0] = tempImg;
         }
         else
         {
-            // otherwise draw player ontop of raft
+            // otherwise draw player on top of raft
             tempImg = new GreenfootImage(floatyImage[num]);
             tempImg.drawImage(playerImg, 0, 0);
             playerImage[0] = tempImg;
@@ -117,12 +118,67 @@ public class Player extends Effects {
         createdHitbox = true;
     }
 
-    // Handle player movement and collisions
+    // AI-controlled movement
+    private void aiMove() {
+        if (target != null) {
+            // Get the target's position
+            double targetX = target.getX();
+            double targetY = target.getY();
+            
+            // Calculate direction vector
+            double deltaX = targetX - getX();
+            double deltaY = targetY - getY();
+            double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            
+            // Normalize the direction vector to get the movement direction
+            double directionX = deltaX / distance;
+            double directionY = deltaY / distance;
+            
+            // Move towards the target
+            dx = directionX * speed;
+            dy = directionY * speed;
+
+            handleCollision(dx, dy);  // Handle collision detection while moving
+
+            // If the target is an enemy and is within shooting range, shoot at it
+            if (target instanceof Enemy && distance < 500) {  // 500 is the shooting range
+                shootWithDelay();  // Ensure shooting with a delay
+            }
+        }
+    }
+
+    // Set the target to the nearest coin or enemy
+    private void setTargetToNearestCoinOrEnemy() {
+        Actor nearestTarget = null;
+        double nearestDistance = Double.MAX_VALUE;
+        
+        // Check for coins and enemies
+        List<Actor> objectsInWorld = getWorld().getObjects(Actor.class);  // Use List<Actor>
+        for (Actor obj : objectsInWorld) {
+            // Only target coins or enemies
+            if (obj instanceof Coins || obj instanceof Enemy) {
+                double deltaX = obj.getX() - getX();
+                double deltaY = obj.getY() - getY();
+                double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                
+                // Find the nearest object
+                if (distance < nearestDistance) {
+                    nearestDistance = distance;
+                    nearestTarget = obj;
+                }
+            }
+        }
+        
+        // Set the nearest object as the target
+        target = nearestTarget;
+    }
+
+    // Handle player movement with collision detection
     private void handleMovement() {
         dx = 0;
         dy = 0;
 
-        // Input-based movement
+        // Input-based movement (for manual control)
         if (Greenfoot.isKeyDown("a")) {
             dx -= speed;
             direction = 3; // Left
@@ -167,26 +223,27 @@ public class Player extends Effects {
         }
     }
 
-
-    // Handle shooting inputs
+    // Handle shooting inputs with a 1-second delay
     private void handleInputs() {
         if (shootCounter == 0 && !getWorld().getObjects(Enemy.class).isEmpty()) {
             if (Greenfoot.isKeyDown("space")) {
-                shootCounter = weaponCooldown;
-                shoot();
+                shootWithDelay();  // Only shoot if the cooldown has passed
             }
         }
     }
 
-    // Add projectile to player's position
-    protected void shoot() {
-        getWorld().addObject(new Projectile("arrow.png"), getX(), getY());
+    // Add projectile to player's position with a delay
+    protected void shootWithDelay() {
+        if (shootCounter <= 0) {
+            shootCounter = weaponCooldown; // Reset shoot cooldown
+            getWorld().addObject(new Projectile("arrow.png"), getX(), getY());
+        }
     }
 
     // Damage the player
     public void damageMe(int damage) {
         if (hp > 0) {
-            hp -= damage*world.diffMulti;
+            hp -= damage * world.diffMulti;
             System.out.println("PLAYER HP: " + hp);
         }
     }
@@ -226,5 +283,10 @@ public class Player extends Effects {
 
     public Hitbox getHitbox() {
         return this.hitbox;
+    }
+
+    // Set the target for the AI to move towards (could be an enemy or other object)
+    public void setTarget(Actor target) {
+        this.target = target;
     }
 }
