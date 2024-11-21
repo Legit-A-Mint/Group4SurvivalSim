@@ -17,7 +17,6 @@ public class SimulationWorld extends World {
     private boolean spawnOnce, countOnce; // Used for one-time actions
     public static int killCount; // Counts for the kills across the game
     public static double diffMulti; // This multiplies the difficulty of the simulation
-
     // Used for the world size and maximum spawn distance
     private static final int MAX_SPAWN_DISTANCE = 200;
     private static final int WIDTH = 2000, height = 2000;
@@ -84,6 +83,11 @@ public class SimulationWorld extends World {
         addObject(waveLabel, 200, 25);  // Position the wave label on the screen
     }
 
+    // Method to get the scroller instance for background movement
+    public Scroller getScroller() {
+        return scroller;
+    }
+
     // Method that gets called when the world is added to the Greenfoot environment
     public void addedToWorld() {
         // Start the ambient sound in a loop when the world is active
@@ -104,7 +108,7 @@ public class SimulationWorld extends World {
 
     // Empty addObject method
     public void addObject(Actor a) {
-        // This empty method prevents other addObject calls from being overrid
+        // This empty method prevents other addObject calls from being overridden
     }
 
     // Main act method that runs on every frame of the game
@@ -140,6 +144,11 @@ public class SimulationWorld extends World {
                 ambientSound.pause();  // Pause ambient sound
             }
         }
+
+        // Check if Kraken is defeated and the wave count is 14 or higher before transitioning to the winning screen
+        if (isKrakenDefeated() && waveCount >= 3) {
+            WinningScreen();  // Transition to the winning screen only if the Kraken is defeated after wave 14
+        }
     }
 
     // Method to check if the player has enough coins to buy certain items
@@ -162,59 +171,73 @@ public class SimulationWorld extends World {
             waveCount++;  // Increment the wave count
             spawnEnemiesForWave(waveCount);  // Spawn enemies based on the current wave count
 
-            // Check if it's wave 5, and spawn the Kraken if it is
-            if (waveCount == 15 && !createdKraken) {  // Wave 5 is waveCount 4 (0-based)
+            // Check if it's wave 15, and spawn the Kraken if it is
+            if (waveCount == 3 && !createdKraken) {  // Wave 5 is waveCount 4 (0-based)
                 spawnKraken();  // Spawn the Kraken
                 createdKraken = true;  // Set flag to prevent Kraken from spawning again
             }
-
-            // Update the wave label on the screen
-            waveLabel.setText("Wave " + (waveCount + 1));  
         }
     }
 
-    // Spawn enemies for the current wave
-    private void spawnEnemiesForWave(int wave) {
-        // For each wave, spawn additional enemies from different types
-        for (int i = 0; i < wave; i++) {
-            spawnEnemy(Bass.class);
-            spawnEnemy(Shark.class);
-            spawnEnemy(Swordfish.class);
-            spawnEnemy(Whale.class);
-            spawnEnemy(Krakite.class);
-        }
+        // Add a method to spawn the Kraken
+    private void spawnKraken() {
+        // Create a Kraken actor at a random position
+        Kraken kraken = new Kraken();  // Instantiate the Kraken actor
+        int spawnX = Greenfoot.getRandomNumber(WIDTH);  // Random X position within world width
+        int spawnY = Greenfoot.getRandomNumber(height);  // Random Y position within world height
+        addObject(kraken, spawnX, spawnY);  // Add Kraken to the world at the random position
     }
 
-    // Spawn an enemy of the given class type
-    private void spawnEnemy(Class<? extends Enemy> enemyClass) {
-        int x = Greenfoot.getRandomNumber(WIDTH);
-        int y = Greenfoot.getRandomNumber(height);
+    
+    private void spawnEnemy(Class<? extends Actor> enemyClass) {
+        // Generate random spawn coordinates within the world boundaries
+        int spawnX = Greenfoot.getRandomNumber(WIDTH);  // Random X position within world width
+        int spawnY = Greenfoot.getRandomNumber(height);  // Random Y position within world height
+        
         try {
-            // Spawn the enemy at a random location
-            addObject(enemyClass.getConstructor().newInstance(), x, y);
+            // Instantiate the enemy class dynamically and add it to the world
+            Actor enemy = enemyClass.getDeclaredConstructor().newInstance();
+            addObject(enemy, spawnX, spawnY);  // Add the enemy to the world at the generated position
+        } catch (Exception e) {
+            e.printStackTrace();  // Handle any exceptions that occur during reflection or instantiation
+        }
+    }
+    
+    private void spawnEnemiesForWave(int waveCount) {
+        spawnEnemy(Bass.class);
+        spawnEnemy(Whale.class);
+        spawnEnemy(Swordfish.class);
+        spawnEnemy(Krakite.class);
+        spawnEnemy(Shark.class);
+    } 
+    
+    // Method to spawn coins
+    private void spawnCoins() {
+        int x = Greenfoot.getRandomNumber(WIDTH); // Random x-coordinate
+        int y = Greenfoot.getRandomNumber(height); // Random y-coordinate
+        addObject(new Coins(), x, y); // Add coin at the random position
+    }
+
+    // Method to check if the Kraken is defeated
+    private boolean isKrakenDefeated() {
+        return getObjects(Kraken.class).isEmpty();  // Return true if the Kraken has been defeated
+    }
+
+    // Transition to the winning screen
+    private void WinningScreen() {
+        // Transition logic for winning the game after defeating the Kraken in wave 14
+        Greenfoot.setWorld(new WinningScreen());
+    }
+
+    // Helper method to create a new instance of a given class
+    private Actor newInstance(Class<? extends Actor> clazz) {
+        try {
+            return clazz.getDeclaredConstructor().newInstance();  // Create a new instance using reflection
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
-
-    // Method to spawn coins at random locations
-    private void spawnCoins() {
-        int x = Greenfoot.getRandomNumber(WIDTH);
-        int y = Greenfoot.getRandomNumber(height);
-        addObject(new Coins(), x, y);  // Create a new coin at a random location
-    }
-
-    // Method to spawn the Kraken on wave 5
-    private void spawnKraken() {
-        int x = Greenfoot.getRandomNumber(WIDTH);
-        int y = Greenfoot.getRandomNumber(height);
-        addObject(new Kraken(), x, y);  // Spawn the Kraken at a random location
-    }
-
-    // Get the scroller instance for background movement
-    public Scroller getScroller() {
-        return scroller;
-    } 
     
     // Override to add objects with precise coordinates (not currently used)
     public void addObject(Actor object, double x, double y) {
