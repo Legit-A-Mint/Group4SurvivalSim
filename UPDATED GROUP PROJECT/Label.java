@@ -1,11 +1,12 @@
 import greenfoot.*;
 
-public class Label extends Actor {
+public class Label extends Interface {
     private GreenfootImage image;
     private String text;
     private int fontSize;
 
-    public Label(String text, int fontSize) {
+    public Label(String text, int fontSize, int myX, int myY) {
+        super("LABEL", myX, myY);
         this.text = text;
         this.fontSize = fontSize;
         updateImage();
@@ -19,5 +20,10 @@ public class Label extends Actor {
     private void updateImage() {
         image = new GreenfootImage(text, fontSize, Color.WHITE, new Color(0, 0, 0, 0)); 
         setImage(image);
+    }
+    
+    @Override
+    protected boolean isUserInteracting() {
+        return Greenfoot.mouseMoved(this); // Detect if the mouse is moving over the health bar
     }
 }

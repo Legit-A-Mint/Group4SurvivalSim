@@ -20,8 +20,8 @@ public class Kraken extends Enemy
         super();
         img = new GreenfootImage[12];
         createdHitbox = false;
-        hp = 10000;
-        damage = 5;
+        hp = 3500;
+        damage = 500;
         attackCooldown = 100;
         attackTimer = 0;
 
@@ -96,6 +96,7 @@ public class Kraken extends Enemy
         // Handle each case seperatly
         switch(randomNumber) {
             case 0:
+                
                 if (getWorld().getObjects(Tentacle.class).isEmpty()) {
                     tentacleAttack();
                     if (doDoubleAttack) {
@@ -105,6 +106,7 @@ public class Kraken extends Enemy
                 break;
 
             case 1:
+                
                 summonAttack();
                 if (doDoubleAttack) {
                     performAnotherAttack(0, 2); // Perform a second attack (tentacle or aoe)
@@ -112,11 +114,13 @@ public class Kraken extends Enemy
                 break;
 
             case 2:
+                
                 aoeAttack();
                 if (doDoubleAttack) {
                     performAnotherAttack(0, 1); // Perform a second attack (tentacle or summon)
                 }
                 break;
+                
         }
     }
 

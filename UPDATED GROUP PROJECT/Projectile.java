@@ -58,7 +58,7 @@ public class Projectile extends Effects{
                     if(getOneIntersectingObject(Enemy.class) != null){
                         hitEnemy = (Enemy) getOneIntersectingObject(Enemy.class);
                         hitEnemy.damageMe(damage);
-                        System.out.println("Hit: " + hitEnemy);
+                        //System.out.println("Hit: " + hitEnemy);
                         getWorld().removeObject(this);
                     }
                     /**

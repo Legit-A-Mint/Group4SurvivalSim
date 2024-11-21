@@ -1,9 +1,11 @@
 #BlueJ class context
 comment0.target=Label
-comment1.params=text\ fontSize
-comment1.target=Label(java.lang.String,\ int)
+comment1.params=text\ fontSize\ myX\ myY
+comment1.target=Label(java.lang.String,\ int,\ int,\ int)
 comment2.params=newText
 comment2.target=void\ setText(java.lang.String)
 comment3.params=
 comment3.target=void\ updateImage()
-numComments=4
+comment4.params=
+comment4.target=boolean\ isUserInteracting()
+numComments=5

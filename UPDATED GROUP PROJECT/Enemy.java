@@ -59,7 +59,6 @@ public abstract class Enemy extends Effects
                     getWorld().removeObject(hitbox);
                     getWorld().removeObject(this);
                     world.addkillCount();
-                    System.out.println(world.getKillCount());
                     return;
                 }
             
