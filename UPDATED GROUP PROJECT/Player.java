@@ -40,7 +40,7 @@ public class Player extends Effects {
     private Actor target;  // Target for AI-controlled player to move towards
 
     // Define SAFE_DISTANCE constant
-    private static final double SAFE_DISTANCE = 100.0; // Example value, adjust as needed
+    private static final double SAFE_DISTANCE = 175.0; // Example value, adjust as needed
 
     public Player(String playerModel, int speed, Lives lives) {
         floatyImage[0] = new GreenfootImage("floaty.png");

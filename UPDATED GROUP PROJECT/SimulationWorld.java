@@ -24,16 +24,13 @@ public class SimulationWorld extends World
     private int coinSpawnTimer;  // Timer to track coin spawning time
     private int coinDisplay;
     
-    // https://pixabay.com/sound-effects/gentle-ocean-waves-fizzing-bubbles-64980/
     public static GreenfootSound ambientSound = new GreenfootSound("gentle_Ocean.mp3");
 
-    // Declare waveLabel as an instance variable
     private Label waveLabel; 
 
     public SimulationWorld(String playerModel, int maxLives, int speed, double difficulty)
     {
         super(1024, 576, 1, false);
-        // settings
 
         waveCount = 0;  // Initialize wave count
         actCount = 0;
@@ -66,9 +63,6 @@ public class SimulationWorld extends World
         addObject(pauseButton = new Button("PauseButton", new String[] {"db_1.png", "db_2.png", "db_3.png"}, true, 1, 55, 35), 55, 35);
         addObject(slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540), 155, 540);
     
-        //addObject(lives = new Lives("Heart", 512, 60, maxLives), WIDTH/2, 100);
-
-        // Add the waveLabel to display the current wave count
         waveLabel = new Label("Wave " + (waveCount + 1), 40);  // Initial label will display "Wave 1"
         addObject(waveLabel, 200, 25);  // Position it on the screen
     }
@@ -130,7 +124,6 @@ public class SimulationWorld extends World
         // For each wave, spawn one more enemy from each enemy class
         for (int i = 0; i < wave; i++) {
             spawnEnemy(Bass.class);
-            spawnEnemy(Kraken.class);
             spawnEnemy(Krakite.class);
             spawnEnemy(Shark.class);
             spawnEnemy(Swordfish.class);
