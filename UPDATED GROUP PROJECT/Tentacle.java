@@ -14,7 +14,7 @@ public class Tentacle extends Kraken
     private boolean createdHitbox;
     public Tentacle(){
         hp = 50;
-        damage = 5;
+        damage = 500;
         attackCooldown = 30;
         img = new GreenfootImage[3];
         createdHitbox = false;

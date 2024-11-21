@@ -35,23 +35,21 @@ public class Player extends Effects {
     private int direction;
     
     SimulationWorld world;
-    Lives lives;
 
     private Actor target;  // Target for AI-controlled player to move towards
 
-    public Player(String playerModel, int speed, int health, Lives lives) {
+    public Player(String playerModel, int speed) {
         floatyImage[0] = new GreenfootImage("floaty.png");
         floatyImage[1] = new GreenfootImage("wood.png");
         floatyImage[2] = new GreenfootImage("metal.png");
         playerImg = new GreenfootImage(playerModel);
         setRaft(0);
 
-        this.lives = lives;
         this.speed = speed;
         
         weaponCooldown = 15;  // Cooldown in terms of ticks, 60 ticks = 1 second
         createdHitbox = false;
-        maxhp = health;
+        maxhp = 10000;
         hp = maxhp;
         coins = 0; // Initialize coins
         inventory = new ArrayList<>(); // Initialize inventory
@@ -246,7 +244,6 @@ public class Player extends Effects {
     public void damageMe(int damage) {
         if (hp > 0) {
             hp -= damage * world.diffMulti;
-            lives.setHp(hp);
             System.out.println("PLAYER HP: " + hp);
         }
     }
