@@ -46,8 +46,9 @@ public class SimulationWorld extends World
 
         diffMulti = difficulty;
 
+        addObject(lives = new Lives("Heart", 512, 60, maxLives), WIDTH/2, 100);
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, height));
-        addObject(player = new Player(playerModel, speed), this.getWidth()/2, this.getHeight()/2);
+        addObject(player = new Player(playerModel, speed, lives), this.getWidth()/2, this.getHeight()/2);
 
         // border hitbox
         addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH/2, height);
@@ -65,7 +66,7 @@ public class SimulationWorld extends World
         addObject(pauseButton = new Button("PauseButton", new String[] {"db_1.png", "db_2.png", "db_3.png"}, true, 1, 55, 35), 55, 35);
         addObject(slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540), 155, 540);
     
-        addObject(lives = new Lives("Heart", 512, 60, maxLives), WIDTH/2, 100);
+        //addObject(lives = new Lives("Heart", 512, 60, maxLives), WIDTH/2, 100);
 
         // Add the waveLabel to display the current wave count
         waveLabel = new Label("Wave " + (waveCount + 1), 40);  // Initial label will display "Wave 1"

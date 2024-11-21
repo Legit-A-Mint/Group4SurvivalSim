@@ -34,6 +34,12 @@ public class Lives extends Interface
         updateDisplay();
     }
     
+    public void updateValue(int newValue) 
+    {
+        currentHp = newValue; // Ensure HP doesn't go below 0
+        updateDisplay(); // Refresh the hearts image
+    }
+
     private void updateDisplay() {
         hearts = new GreenfootImage("pixel_Heart.png");
         hearts.scale(150, 150);

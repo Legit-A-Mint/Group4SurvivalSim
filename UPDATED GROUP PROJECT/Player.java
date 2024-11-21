@@ -35,13 +35,14 @@ public class Player extends Effects {
     private int direction;
     
     SimulationWorld world;
+    Lives lives;
 
     private Actor target;  // Target for AI-controlled player to move towards
 
     // Define SAFE_DISTANCE constant
     private static final double SAFE_DISTANCE = 100.0; // Example value, adjust as needed
 
-    public Player(String playerModel, int speed) {
+    public Player(String playerModel, int speed, Lives lives) {
         floatyImage[0] = new GreenfootImage("floaty.png");
         floatyImage[1] = new GreenfootImage("wood.png");
         floatyImage[2] = new GreenfootImage("metal.png");
@@ -49,10 +50,11 @@ public class Player extends Effects {
         setRaft(0);
 
         this.speed = speed;
+        this.lives = lives;
         
         weaponCooldown = 10;  // Cooldown in terms of ticks, 60 ticks = 1 second
         createdHitbox = false;
-        maxhp = 10000;
+        maxhp = lives.getValue();
         hp = maxhp;
         coins = 0; // Initialize coins
         inventory = new ArrayList<>(); // Initialize inventory
@@ -270,13 +272,15 @@ public class Player extends Effects {
         }
     }
 
-    // Damage the player
+    // Damage the player and update the Lives display
     public void damageMe(int damage) {
         if (hp > 0) {
             hp -= damage * world.diffMulti;
+            lives.updateValue(hp); // Update the Lives display
             System.out.println("PLAYER HP: " + hp);
         }
     }
+
 
     // Repel the player upon collision
     private void handleRepel(String direction) {
