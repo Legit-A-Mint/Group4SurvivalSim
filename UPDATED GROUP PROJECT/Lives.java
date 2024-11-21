@@ -17,15 +17,11 @@ public class Lives extends Interface
     private GreenfootImage hearts;
     private GreenfootImage storeHearts;
     
-    Color heartRed = new Color(247,5,1,255);
-    
-    public Lives(String name, int myX, int myY, int max, boolean fadesAway){
+    public Lives(String name, int myX, int myY, int max){
         super(name, myX, myY);
         
         this.myX = myX;
         this.myY = myY;
-        this.fadesAway = fadesAway;
-        
         hearts = new GreenfootImage("pixel_Heart.png");
         maxValue = max;
         currentHp = maxValue;
@@ -42,8 +38,19 @@ public class Lives extends Interface
         hearts = new GreenfootImage("pixel_Heart.png");
         hearts.scale(150, 150);
         //storeHearts = new GreenfootImage("test", 150, Color.WHITE, Color.BLACK);
-        storeHearts = new GreenfootImage(Integer.toString(currentHp), 50, Color.WHITE, heartRed);
-        hearts.drawImage(storeHearts, 50, 50);
+        storeHearts = new GreenfootImage(Integer.toString(currentHp), 50, Color.WHITE, null);
+        if (currentHp >= 100)
+        {
+            hearts.drawImage(storeHearts, hearts.getWidth()/2 - 33, hearts.getHeight()/2 - 15);
+        }
+        else if (currentHp >= 10)
+        {
+            hearts.drawImage(storeHearts, hearts.getWidth()/2 - 20, hearts.getHeight()/2 - 15);
+        }
+        else
+        {
+            hearts.drawImage(storeHearts, hearts.getWidth()/2 - 10, hearts.getHeight()/2 - 15);
+        }
         setImage(hearts);
     }
     

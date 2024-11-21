@@ -5,6 +5,7 @@ import java.util.ArrayList;
  * Write a description of class Kraken here.
  * 
  * @lumilk
+ * @Loziq
  * @1.0.0
  */
 public class Kraken extends Enemy
@@ -14,11 +15,12 @@ public class Kraken extends Enemy
 
     // Set max amount of krakites available to spawn
     private static final int MAX_KRAKITE_SPAWN = 15;
+
     public Kraken(){
         super();
         img = new GreenfootImage[12];
         createdHitbox = false;
-        hp = 10000;
+        hp = 1000;
         damage = 5;
         attackCooldown = 100;
         attackTimer = 0;
@@ -26,7 +28,7 @@ public class Kraken extends Enemy
         // Inherited from superclass, ensure to not get pushed around or track player
         isMovable = false;
 
-        // Setimages for each position in array
+        // Set images for each position in the array
         img[0] = new GreenfootImage("KrakenF1.png");
         for(int i = 0; i < img.length; i++){
             img[i] = new GreenfootImage("KrakenF" + (i+1) + ".png");
@@ -42,16 +44,16 @@ public class Kraken extends Enemy
         createHitbox();
 
         // Attack radius of kraken
-        if(!getObjectsInRange(350, Player.class).isEmpty()){
-
+        if(!getObjectsInRange(250, Player.class).isEmpty()){
             if(attackTimer == 0){
                 doRandomAttack();
                 attackTimer = attackCooldown;
             }
-
         }
+
         // Remove me and related objects when I reach 0 or less HP
         if(this.hp <= 0){
+
             // Remove any remaining tentacles by creating an arraylist and iterating through each object
             ArrayList<Tentacle> tentacles = (ArrayList<Tentacle>)(getWorld().getObjects(Tentacle.class));
             for(Tentacle t: tentacles){
@@ -61,7 +63,7 @@ public class Kraken extends Enemy
             // Remove related objects to me
             getWorld().removeObject(hitbox);
             getWorld().removeObject(this);
-        }        
+        }
 
         // Idle animation
         animate(this, img, img[0].getWidth(), img[0].getHeight(), 24, 1);
@@ -69,7 +71,7 @@ public class Kraken extends Enemy
 
     public void tentacleAttack(){
         int maxCreatedTentacles = Greenfoot.getRandomNumber(6) + 3; // Min 3 max 8
-        for(int i = 0; i < maxCreatedTentacles; i ++){
+         for(int i = 0; i < maxCreatedTentacles; i ++){
 
             // Generate a random angle in radians
             double angle = Math.random() * 2 * Math.PI;

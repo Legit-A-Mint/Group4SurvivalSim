@@ -29,6 +29,8 @@ public abstract class Enemy extends Effects
     private boolean downBlocked;
     private boolean leftBlocked;
     private boolean rightBlocked;
+    
+    SimulationWorld world;
 
     public Enemy(){
         attackTimer = 0;
@@ -55,6 +57,8 @@ public abstract class Enemy extends Effects
             if(this.hp <= 0){
                     getWorld().removeObject(hitbox);
                     getWorld().removeObject(this);
+                    world.addkillCount();
+                    System.out.println(world.getKillCount());
                     return;
                 }
             
@@ -83,6 +87,19 @@ public abstract class Enemy extends Effects
                 } finally {
                     // Optionally place any cleanup code here if needed
                 }
+            }
+            // Upgrade raft
+            if (world.getKillCount() <= 10)
+            {
+                player.setRaft(0);
+            }
+            else if (world.getKillCount() <= 30)
+            {
+                player.setRaft(1);
+            }
+            else
+            {
+                player.setRaft(2);
             }
         }
     }
@@ -124,7 +141,7 @@ public abstract class Enemy extends Effects
     }
 
     public void damageMe(int damage){
-        this.hp -= damage;
+        this.hp -= (int)damage*world.diffMulti;
     }
 
     // Modified repel method

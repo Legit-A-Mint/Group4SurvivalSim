@@ -10,20 +10,19 @@ public class Button extends Interface
 {
     private GreenfootImage[] img;
     private String name;
-
+    
     private int animTimer = -1;
     private boolean isAnimated;
-
+    
     //use this constructor for debugging
-    public Button(String name, int myX, int myY, boolean fadesAway){
+    public Button(String name, int myX, int myY){
         super(name, myX, myY);
-
+        
         isAnimated = true;
-        this.fadesAway = fadesAway;
-
+        
         //3 animation states
         img = new GreenfootImage[3];
-
+        
         for(int i = 0; i < img.length; i++){
             img[i] = new GreenfootImage(200, 50);
         }
@@ -33,46 +32,41 @@ public class Button extends Interface
         for(int i = 0; i < img.length; i++){
             img[i].fill();
         }
-
+        
         setImage(img[0]);
     }
-
-    public Button(String name, String[] images, boolean isAnimated , double scale, int myX, int myY, boolean fadesAway){
+    public Button(String name, String[] images, boolean isAnimated , double scale, int myX, int myY){
         super(name, myX, myY);
-
+        
         this.isAnimated = isAnimated;
-        this.fadesAway = fadesAway;
-
+        
         img = new GreenfootImage[3];
         for(int i = 0; i < img.length; i++){
             img[i] = new GreenfootImage(images[i]);
             img[i].scale((int)(img[i].getWidth() * scale), (int)(img[i].getHeight() * scale));
         }
-
+        
         setImage(img[0]);
     }
     //constructor supports Color class in an array use Color.COLOR to set a color
-    public Button(String name, int width, int height, Color[] colors, boolean isAnimated, int myX, int myY, boolean fadesAway){
+    public Button(String name, int width, int height, Color[] colors, boolean isAnimated, int myX, int myY){
         super(name, myX, myY);
-
+        
         this.isAnimated = isAnimated;
-        this.fadesAway = fadesAway;
-
+        
         img = new GreenfootImage[3];
         for(int i = 0; i < img.length; i++){
             img[i] = new GreenfootImage(width, height);
             img[i].setColor(colors[i]);
             img[i].fill();
         }
-
+        
         setImage(img[0]);
     }
-
     public void act(){
         super.act();
         doAnimation();
     }    
-
     public boolean checkClicked(){
         if(Greenfoot.mouseClicked(this)){
             return true;
@@ -81,7 +75,6 @@ public class Button extends Interface
             return false;
         }
     }
-
     public void doAnimation(){
         if(isAnimated && img.length == 3){
             if(animTimer > 0){
@@ -92,14 +85,15 @@ public class Button extends Interface
                 animTimer = -1;
                 setImage(img[1]);
             }
-
+            
+            
             if (Greenfoot.mouseMoved(this)){
                 setImage(img[1]);
             }
             if (Greenfoot.mouseMoved(null) && !Greenfoot.mouseMoved(this)){
                 setImage(img[0]);
             }
-
+            
             if(checkClicked()){
                 animTimer = 15;
                 setImage(img[2]);
@@ -109,7 +103,7 @@ public class Button extends Interface
             checkClicked();
         }
     }
-
+    
     @Override
     protected boolean isUserInteracting() {
         return Greenfoot.mouseMoved(this);

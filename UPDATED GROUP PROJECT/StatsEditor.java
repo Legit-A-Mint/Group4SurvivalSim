@@ -10,17 +10,17 @@ public class StatsEditor extends World
 {
     String playerModel;
     
-    private int health = 10;
+    private int health = 100;
     private int speed = 10;
     private int difficulty = 1;
     
     // Multiplier for each difficulty
     private String[] diffName = {"EASY","MEDIUM","HARD","IMPOSSIBLE"};
-    private double[] diffMulti = {0.7, 1, 1.3, 2};
+    private double[] diffMulti = {0.3, 1, 1.3, 3};
     
     private GreenfootImage temp;
     StatsLabel healthTxt;
-    StatsLabel SpeedTxt;
+    StatsLabel speedTxt;
     StatsLabel diffTxt;
 
     LeftButton leftHealth;
@@ -50,49 +50,50 @@ public class StatsEditor extends World
         addObject(leftDifficulty = new LeftButton(), getWidth()/4, 350);
         addObject(rightDifficulty = new RightButton(), getWidth()/4*3, 350);
         
-        addObject(healthTxt = new StatsLabel(new GreenfootImage("Health: " + Integer.toString(health), 100, Color.WHITE, Color.BLACK)), getWidth()/2, 100);
-        addObject(SpeedTxt = new StatsLabel(new GreenfootImage("Speed: " + Integer.toString(speed), 100, Color.WHITE, Color.BLACK)), getWidth()/2, 225);
-        addObject(diffTxt = new StatsLabel(new GreenfootImage(getDifficultyText(difficulty), 100, Color.WHITE, Color.BLACK)), getWidth()/2, 350);
+        addObject(healthTxt = new StatsLabel(new GreenfootImage("Health: " + Integer.toString(health), 90, Color.WHITE, null)), getWidth()/2, 100);
+        addObject(speedTxt = new StatsLabel(new GreenfootImage("Speed: " + Integer.toString(speed), 90, Color.WHITE, null)), getWidth()/2, 225);
+        addObject(diffTxt = new StatsLabel(new GreenfootImage(getDifficultyText(difficulty), 90, Color.WHITE, null)), getWidth()/2, 350);
         
         addObject(start = new NextButton(0), 512, 475);
     }
     
     public void act()
     {
-        if (Greenfoot.mouseClicked(leftHealth))
+        if (Greenfoot.mouseClicked(leftHealth)||Greenfoot.isKeyDown("left"))
         {
-            if (health > 1)
-                health--;
-            healthTxt.setImage(new GreenfootImage("Health: " + Integer.toString(health), 100, Color.WHITE, Color.BLACK));
+            if (health > 10)
+                health -= 10;
+            healthTxt.setImage(new GreenfootImage("Health: " + Integer.toString(health), 90, Color.WHITE, null));
         }
-        if (Greenfoot.mouseClicked(rightHealth))
+        if (Greenfoot.mouseClicked(rightHealth)||Greenfoot.isKeyDown("Right"))
         {
-            health++;
-            healthTxt.setImage(new GreenfootImage("Health: " + Integer.toString(health), 100, Color.WHITE, Color.BLACK));
+            if (health < 9990)
+                health += 10;
+            healthTxt.setImage(new GreenfootImage("Health: " + Integer.toString(health), 90, Color.WHITE, null));
         }
         if (Greenfoot.mouseClicked(leftSpeed))
         {
-            if (speed > 1)
+            if (speed > 0)
                 speed--;
-            SpeedTxt.setImage(new GreenfootImage("Speed: " + Integer.toString(speed), 100, Color.WHITE, Color.BLACK));
+            speedTxt.setImage(new GreenfootImage("Speed: " + Integer.toString(speed), 90, Color.WHITE, null));
         }
         if (Greenfoot.mouseClicked(rightSpeed))
         {
             if (speed < 20)
                 speed++;
-            SpeedTxt.setImage(new GreenfootImage("Speed: " + Integer.toString(speed), 100, Color.WHITE, Color.BLACK));
+            speedTxt.setImage(new GreenfootImage("Speed: " + Integer.toString(speed), 90, Color.WHITE, null));
         }
         if (Greenfoot.mouseClicked(leftDifficulty))
         {
             if (difficulty > 0)
                 difficulty--;
-            diffTxt.setImage(new GreenfootImage(getDifficultyText(difficulty), 100, Color.WHITE, Color.BLACK));
+            diffTxt.setImage(new GreenfootImage(getDifficultyText(difficulty), 90, Color.WHITE, null));
         }
         if (Greenfoot.mouseClicked(rightDifficulty))
         {
             if (difficulty < 3)
                 difficulty++;
-            diffTxt.setImage(new GreenfootImage(getDifficultyText(difficulty), 100, Color.WHITE, Color.BLACK));
+            diffTxt.setImage(new GreenfootImage(getDifficultyText(difficulty), 90, Color.WHITE, null));
         }
         if (Greenfoot.mouseClicked(start))
         {
