@@ -8,16 +8,16 @@ import java.util.*;
  * @Logan
  * @1.0.0
  */
-public class Hitbox extends SuperSmoothMover
+public abstract class Hitbox extends SuperSmoothMover
 {
     //image variables
-    private GreenfootImage box;
-    private Actor owner;
-    private String type;
+    protected GreenfootImage box;
+    protected Actor owner;
+    protected String type;
     private static final boolean visible = true;
     
-    private int offsetX, offsetY;
-    private double boundingFactor;
+    protected int offsetX, offsetY;
+    protected double boundingFactor;
     public Hitbox(int h, int w, double boundingFactor){
         this.boundingFactor = boundingFactor;
         this.type = type;

@@ -28,7 +28,7 @@ public class Net extends Projectile
             hitEnemy.damageMe(damage);
             hitEnemy.slowMe();
             removeMe = true;
-            if(getOneIntersectingObject(IslandHitbox.class) != null){
+            if(getOneIntersectingObject(CollisionHitbox.class) != null){
                 speed = 0;
             }
         }

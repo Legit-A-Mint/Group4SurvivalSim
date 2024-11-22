@@ -61,10 +61,10 @@ public class SimulationWorld extends World{
         addObject(player = new Player(playerModel, speed, lives), this.getWidth() / 2, this.getHeight() / 2);
 
         // Add border hitboxes to prevent the player from going outside the world
-        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH / 2, HEIGHT); // Bottom border
-        addObject(new Hitbox(WIDTH, 100, 2.5), WIDTH / 2, 0); // Top border
-        addObject(new Hitbox(100, HEIGHT, 2.5), WIDTH, HEIGHT / 2); // Right border
-        addObject(new Hitbox(100, HEIGHT, 2.5), 0, HEIGHT / 2); // Left border
+        addObject(new CollisionHitbox(WIDTH, 100, 2.5), WIDTH / 2, HEIGHT); // Bottom border
+        addObject(new CollisionHitbox(WIDTH, 100, 2.5), WIDTH / 2, 0); // Top border
+        addObject(new CollisionHitbox(100, HEIGHT, 2.5), WIDTH, HEIGHT / 2); // Right border
+        addObject(new CollisionHitbox(100, HEIGHT, 2.5), 0, HEIGHT / 2); // Left border
 
         // Add islands to the world
         addObject(new Island(new GreenfootImage("island.png")), 500 - getScroller().getScrolledX(), 500 - getScroller().getScrolledY());

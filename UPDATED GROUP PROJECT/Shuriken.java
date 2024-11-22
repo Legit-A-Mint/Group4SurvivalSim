@@ -38,7 +38,7 @@ public class Shuriken extends Projectile
             if(hitCount >= PIERCE_CAP){
                 removeMe = true;
             }
-            if(getOneIntersectingObject(IslandHitbox.class) != null){
+            if(getOneIntersectingObject(CollisionHitbox.class) != null){
                 speed = 0;
             }
         }

@@ -4,35 +4,39 @@ import greenfoot.*;
 
 /**
  * @lumilk
+ * @andrew
  * @1.0.0
  */
 
 public class Player extends Effects {
+    // Manual movement mode : true -- AI movement: false
+    private static final boolean DEBUGMODE = true;
+
     // One second --> modify with * as needed
     private static final int ONE_SECOND = 60;
-    
+
     // Vfx
     private GreenfootImage[] playerImage = new GreenfootImage[1];
     private GreenfootImage[] floatyImage = new GreenfootImage[3];
-    
+
     // Price of Items
     private static final int POTION_COST = 4;
     private static final int NET_COST = 8;
     private static final int SHURIKEN_COST = 15;
     private static final int HARPOON_COST = 25;
     private static final int RAFT_COST = 15;
-    
+
     // Item variables
     private boolean netBought;
     private boolean shurikenBought;
     private boolean harpoonBought;
     private boolean allRaftUpgradesBought;
     private boolean doneUpgrades;
-    
+
     private int weaponIndex;
-    
+
     private int[] weaponCDList = new int[4];
-    
+
     // Instance variables
     private double speed;
     private int hp, maxHp;
@@ -40,20 +44,20 @@ public class Player extends Effects {
     private int coinsStored;
     private int buyCooldown;
     private int direction; /** This will affect vfx */
-    
+
     // Effects
     private int poisonCounter;
     private int poisonDamage;
     private boolean poisoned;
     private static final int POISONTICKS = 60;
-    
+
     // Hitbox variables
-    private Hitbox hitbox;
+    private PlayerHitbox hitbox;
     private boolean createdHitbox;
     private int collisionCounter = 0;
     private final int MAX_COLLISION_ATTEMPTS = 3;
-    
-    private Hitbox tempBox;
+
+    private PlayerHitbox tempBox;
 
     // Which floating device is player using (0 = floaty, 1 = wood raft, 2 = metal boat)
     private GreenfootImage playerImg;
@@ -67,8 +71,7 @@ public class Player extends Effects {
     protected ArrayList<Enemy> enemies;
     protected Enemy enemy;
     private Projectile projectile;
-    
-    
+    private int dx, dy;
 
     public Player(String playerModel, int choosenSpeed, Lives lives) {
         // Vfx
@@ -84,7 +87,7 @@ public class Player extends Effects {
         lives = lives;
         coinsStored = 0;
         hp = maxHp;
-        
+
         weaponCDList[0] = 45;
         weaponCDList[1] = 70;
         weaponCDList[2] = 35;
@@ -92,11 +95,11 @@ public class Player extends Effects {
 
         createdHitbox = false;
     }
-    
+
     /** try to make this added to world, if doesnt work keep it as is */
     // Create the player's hitbox
     private void createHitbox() {
-        hitbox = new Hitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight() / 2, 0, 0, this, 2.5);
+        hitbox = new PlayerHitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight() / 2, 0, 0, this, 2.5);
         getWorld().addObject(hitbox, getX(), getY());
         createdHitbox = true;
     }
@@ -106,60 +109,72 @@ public class Player extends Effects {
         if (!createdHitbox){
             createHitbox();
         }
-        
+
         if (SimulationWorld.isActing()) {
             // pre action handling
             handleCooldowns();
-            determineWhatToBuy();
-            if(!getWorld().getObjects(Enemy.class).isEmpty()){
-                findClosestEnemy();
-            }
-            if(!doneUpgrades && !getWorld().getObjects(Coins.class).isEmpty()){
-                lookForCoins();
-            }
-            
-            // Movement Action
-            System.out.println(checkForWall());
-            if(!checkForWall()){
-                if(distanceToClosestTarget(Enemy.class, 0, 100, 300) > 250){
-                    speed = Math.abs(speed);
-                    move(speed);
-                }else{
+
+            if(!DEBUGMODE){
+                determineWhatToBuy();
+                if(!getWorld().getObjects(Enemy.class).isEmpty()){
                     findClosestEnemy();
-                    speed = Math.abs(speed);
-                    speed = -speed;
-                    move(speed);
                 }
-            }else{
-                turn(15);
-                
+                if(!doneUpgrades && !getWorld().getObjects(Coins.class).isEmpty()){
+                    lookForCoins();
+                }
+
+                // Movement Action
+                System.out.println(checkForWall());
+                if(!checkForWall()){
+                    if(distanceToClosestTarget(Enemy.class, 0, 100, 300) > 250){
+                        speed = Math.abs(speed);
+                        move(speed);
+                    }else{
+                        findClosestEnemy();
+                        speed = Math.abs(speed);
+                        speed = -speed;
+                        move(speed);
+                    }
+                }
+                else{
+                    turn(15);
+                }
+                if(cooldown <= 0){
+                    spawnProjectile(weaponIndex);
+                    cooldown = weaponCDList[weaponIndex];
+                }
+            }
+            else if(DEBUGMODE){
+                handleMovement();
+
+                if(cooldown <= 0){
+                    if(Greenfoot.isKeyDown("space")){
+                        spawnProjectile(weaponIndex);
+                        cooldown = weaponCDList[weaponIndex];
+                    }
+                }
             }
 
-            if(cooldown <= 0){
-                spawnProjectile(weaponIndex);
-                cooldown = weaponCDList[weaponIndex];
-            }
-            
             // End Action
             collectCoins();
             checkEffects();
-            
+
         }
     }
-    
+
     private void handleCooldowns(){
         if(cooldown > 0){
             cooldown--;
         }
     }
-    
+
     private void determineWhatToBuy(){
         if((coinsStored > POTION_COST && buyCooldown <= 0) && hp < maxHp){
             buyHealthPotion();
             buyCooldown = ONE_SECOND;
             return;
         }
-        
+
         // skip other ifs (optimization)
         if(!doneUpgrades){
             if(!netBought && (coinsStored > NET_COST && buyCooldown <= 0)){
@@ -168,14 +183,14 @@ public class Player extends Effects {
                 buyCooldown = ONE_SECOND;
                 return;
             }
-            
+
             if(!shurikenBought && (coinsStored > SHURIKEN_COST && buyCooldown <= 0)){
                 weaponIndex++;
                 shurikenBought = true;
                 buyCooldown = ONE_SECOND;
                 return;
             }
-            
+
             if(!harpoonBought && (coinsStored > HARPOON_COST && buyCooldown <= 0)){
                 weaponIndex++;
                 harpoonBought = true;
@@ -183,7 +198,7 @@ public class Player extends Effects {
                 return;
             }
         }
-        
+
         if(harpoonBought && shurikenBought && netBought && allRaftUpgradesBought){
             doneUpgrades = true;
         }
@@ -195,7 +210,6 @@ public class Player extends Effects {
         hp ++; 
     }
 
-    
     public void findClosestEnemy(){
         if(!getWorld().getObjects(Enemy.class).isEmpty()){
             if(findClosestTarget(Enemy.class, 150, 200, 2500) != null){
@@ -203,7 +217,7 @@ public class Player extends Effects {
             }
         }
     }
-    
+
     public void lookForCoins(){
         if(!getWorld().getObjects(Coins.class).isEmpty()){
             if(findClosestTarget(Coins.class, 150, 200, 2500) != null){
@@ -211,19 +225,19 @@ public class Player extends Effects {
             }
         }
     }
-    
+
     public boolean checkForWall(){
         double nextX = getPreciseX() + (double) Math.round(Math.cos(Math.toRadians(getRotation())));
         double nextY = getPreciseY() + (double) Math.round(Math.sin(Math.toRadians(getRotation())));
-        
+
         nextX += getImage().getWidth();
         nextY += getImage().getHeight();
-        
-        tempBox = new Hitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight() / 2, 0, 0, this, 2.5);
+
+        tempBox = new PlayerHitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight() / 2, 0, 0, this, 2.5);
         getWorld().addObject(tempBox,  (int)(nextX*speed), (int)(nextY*speed));
-        
+
         Actor wall = (Actor) findClosestTarget(Hitbox.class, 150, 200, 750);
-        
+
         if(wall != null && tempBox.checkIntersection(wall)){
             getWorld().removeObject(tempBox);
             return true;
@@ -231,10 +245,11 @@ public class Player extends Effects {
         getWorld().removeObject(tempBox);
         return false;
     }
-    
+
     private void spawnProjectile(int type){
         switch(type){
                 case(0):
+
                 getWorld().addObject(new Spear(), getX(), getY());
                 break;
 
@@ -255,7 +270,7 @@ public class Player extends Effects {
 
         }
     }
-    
+
     private void collectCoins() {
         Actor coin = getOneIntersectingObject(Coins.class);
         if (coin != null) {
@@ -264,13 +279,13 @@ public class Player extends Effects {
             getWorld().removeObject(c);  // Remove coin from world
         }
     }
-    
+
     public void checkEffects(){
         // Check if player is poisoned or not
         if(poisoned){
             // Decrease poison counter
             poisonCounter--;
-            
+
             // Ensure to only poison if poison counter is > 0
             if(poisonCounter > 0){
                 // Every 20th act inflict poison damage
@@ -286,10 +301,7 @@ public class Player extends Effects {
             }
         }
     }
-    
-    
-    
-    
+
     public void setRaft(int num) {
         if (floatyNum == 0)
         {
@@ -308,10 +320,7 @@ public class Player extends Effects {
         setImage(playerImage[0]);
     }
 
-    
     // MANUAL
-    
-    /*
     private void handleMovement() {
         dx = 0;
         dy = 0;
@@ -360,8 +369,7 @@ public class Player extends Effects {
             handleRepel("vertical");
         }
     }
-    
-    
+
     // Repel the player upon collision
     private void handleRepel(String direction) {
         collisionCounter++;
@@ -394,36 +402,33 @@ public class Player extends Effects {
         }
         return false;
     }
-    */
 
     public Hitbox getHitbox() {
         return this.hitbox;
     }
 
     // For Enemy class
-    
+
     public void damageMe(int damage) {
         if (hp > 0) {
             hp -= damage;
             lives.updateDisplay(); // Update the Lives display
         }
     }
-    
+
     // For Kraken class
-    
+
     public void poisonMe(int damage, int ticks){        
         poisonCounter = ticks * POISONTICKS;
         poisoned = true;
         poisonDamage = damage;
     }
-    
-    
+
     // For Lives class
-    
     public int getHp() {
         return hp;
     }
-    
+
     public int getMaxHp() {
         return maxHp;
     }

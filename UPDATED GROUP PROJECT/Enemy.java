@@ -23,7 +23,7 @@ public abstract class Enemy extends Effects
     protected Player player;
     private boolean foundPlayer;
     private EnemyHitbox hitbox;
-    private boolean createdHitbox;
+    private boolean createdHitbox = true;
     private double slow;
     private double minSpeed;
 

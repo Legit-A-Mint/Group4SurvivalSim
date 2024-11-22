@@ -26,7 +26,7 @@ public class Harpoon extends Projectile
             hitEnemy = (Enemy) getOneIntersectingObject(Enemy.class);
             hitEnemy.damageMe(damage);
             hitEnemy.slowMe();
-            if(getOneIntersectingObject(IslandHitbox.class) != null){
+            if(getOneIntersectingObject(CollisionHitbox.class) != null){
                 speed = 0;
             }
         }

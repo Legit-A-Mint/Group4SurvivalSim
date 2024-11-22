@@ -8,13 +8,13 @@ import java.util.*;
  * @Logan
  * @1.0.0
  */
-public class IslandHitbox extends Hitbox
+public class CollisionHitbox extends Hitbox
 {
-    public IslandHitbox(int h, int w, int offsetX, int offsetY, Actor owner, double boundingFactor){
+    public CollisionHitbox(int h, int w, int offsetX, int offsetY, Actor owner, double boundingFactor){
         super(h, w, offsetX, offsetY, owner, boundingFactor);
     }
     
-    public IslandHitbox(int h, int w, double boundingFactor){
+    public CollisionHitbox(int h, int w, double boundingFactor){
         super(h, w, boundingFactor);
     }
     

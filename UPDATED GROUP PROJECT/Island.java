@@ -11,7 +11,7 @@ public class Island extends SuperSmoothMover
 {
     private boolean createdHitbox;
     private GreenfootImage img;
-    private IslandHitbox hitbox;
+    private CollisionHitbox hitbox;
     
     private static final double BOUNDINGFACTOR = 2.0;
     public Island(GreenfootImage img){
@@ -24,7 +24,7 @@ public class Island extends SuperSmoothMover
     public void act()
     {
         if(!createdHitbox){
-            hitbox = new IslandHitbox(img.getWidth(), (int)(img.getHeight()/1.75), 2.5);
+            hitbox = new CollisionHitbox(img.getWidth(), (int)(img.getHeight()/1.75), 2.5);
             getWorld().addObject(hitbox, this.getX(), this.getY() - 30);
             createdHitbox = true;
         }
