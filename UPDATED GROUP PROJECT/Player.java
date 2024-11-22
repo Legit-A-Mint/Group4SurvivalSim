@@ -71,6 +71,7 @@ public class Player extends Effects {
     protected ArrayList<Enemy> enemies;
     protected Enemy enemy;
     private Projectile projectile;
+
     private int dx, dy;
 
     public Player(String playerModel, int choosenSpeed, Lives lives) {

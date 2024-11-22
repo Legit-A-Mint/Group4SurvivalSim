@@ -1,10 +1,7 @@
 #BlueJ class context
 comment0.target=Shop
-comment0.text=\r\n\ Shop\ class\ that\ extends\ Interface\ and\ implements\ the\ isUserInteracting\ method.\r\n\ Handles\ the\ interaction\ with\ the\ shop\ interface.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=
-comment1.target=void\ act()
-comment1.text=\r\n\ Act\ -\ do\ whatever\ the\ Shop\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+comment1.target=Shop()
 comment2.params=
-comment2.target=boolean\ isUserInteracting()
-comment2.text=\r\n\ This\ method\ checks\ if\ the\ user\ is\ interacting\ with\ the\ shop.\r\n\ It\ might\ check\ for\ a\ mouse\ click\ or\ other\ input.\r\n\ @return\ true\ if\ the\ user\ is\ interacting,\ false\ otherwise.\r\n
+comment2.target=void\ displayItems()
 numComments=3

@@ -21,8 +21,6 @@ public abstract class Interface extends SuperSmoothMover{
     protected abstract boolean isUserInteracting();
     
     public void act() {
-        // updatePos();
-        
         if(isUserInteracting()){ 
             lastInteractionTime = 0;  //reset global timer
             resetTransparency();
@@ -54,17 +52,6 @@ public abstract class Interface extends SuperSmoothMover{
             getImage().setTransparency(transparency);  //reapply transparency
         }
     }
-    
-    private interface Shop
-    {
-        void displayItems();
-        
-        boolean isUserInteracting();
-    }
-    
-    @Override
-    public void setLocation(int x, int y){}
-    public void setLocation(double x, double y){}
 }
 
 

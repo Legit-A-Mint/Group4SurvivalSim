@@ -66,7 +66,7 @@ public class Scroller extends Actor
             bg.drawImage(scrollImages[y+1][x+1], dx+worldWidth, dy+worldHeight);
     }
     
-    public void scroll(double dx, double dy, World world, ArrayList<SuperSmoothMover> actorsToSort)
+    public void scroll(double dx, double dy, World world, ArrayList<Effects> actorsToSort)
     {
         // limit change values
         if (dx > 0 && relativeX +dx > 0) dx = -relativeX;
@@ -84,7 +84,7 @@ public class Scroller extends Actor
         
         ArrayList<ActorContent> acList = new ArrayList<ActorContent>();
         // Create a list of ActorContent objects and populate it with all Actors sent to be sorted
-        for (SuperSmoothMover a : actorsToSort){
+        for (Effects a : actorsToSort){
             //System.out.println(a.toString() + ": " + a.getPreciseY());
             acList.add (new ActorContent (a, a.getPreciseX(), a.getPreciseY()));
         }    

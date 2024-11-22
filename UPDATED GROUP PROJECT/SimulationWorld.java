@@ -79,7 +79,9 @@ public class SimulationWorld extends World{
         // waveLabel = new Label("Wave " + (waveCount + 1), 40, 200, 25);  // Initialize label to show wave
         // addObject(waveLabel, 200, 25);  // Position the wave label on the screen
 
-        setPaintOrder(Interface.class, Projectile.class);
+        
+        addObject(lives = new Lives(), getWidth()/2 - 350, 30);
+        setPaintOrder(Lives.class, Interface.class, Projectile.class);
     }
 
     // Method that gets called when the world is added to the Greenfoot environment
@@ -88,7 +90,6 @@ public class SimulationWorld extends World{
         // Plays the ambient noise in a loop
         ambientSound.playLoop();
         addObject(slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130), 155, 540);   
-        addObject(lives = new Lives(), WIDTH / 2, 100);
     }
 
     // Method to get the scroller instance for background movement
@@ -163,7 +164,7 @@ public class SimulationWorld extends World{
                         countOnce = true;
                     }
                 }
-            scroller.scroll(getWidth() / 2 - player.getX(), getHeight() / 2 - player.getY(), this, (ArrayList<SuperSmoothMover>) (getObjects(SuperSmoothMover.class)));
+            scroller.scroll(getWidth() / 2 - player.getX(), getHeight() / 2 - player.getY(), this, (ArrayList<Effects>) (getObjects(Effects.class)));
         }
 
         // Check if the pause button is clicked
