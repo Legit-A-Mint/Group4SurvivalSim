@@ -28,7 +28,14 @@ public class Fov extends Hitbox
     }
     
     public boolean enemyDetected(){
-        if(this.getIntersectingObjects(Enemy.class).size() == 0){
+        if(this.getIntersectingObjects(EnemyHitbox.class).size() == 0){
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean wallDetected(){
+        if(this.getIntersectingObjects(CollisionHitbox.class).size() == 0){
             return true;
         }
         return false;
@@ -53,6 +60,5 @@ public class Fov extends Hitbox
         size[0] = baseSize[0]*(0.25+((Math.abs(Math.cos(Math.toRadians(owner.getRotation())))))*1.3);
         
         size[1] = baseSize[0]*(0.25+((Math.abs(Math.sin(Math.toRadians(owner.getRotation())))))*1.2);
-        
     }
 }

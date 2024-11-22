@@ -70,7 +70,7 @@ public class Tentacle extends Kraken
     @Override
     protected void createHitbox(){
         if(!createdHitbox){
-            hitbox = new EnemyHitbox(img[0].getWidth()/2, img[0].getHeight(), 0, 0, this, 2.5);
+            hitbox = new EnemyHitbox(img[0].getWidth()/2, img[0].getHeight(), 0, 0, this, 2.5, false);
             getWorld().addObject(hitbox, 0, 0);
             createdHitbox = true;
         }   

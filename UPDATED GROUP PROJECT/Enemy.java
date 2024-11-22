@@ -41,6 +41,7 @@ public abstract class Enemy extends Effects
         slow = 0.35;
         attackTimer = 0;
         removeMe = false;
+        createdHitbox = false;
     }
 
     protected abstract void attack();
@@ -48,7 +49,9 @@ public abstract class Enemy extends Effects
     protected abstract void attackAnimation();
 
     public void act(){
-        createHitbox();
+        if(!createdHitbox){
+            createHitbox();
+        }
 
         if (SimulationWorld.isActing())
         {
@@ -91,7 +94,7 @@ public abstract class Enemy extends Effects
                     // Optionally place any cleanup code here if needed
                 }
             }
-            
+
             if(removeMe){
                 getWorld().removeObject(hitbox);
                 getWorld().removeObject(this);
@@ -100,11 +103,9 @@ public abstract class Enemy extends Effects
     }
 
     protected void createHitbox(){
-        if(!createdHitbox){
-            hitbox = new EnemyHitbox(img[0].getWidth() - 30, img[0].getHeight()/2, 0, 0, this, 2.5);
-            getWorld().addObject(hitbox, 0, 0);
-            createdHitbox = true;
-        }   
+        hitbox = new EnemyHitbox(getImage().getWidth() - 30, getImage().getHeight()/2, 0, 0, this, 2.5, false);
+        getWorld().addObject(hitbox, this.getX(), this.getY());
+        createdHitbox = true;
     }
 
     protected boolean getPlayerCollision(){
