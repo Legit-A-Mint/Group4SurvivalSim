@@ -80,7 +80,7 @@ public class SimulationWorld extends World{
         // addObject(waveLabel, 200, 25);  // Position the wave label on the screen
 
         
-        addObject(lives = new Lives(), getWidth()/2 - 350, 30);
+        addObject(lives = new Lives(), getWidth()/2 - 290, 30);
         setPaintOrder(Lives.class, Interface.class, Projectile.class);
     }
 
@@ -89,7 +89,8 @@ public class SimulationWorld extends World{
     {
         // Plays the ambient noise in a loop
         ambientSound.playLoop();
-        addObject(slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130), 155, 540);   
+        // Updated line to place the slider at the bottom left
+        addObject(slider = new Slider("TestSlider.", "rail.png", "circle.png", 1, 130), 50, getHeight() - 50);   
     }
 
     // Method to get the scroller instance for background movement

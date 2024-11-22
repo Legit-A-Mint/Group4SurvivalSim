@@ -29,8 +29,7 @@ public class Slider extends Interface
         this.offset = offset;
 
         sliderBackground = new GreenfootImage(image);
-        sliderBackground.scale((int)(sliderBackground.getWidth() * scale), 
-            (int)(sliderBackground.getHeight() * scale));
+        sliderBackground.scale((int)(sliderBackground.getWidth() * scale), (int)(sliderBackground.getHeight() * scale));
         setImage(sliderBackground);
     }
 

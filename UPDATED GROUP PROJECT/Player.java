@@ -10,7 +10,7 @@ import greenfoot.*;
 
 public class Player extends Effects {
     // Manual movement mode : true -- AI movement: false
-    private static final boolean DEBUGMODE = true;
+    private static final boolean DEBUGMODE = false;
 
     // One second --> modify with * as needed
     private static final int ONE_SECOND = 60;

@@ -15,10 +15,8 @@ public class Lives extends SuperSmoothMover {
     private GreenfootImage storeHearts; // Image for the numerical value of lives
 
     private Player player;
-
-    private static final int HEART_OFFSET = 20;
     
-    private int tempThing = 3; 
+    private int tempThing = 5; 
 
     // Constructor to initialize the Lives object
     public Lives(){
@@ -28,7 +26,7 @@ public class Lives extends SuperSmoothMover {
         hearts = new GreenfootImage("pixel_Heart.png"); // Load the heart image
         //storeHearts = new GreenfootImage((hearts.getWidth() + HEART_OFFSET*2)*player.getMaxHp(), hearts.getHeight());
 
-        storeHearts = new GreenfootImage(220, hearts.getHeight());
+        storeHearts = new GreenfootImage(225, hearts.getHeight());
         
         // Values 
         //maxValue = player.getMaxHp(); // Set max lives
@@ -36,10 +34,8 @@ public class Lives extends SuperSmoothMover {
         // setImage
         //updateDisplay(); // Update the display immediately
 
-        /**
         hearts = new GreenfootImage("pixel_Heart.png"); // Load the heart image
         setImage(hearts);
-        */
     }
 
 
@@ -51,14 +47,14 @@ public class Lives extends SuperSmoothMover {
     }
 
     public void updateDisplay() {
-        /*
+        
+        int heartX = 0;
+        int spacing = 45;
+        
         for (int i = 0; i < tempThing; i++) {
-            storeHearts.drawImage(hearts, ((hearts.getWidth() + HEART_OFFSET))*i , 0);
+            storeHearts.drawImage(hearts, heartX + (i * spacing), 0);
         }
-        */
-       
-        storeHearts.drawImage(hearts, 0, 0);
-        storeHearts.drawImage(hearts, 30, 0);
+    
         //
         setImage(storeHearts);
     }
