@@ -44,6 +44,10 @@ public class Player extends Effects {
     private int coinsStored;
     private int buyCooldown;
     private int direction; /** This will affect vfx */
+    
+    private long rotaCont;
+    private long storeRota;
+    private boolean resetRotaCont;
 
     // Effects
     private int poisonCounter;
@@ -71,8 +75,10 @@ public class Player extends Effects {
     protected ArrayList<Enemy> enemies;
     protected Enemy enemy;
     private Projectile projectile;
+    private Fov fov;
 
     private int dx, dy;
+    private boolean createdFovHitbox;
 
     public Player(String playerModel, int choosenSpeed, Lives lives) {
         // Vfx
@@ -84,10 +90,11 @@ public class Player extends Effects {
 
         // Instance variables
         // speed = choosenSpeed;
-        speed = 4;
+        speed = 3;
         lives = lives;
         coinsStored = 0;
         hp = maxHp;
+        resetRotaCont = true;
 
         weaponCDList[0] = 45;
         weaponCDList[1] = 70;
@@ -104,12 +111,23 @@ public class Player extends Effects {
         getWorld().addObject(hitbox, getX(), getY());
         createdHitbox = true;
     }
+    
+    private void createFov() {
+        fov = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5);
+        getWorld().addObject(fov, getX() + 55, getY() + 55);
+        createdFovHitbox = true;
+    }
 
     public void act() {
         // Make a hitbox
         if (!createdHitbox){
             createHitbox();
         }
+        
+        if (!createdFovHitbox){
+            createFov();
+        }
+        
 
         if (SimulationWorld.isActing()) {
             // pre action handling
@@ -118,7 +136,7 @@ public class Player extends Effects {
             if(!DEBUGMODE){
                 determineWhatToBuy();
                 if(!getWorld().getObjects(Enemy.class).isEmpty()){
-                    findClosestEnemy();
+                    //findClosestEnemy();
                 }
                 if(!doneUpgrades && !getWorld().getObjects(Coins.class).isEmpty()){
                     lookForCoins();
@@ -126,19 +144,25 @@ public class Player extends Effects {
 
                 // Movement Action
                 System.out.println(checkForWall());
+                if(resetRotaCont){
+                    //findClosestEnemy();
+                    //rotaCont = getRotation();
+                }
+                
                 if(!checkForWall()){
-                    if(distanceToClosestTarget(Enemy.class, 0, 100, 300) > 250){
-                        speed = Math.abs(speed);
+                    //if(distanceToClosestTarget(Enemy.class, 0, 100, 300) > 250){
+                    if(fov.enemyDetected()){
+                        resetRotaCont = true;
                         move(speed);
                     }else{
-                        findClosestEnemy();
-                        speed = Math.abs(speed);
-                        speed = -speed;
+                        resetRotaCont = false;
+                        rotaCont -= 2.5;
+                        setRotation(rotaCont);
                         move(speed);
                     }
                 }
                 else{
-                    turn(15);
+                    //turn(15);
                 }
                 if(cooldown <= 0){
                     spawnProjectile(weaponIndex);
@@ -228,16 +252,18 @@ public class Player extends Effects {
     }
 
     public boolean checkForWall(){
-        double nextX = getPreciseX() + (double) Math.round(Math.cos(Math.toRadians(getRotation())));
-        double nextY = getPreciseY() + (double) Math.round(Math.sin(Math.toRadians(getRotation())));
+        double nextX = getPreciseX() + (double) Math.round(Math.cos(Math.toRadians(getRotation()))) * speed + getImage().getWidth()
+        ;
+        double nextY = getPreciseY() + (double) Math.round(Math.sin(Math.toRadians(getRotation()))) * speed + getImage().getHeight()
+        ;
 
         nextX += getImage().getWidth();
         nextY += getImage().getHeight();
 
         tempBox = new PlayerHitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight() / 2, 0, 0, this, 2.5);
-        getWorld().addObject(tempBox,  (int)(nextX*speed), (int)(nextY*speed));
+        getWorld().addObject(tempBox,  (int)(nextX), (int)(nextY));
 
-        Actor wall = (Actor) findClosestTarget(Hitbox.class, 150, 200, 750);
+        Actor wall = (Actor) findClosestTarget(Hitbox.class, 0, 200, 750);
 
         if(wall != null && tempBox.checkIntersection(wall)){
             getWorld().removeObject(tempBox);
@@ -383,6 +409,10 @@ public class Player extends Effects {
             collisionCounter = 0; // Reset collision counter
         }
     }
+    
+    public double getSpeed(){
+        return speed;
+    }
 
     // Update the hitbox position to align with the player
     private void updateHitboxPosition() {
@@ -393,6 +423,10 @@ public class Player extends Effects {
     private void resetHitboxPosition() {
         hitbox.setLocation(getX(), getY());
     }
+    
+    public Hitbox getHitbox() {
+        return this.hitbox;
+    }
 
     // Check if the hitbox is colliding with other objects
     private boolean isCollidingWithHitbox() {
@@ -402,10 +436,6 @@ public class Player extends Effects {
             }
         }
         return false;
-    }
-
-    public Hitbox getHitbox() {
-        return this.hitbox;
     }
 
     // For Enemy class

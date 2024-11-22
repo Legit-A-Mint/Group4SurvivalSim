@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=Fov
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ hitScan\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=h\ w\ offsetX\ offsetY\ owner\ boundingFactor
+comment1.target=Fov(int,\ int,\ int,\ int,\ Player,\ double)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=boolean\ enemyDetected()
+comment4.params=
+comment4.target=void\ scaleFov()
+comment5.params=
+comment5.target=void\ moveWithOwner()
+comment6.params=
+comment6.target=void\ calcTrig()
+numComments=7
