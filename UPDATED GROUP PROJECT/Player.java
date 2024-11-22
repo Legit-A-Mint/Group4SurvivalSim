@@ -119,6 +119,7 @@ public class Player extends Effects {
             }
             
             // Movement Action
+            System.out.println(checkForWall());
             if(!checkForWall()){
                 if(distanceToClosestTarget(Enemy.class, 0, 100, 300) > 250){
                     speed = Math.abs(speed);
@@ -142,6 +143,7 @@ public class Player extends Effects {
             // End Action
             collectCoins();
             checkEffects();
+            
         }
     }
     
@@ -196,12 +198,18 @@ public class Player extends Effects {
     
     public void findClosestEnemy(){
         if(!getWorld().getObjects(Enemy.class).isEmpty()){
-            turnTowards(findClosestTarget(Enemy.class, 150, 200, 1250));
+            if(findClosestTarget(Enemy.class, 150, 200, 2500) != null){
+                turnTowards(findClosestTarget(Enemy.class, 150, 200, 2500));
+            }
         }
     }
     
     public void lookForCoins(){
-        turnTowards(findClosestTarget(Coins.class, 150, 200, 1250));
+        if(!getWorld().getObjects(Coins.class).isEmpty()){
+            if(findClosestTarget(Coins.class, 150, 200, 2500) != null){
+                turnTowards(findClosestTarget(Coins.class, 150, 200, 2500));
+            }
+        }
     }
     
     public boolean checkForWall(){
@@ -214,7 +222,7 @@ public class Player extends Effects {
         tempBox = new Hitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight() / 2, 0, 0, this, 2.5);
         getWorld().addObject(tempBox,  (int)(nextX*speed), (int)(nextY*speed));
         
-        Actor wall = (Actor) findClosestTarget(IslandHitbox.class, 150, 200, 750);
+        Actor wall = (Actor) findClosestTarget(Hitbox.class, 150, 200, 750);
         
         if(wall != null && tempBox.checkIntersection(wall)){
             getWorld().removeObject(tempBox);
