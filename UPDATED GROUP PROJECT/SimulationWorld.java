@@ -295,7 +295,7 @@ public class SimulationWorld extends World{
     private void spawnCoins(){
         int x = Greenfoot.getRandomNumber(WIDTH); // Random x-coordinate
         int y = Greenfoot.getRandomNumber(HEIGHT); // Random y-coordinate
-        addObject(new Coins(), x, y); // Add coin at the random position
+        // addObject(new Coins(), x, y); // Add coin at the random position
     }
 
     // Method to check if the Kraken is defeated

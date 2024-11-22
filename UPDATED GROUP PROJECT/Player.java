@@ -10,7 +10,7 @@ import greenfoot.*;
 
 public class Player extends Effects {
     // Manual movement mode : true -- AI movement: false
-    private static final boolean DEBUGMODE = true;
+    private static final boolean DEBUGMODE = false;
 
     // One second --> modify with * as needed
     private static final int ONE_SECOND = 60;
@@ -44,10 +44,11 @@ public class Player extends Effects {
     private int coinsStored;
     private int buyCooldown;
     private int direction; /** This will affect vfx */
-    
+
     private long rotaCont;
     private long storeRota;
     private boolean resetRotaCont;
+    private long coinRota;
 
     // Effects
     private int poisonCounter;
@@ -79,6 +80,7 @@ public class Player extends Effects {
 
     private int dx, dy;
     private boolean createdFovHitbox;
+    private boolean lookingForCoins;
 
     public Player(String playerModel, int choosenSpeed, Lives lives) {
         // Vfx
@@ -102,6 +104,7 @@ public class Player extends Effects {
         weaponCDList[3] = 15;
 
         createdHitbox = false;
+        enableStaticRotation();
     }
 
     /** try to make this added to world, if doesnt work keep it as is */
@@ -111,7 +114,7 @@ public class Player extends Effects {
         getWorld().addObject(hitbox, getX(), getY());
         createdHitbox = true;
     }
-    
+
     private void createFov() {
         fov = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5);
         getWorld().addObject(fov, getX() + 55, getY() + 55);
@@ -123,11 +126,10 @@ public class Player extends Effects {
         if (!createdHitbox){
             createHitbox();
         }
-        
+
         if (!createdFovHitbox){
             createFov();
         }
-        
 
         if (SimulationWorld.isActing()) {
             // pre action handling
@@ -138,20 +140,48 @@ public class Player extends Effects {
                 if(!getWorld().getObjects(Enemy.class).isEmpty()){
                     //findClosestEnemy();
                 }
-                if(!doneUpgrades && !getWorld().getObjects(Coins.class).isEmpty()){
-                    lookForCoins();
-                }
 
                 // Movement Action
+                //System.out.println(checkForWall());
+                if(resetRotaCont){
+                    //findClosestEnemy();
+                    //rotaCont = getRotation();
+                }
 
-                //System.out.println("Wall ahead: " + checkForWall());
                 if(!checkForWall()){
                     //if(distanceToClosestTarget(Enemy.class, 0, 100, 300) > 250){
                     if(fov.enemyDetected()){
-                        resetRotaCont = true;
+                        if(!doneUpgrades && !getWorld().getObjects(Coins.class).isEmpty()){
+                            lookForCoins();
+                            if(lookingForCoins){
+                                long rotationDiff = coinRota - getRotation();
+                                if(rotationDiff < 0){
+                                    rotationDiff = 360 + rotationDiff;
+                                }
+                                //System.out.println("money"); 
+                                System.out.println(rotationDiff);
+                                if(rotationDiff > 0 && rotationDiff < 179){
+                                    System.out.println("moneydown");
+                                    rotaCont += 2;
+                                }
+                                if(rotationDiff > 180 && rotationDiff < 360){
+                                    System.out.println("moneyup");
+                                    rotaCont -= 2;
+                                }
+                            }
+                        }
+                        
+                        /*
+                        if(getRotation() < (coinRota + 2) && getRotation() > (coinRota - 2)){
+                            rotaCont += 2;
+                        }
+                        */
+                        
+                        //resetRotaCont = true;
+                        setRotation(rotaCont);
                         move(speed);
                     }else{
-                        resetRotaCont = false;
+                        //resetRotaCont = false;
                         rotaCont -= 2;
                         setRotation(rotaCont);
                         move(speed-1);
@@ -240,11 +270,19 @@ public class Player extends Effects {
     }
 
     public void lookForCoins(){
+        storeRota = getRotation();
+        
         if(!getWorld().getObjects(Coins.class).isEmpty()){
             if(findClosestTarget(Coins.class, 150, 200, 2500) != null){
                 turnTowards(findClosestTarget(Coins.class, 150, 200, 2500));
+                coinRota = getRotation();
+                lookingForCoins = true;
             }
+        }else{
+            lookingForCoins = false;
         }
+        
+        setRotation(storeRota);
     }
 
     public boolean checkForWall(){
@@ -405,7 +443,7 @@ public class Player extends Effects {
             collisionCounter = 0; // Reset collision counter
         }
     }
-    
+
     public double getSpeed(){
         return speed;
     }
@@ -419,7 +457,7 @@ public class Player extends Effects {
     private void resetHitboxPosition() {
         hitbox.setLocation(getX(), getY());
     }
-    
+
     public Hitbox getHitbox() {
         return this.hitbox;
     }

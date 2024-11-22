@@ -146,6 +146,10 @@ public abstract class Hitbox extends Effects
         }
     }
     
+    public boolean returnVisable(){
+        return visible;
+    }
+    
     public boolean checkIntersection(Actor other) {
         return this.intersects(other);
     }

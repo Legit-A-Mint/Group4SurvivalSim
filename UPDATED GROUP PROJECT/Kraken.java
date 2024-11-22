@@ -14,7 +14,7 @@ public class Kraken extends Enemy
     private Hitbox hitbox;
 
     // Set max amount of krakites available to spawn
-    private static final int MAX_KRAKITE_SPAWN = 15;
+    private static final int MAX_KRAKITE_SPAWN = 10;
 
     public Kraken(){
         super();
@@ -148,7 +148,7 @@ public class Kraken extends Enemy
     }
 
     public void summonAttack(){
-        int numEnemies = Greenfoot.getRandomNumber(3) + 3; // Randomly summon 3 to 5 enemies
+        int numEnemies = Greenfoot.getRandomNumber(2) + 2; // Randomly summon 3 to 5 enemies
         int summonRadius = 200;
 
         // Only summon if there are less than 20 Krakite instances
