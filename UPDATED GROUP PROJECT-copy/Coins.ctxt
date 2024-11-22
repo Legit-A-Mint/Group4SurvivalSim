@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Coins
+comment0.text=\r\n\ Full\ Coin\ Class\r\n\ @Darius\r\n
+comment1.params=
+comment1.target=Coins()
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ checkCollisionWithPlayer()
+numComments=4

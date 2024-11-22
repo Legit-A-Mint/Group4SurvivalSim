@@ -24,6 +24,8 @@ public abstract class Enemy extends Effects
     private boolean foundPlayer;
     private EnemyHitbox hitbox;
     private boolean createdHitbox;
+    private double slow;
+    private double minSpeed;
 
     // Path-blocked flags
     private boolean upBlocked;
@@ -34,6 +36,8 @@ public abstract class Enemy extends Effects
     SimulationWorld world;
 
     public Enemy(){
+        minSpeed = 0.5;
+        slow = 0.35;
         attackTimer = 0;
     }
 
@@ -142,6 +146,12 @@ public abstract class Enemy extends Effects
 
     public void damageMe(int damage){
         this.hp -= damage*world.diffMulti;
+    }
+    
+    public void slowMe(){
+        if(speed >= minSpeed){
+            this.speed -= slow;
+        }
     }
 
     // Modified repel method

@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Projectile extends Effects{
+public abstract class Projectile extends Effects{
     protected Actor origin, target; 
     protected GreenfootImage img;
     protected boolean targetFound = false;
@@ -21,18 +21,18 @@ public class Projectile extends Effects{
     // Inherited Instance variables
     protected double speed;
     protected int damage;
-    protected int fadeLength;
+    protected int attackSpeed;
+    protected int lifeSpan;
     
-    protected int lifeSpan = 350;
+    private int fadeLength;
+    protected boolean removeMe;
 
-    public Projectile(String img, int damage, double speed){
-        this.speed = speed;
-        this.damage = damage;
-        this.img = new GreenfootImage(img);
-        setImage(img);
-        
+    public Projectile(){
+        removeMe = false;
         fadeLength = 100;
     }
+    
+    public abstract void hitSomething();
 
     public void act(){
         if (SimulationWorld.isActing())
@@ -45,35 +45,19 @@ public class Projectile extends Effects{
                 targeting();
             }
             else if(enemy != null){
-                
                 if(lifeSpan > 0){
                     move(speed);
                 }
-                else if(lifeSpan == 0){ 
-                    getWorld().removeObject(this);
+                else if(lifeSpan <= 0){ 
+                    removeMe = true;
                     return;
                 }
-
-                try{
-                    if(getOneIntersectingObject(Enemy.class) != null){
-                        hitEnemy = (Enemy) getOneIntersectingObject(Enemy.class);
-                        hitEnemy.damageMe(damage);
-                        //System.out.println("Hit: " + hitEnemy);
-                        getWorld().removeObject(this);
-                    }
-                    /**
-                    if(this.intersects(enemy.getHitbox())){
-                    enemy.damageMe(damage);
-                    getWorld().removeObject(this);
-                    }
-                     */
-                }catch(Exception e){
-
-                }
-
             }
-
             move(speed);
+        }
+        
+        if(removeMe){
+            getWorld().removeObject(this);
         }
     }
 
@@ -121,9 +105,14 @@ public class Projectile extends Effects{
 
             targetFound = true;
             turnTowards(enemy);
-
-            //speedX = (((enemy.getX() - getX())/closestTargetDistance)*speedMulti);
-            //speedY = (((enemy.getY() - getY())/closestTargetDistance)*speedMulti);
         }
+    }
+    
+    public void markForRemoval(){
+        removeMe = true;
+    }
+    
+    public int getWeaponCooldown(){
+        return attackSpeed;
     }
 }
