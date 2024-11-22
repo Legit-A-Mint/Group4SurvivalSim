@@ -32,13 +32,15 @@ public abstract class Enemy extends Effects
     private boolean downBlocked;
     private boolean leftBlocked;
     private boolean rightBlocked;
-    
+
     SimulationWorld world;
+    protected boolean removeMe;
 
     public Enemy(){
         minSpeed = 0.5;
         slow = 0.35;
         attackTimer = 0;
+        removeMe = false;
     }
 
     protected abstract void attack();
@@ -47,7 +49,7 @@ public abstract class Enemy extends Effects
 
     public void act(){
         createHitbox();
-        
+
         if (SimulationWorld.isActing())
         {
             //System.out.println(this + " myHp: " + hitpoints);
@@ -60,12 +62,9 @@ public abstract class Enemy extends Effects
             }
 
             if(this.hp <= 0){
-                    getWorld().removeObject(hitbox);
-                    getWorld().removeObject(this);
-                    world.addkillCount();
-                    return;
-                }
-            
+                removeMe = true;;
+            }
+
             if(isMovable){
 
                 lookForTarget();
@@ -92,18 +91,10 @@ public abstract class Enemy extends Effects
                     // Optionally place any cleanup code here if needed
                 }
             }
-            // Upgrade raft
-            if (world.getKillCount() <= 10)
-            {
-                player.setRaft(0);
-            }
-            else if (world.getKillCount() <= 30)
-            {
-                player.setRaft(1);
-            }
-            else
-            {
-                player.setRaft(2);
+            
+            if(removeMe){
+                getWorld().removeObject(hitbox);
+                getWorld().removeObject(this);
             }
         }
     }
@@ -147,7 +138,7 @@ public abstract class Enemy extends Effects
     public void damageMe(int damage){
         this.hp -= damage*world.diffMulti;
     }
-    
+
     public void slowMe(){
         if(speed >= minSpeed){
             this.speed -= slow;

@@ -4,7 +4,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * Write a description of class OpeningWindow here.
  * 
  * @author (your name) 
- * @version (a version number or a date)
+ * 2.01
  */
 public class OpeningWindow extends World
 {

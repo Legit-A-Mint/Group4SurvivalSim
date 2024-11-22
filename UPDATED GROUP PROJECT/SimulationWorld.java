@@ -54,12 +54,9 @@ public class SimulationWorld extends World{
 
         diffMulti = difficulty; // Set difficulty multiplier
 
-        // Add lives display at top of screen
-        addObject(lives = new Lives(maxLives), WIDTH / 2, 100);
-        
         // Add scroller for background movement
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, HEIGHT));
-        
+
         // Add player to the center of the screen
         addObject(player = new Player(playerModel, speed, lives), this.getWidth() / 2, this.getHeight() / 2);
 
@@ -77,13 +74,10 @@ public class SimulationWorld extends World{
         addObject(new Island(new GreenfootImage("island.png")), 1200 - getScroller().getScrolledX(), 1500 - getScroller().getScrolledY());
 
         // Add GUI elements like pause button and slider
-        addObject(pauseButton = new Button("PauseButton", new String[]{"db_1.png", "db_2.png", "db_3.png"}, true, 1, 55, 35), 55, 35);
-
-        addObject(slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540), 155, 540);
-        addObject(lives = new Lives("Heart", maxLives), WIDTH/2, 100);
+        addObject(pauseButton = new Button("PauseButton", new String[]{"db_1.png", "db_2.png", "db_3.png"}, true, 1), 55, 35);
         // Add a label to display the wave number
-        waveLabel = new Label("Wave " + (waveCount + 1), 40, 200, 25);  // Initialize label to show wave
-        addObject(waveLabel, 200, 25);  // Position the wave label on the screen
+        // waveLabel = new Label("Wave " + (waveCount + 1), 40, 200, 25);  // Initialize label to show wave
+        // addObject(waveLabel, 200, 25);  // Position the wave label on the screen
 
         setPaintOrder(Interface.class, Projectile.class);
     }
@@ -93,7 +87,8 @@ public class SimulationWorld extends World{
     {
         // Plays the ambient noise in a loop
         ambientSound.playLoop();
-        addObject(slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130, 155, 540), 155, 540);   
+        addObject(slider = new Slider("TestSlider", "rail.png", "circle.png", 1, 130), 155, 540);   
+        addObject(lives = new Lives(), WIDTH / 2, 100);
     }
 
     // Method to get the scroller instance for background movement
@@ -114,6 +109,7 @@ public class SimulationWorld extends World{
     }
 
     // Empty addObject method
+    
     public void addObject(Actor a){
         // This empty method prevents other addObject calls from being overridden
     }
@@ -132,13 +128,41 @@ public class SimulationWorld extends World{
                 coinSpawnTimer = 0;  // Reset coin spawn timer after spawning coins
             }
 
-            // Handle enemy waves
-            handleWaves();
+            switch(waveCount) {
+                    case(0):
+                    if(spawnOnce){
+                        spawnOnce = false;
+                        for(int i = 0; i < 3; i++){
+                            addObject(new Bass(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
+                                Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
+                        }
+                    }
+                    break;
+                    
+                    case(1):
+                    delay--;
+                    if(delay == 0 && countOnce){
+                        spawnOnce = true;
+                        countOnce = false;
+                        
+                        if(spawnOnce){
+                            spawnOnce = false;
+                            for(int i = 0; i < 5; i++){
+                                addObject(new Shark(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
+                                    Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
+                            }
+                        }
+                        break;
 
-            // Check if the player has enough coins to unlock new items (Spear or Raft)
-            checkForPurchases();
+                    }
 
-            // Scroll the background to follow the player
+                    if(actCount == 400 || (getObjects(Enemy.class).isEmpty() && countOnce == false)){
+                        waveCount++;
+                        actCount = 0;
+                        delay = 30;
+                        countOnce = true;
+                    }
+                }
             scroller.scroll(getWidth() / 2 - player.getX(), getHeight() / 2 - player.getY(), this, (ArrayList<SuperSmoothMover>) (getObjects(SuperSmoothMover.class)));
         }
 
@@ -158,22 +182,6 @@ public class SimulationWorld extends World{
         }
     }
 
-    // Handle the spawning of enemies based on the wave count
-    private void handleWaves(){
-        // If no enemies are left, increment the wave count and spawn new enemies
-        if (getObjects(Enemy.class).isEmpty()){
-            waveCount++;  // Increment the wave count
-            waveLabel.setText("Wave: " + (waveCount + 1)); 
-            spawnEnemiesForWave(waveCount);  // Spawn enemies based on the current wave count
-
-            // Check if it's wave 15, and spawn the Kraken if it is
-            if (waveCount == 14 && !createdKraken){  // Wave 5 is waveCount 4 (0-based)
-                spawnKraken();  // Spawn the Kraken
-                createdKraken = true;  // Set flag to prevent Kraken from spawning again
-            }
-        }
-    }
-
     // Add a method to spawn the Kraken
     private void spawnKraken(){
         // Create a Kraken actor at a random position
@@ -183,27 +191,6 @@ public class SimulationWorld extends World{
         System.out.println("Added new kraken @ (" + spawnX + ", " + spawnY + ")");
         addObject(kraken, spawnX, spawnY);  // Add Kraken to the world at the random position
     }
-
-    private void spawnEnemy(Class<? extends Actor> enemyClass){
-        // Generate random spawn coordinates within the world boundaries
-        int spawnX = Greenfoot.getRandomNumber((WIDTH/2) + getScroller().getScrolledX());  // Random X position within world width
-        int spawnY = Greenfoot.getRandomNumber((HEIGHT/2) + getScroller().getScrolledY());  // Random Y position within world height
-        System.out.println("Added new enemy @ (" + spawnX + ", " + spawnY + ")");
-        try{
-            // Instantiate the enemy class dynamically and add it to the world
-            Actor enemy = enemyClass.getDeclaredConstructor().newInstance();
-            addObject(enemy, spawnX, spawnY);  // Add the enemy to the world at the generated position
-        } catch (Exception e){
-            e.printStackTrace();  // Handle any exceptions that occur during reflection or instantiation
-        }
-    }
-
-    private void spawnEnemiesForWave(int waveCount){
-        spawnEnemy(Bass.class);
-        spawnEnemy(Whale.class);
-        spawnEnemy(Swordfish.class);
-        spawnEnemy(Shark.class);
-    } 
 
     // Method to spawn coins
     private void spawnCoins(){
@@ -223,16 +210,6 @@ public class SimulationWorld extends World{
         Greenfoot.setWorld(new WinningScreen());
     }
 
-    // Helper method to create a new instance of a given class
-    private Actor newInstance(Class<? extends Actor> clazz){
-        try{
-            return clazz.getDeclaredConstructor().newInstance();  // Create a new instance using reflection
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     // Override to add objects with precise coordinates (not currently used)
     public void addObject(Actor object, double x, double y){
         super.addObject(object, (int) (x + 0.5), (int) (y + 0.5));
@@ -246,21 +223,5 @@ public class SimulationWorld extends World{
     // Static method to check if the game is acting (active)
     public static boolean isActing(){
         return acting;
-    }
-
-    // Increment the kill count and print a message
-    public static void addkillCount(){
-        killCount++;
-    }
-
-    // Method to get the current kill count based on certain thresholds
-    public static int getKillCount(){
-        if (killCount < 5){
-            return 0;
-        } else if (killCount < 25){
-            return 1;
-        } else{
-            return 2;
-        }
     }
 }

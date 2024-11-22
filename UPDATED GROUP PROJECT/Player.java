@@ -31,6 +31,8 @@ public class Player extends Effects {
     
     private int weaponIndex;
     
+    private int[] weaponCDList = new int[4];
+    
     // Instance variables
     private double speed;
     private int hp, maxHp;
@@ -77,10 +79,16 @@ public class Player extends Effects {
         setRaft(0);
 
         // Instance variables
-        speed = choosenSpeed;
+        // speed = choosenSpeed;
+        speed = 4;
         lives = lives;
         coinsStored = 0;
         hp = maxHp;
+        
+        weaponCDList[0] = 45;
+        weaponCDList[1] = 70;
+        weaponCDList[2] = 35;
+        weaponCDList[3] = 90;
 
         createdHitbox = false;
     }
@@ -103,8 +111,10 @@ public class Player extends Effects {
             // pre action handling
             handleCooldowns();
             determineWhatToBuy();
-            findClosestEnemy();
-            if(!doneUpgrades && getWorld().getObjects(Coins.class).isEmpty()){
+            if(!getWorld().getObjects(Enemy.class).isEmpty()){
+                findClosestEnemy();
+            }
+            if(!doneUpgrades && !getWorld().getObjects(Coins.class).isEmpty()){
                 lookForCoins();
             }
             
@@ -115,17 +125,18 @@ public class Player extends Effects {
                     move(speed);
                 }else{
                     findClosestEnemy();
+                    speed = Math.abs(speed);
                     speed = -speed;
                     move(speed);
                 }
             }else{
                 turn(15);
-                move(speed/2);
+                
             }
 
             if(cooldown <= 0){
-                cooldown = projectile.getWeaponCooldown();
                 spawnProjectile(weaponIndex);
+                cooldown = weaponCDList[weaponIndex];
             }
             
             // End Action
@@ -184,7 +195,9 @@ public class Player extends Effects {
 
     
     public void findClosestEnemy(){
-        turnTowards(findClosestTarget(Enemy.class, 150, 200, 1250));
+        if(!getWorld().getObjects(Enemy.class).isEmpty()){
+            turnTowards(findClosestTarget(Enemy.class, 150, 200, 1250));
+        }
     }
     
     public void lookForCoins(){
@@ -195,14 +208,19 @@ public class Player extends Effects {
         double nextX = getPreciseX() + (double) Math.round(Math.cos(Math.toRadians(getRotation())));
         double nextY = getPreciseY() + (double) Math.round(Math.sin(Math.toRadians(getRotation())));
         
+        nextX += getImage().getWidth();
+        nextY += getImage().getHeight();
+        
         tempBox = new Hitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight() / 2, 0, 0, this, 2.5);
         getWorld().addObject(tempBox,  (int)(nextX*speed), (int)(nextY*speed));
         
         Actor wall = (Actor) findClosestTarget(IslandHitbox.class, 150, 200, 750);
         
         if(wall != null && tempBox.checkIntersection(wall)){
+            getWorld().removeObject(tempBox);
             return true;
         }
+        getWorld().removeObject(tempBox);
         return false;
     }
     

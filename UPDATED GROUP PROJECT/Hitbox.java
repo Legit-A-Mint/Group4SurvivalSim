@@ -14,7 +14,7 @@ public class Hitbox extends SuperSmoothMover
     private GreenfootImage box;
     private Actor owner;
     private String type;
-    private static final boolean visible = false;
+    private static final boolean visible = true;
     
     private int offsetX, offsetY;
     private double boundingFactor;
