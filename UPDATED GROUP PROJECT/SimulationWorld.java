@@ -75,6 +75,7 @@ public class SimulationWorld extends World{
 
         // Add GUI elements like pause button and slider
         addObject(pauseButton = new Button("PauseButton", new String[]{"db_1.png", "db_2.png", "db_3.png"}, true, 1), 55, 35);
+        addObject(slider = new Slider("TestSlider.", "rail.png", "circle.png", 1, 130), 180, getHeight() - 50);  
         // Add a label to display the wave number
         // waveLabel = new Label("Wave " + (waveCount + 1), 40, 200, 25);  // Initialize label to show wave
         // addObject(waveLabel, 200, 25);  // Position the wave label on the screen
@@ -88,9 +89,7 @@ public class SimulationWorld extends World{
     public void addedToWorld ()
     {
         // Plays the ambient noise in a loop
-        ambientSound.playLoop();
-        // Updated line to place the slider at the bottom left
-        addObject(slider = new Slider("TestSlider.", "rail.png", "circle.png", 1, 130), 50, getHeight() - 50);   
+        ambientSound.playLoop(); 
     }
 
     // Method to get the scroller instance for background movement
