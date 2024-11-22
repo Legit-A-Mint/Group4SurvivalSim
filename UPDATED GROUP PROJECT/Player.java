@@ -156,9 +156,9 @@ public class Player extends Effects {
                         move(speed);
                     }else{
                         resetRotaCont = false;
-                        rotaCont -= 2.5;
+                        rotaCont -= 2;
                         setRotation(rotaCont);
-                        move(speed);
+                        move(speed-1);
                     }
                 }
                 else{

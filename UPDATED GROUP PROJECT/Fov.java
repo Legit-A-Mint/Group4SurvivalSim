@@ -44,15 +44,15 @@ public class Fov extends Hitbox
     
     private void calcTrig(){
         cords[0] = owner.getX() + 
-        ((double) (Math.cos(Math.toRadians(owner.getRotation()))) * (owner.getImage().getWidth())*3.725);
+        ((double) (Math.cos(Math.toRadians(owner.getRotation()))) * (owner.getImage().getWidth())*3.745);
         
         cords[1] = owner.getY() + 
-        ((double) (Math.sin(Math.toRadians(owner.getRotation()))) * (owner.getImage().getHeight())*3.66);
+        ((double) (Math.sin(Math.toRadians(owner.getRotation()))) * (owner.getImage().getHeight())*3.69);
         
         
-        size[0] = baseSize[0]*(0.35+((Math.abs(Math.cos(Math.toRadians(owner.getRotation())))))*1.2);
+        size[0] = baseSize[0]*(0.25+((Math.abs(Math.cos(Math.toRadians(owner.getRotation())))))*1.3);
         
-        size[1] = baseSize[0]*(0.35+((Math.abs(Math.sin(Math.toRadians(owner.getRotation())))))*1.2);
+        size[1] = baseSize[0]*(0.25+((Math.abs(Math.sin(Math.toRadians(owner.getRotation())))))*1.2);
         
     }
 }
