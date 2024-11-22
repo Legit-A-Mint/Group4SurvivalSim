@@ -55,6 +55,13 @@ public abstract class Interface extends SuperSmoothMover{
         }
     }
     
+    private interface Shop
+    {
+        void displayItems();
+        
+        boolean isUserInteracting();
+    }
+    
     @Override
     public void setLocation(int x, int y){}
     public void setLocation(double x, double y){}
