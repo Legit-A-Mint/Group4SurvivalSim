@@ -88,10 +88,8 @@ public class SimulationWorld extends World{
 
         addObject(lives = new Lives(), getWidth()/2 - 290, 30);
         setPaintOrder(Lives.class, Interface.class, Projectile.class);
-        
-        
-    }
 
+    }
     // Method that gets called when the world is added to the Greenfoot environment
     public void addedToWorld ()
     {
@@ -166,7 +164,7 @@ public class SimulationWorld extends World{
 
     private void startWave (int waveCount){ 
         // Spawn different enemies in different waves
-        
+
         // Edit the values in spawnEnemies parameter to change spawn amount of each enemy
         switch(waveCount){
 
@@ -189,82 +187,99 @@ public class SimulationWorld extends World{
 
                 spawnEnemies(10, 3, 1, 0);
                 break;
-                
+
                 case(4):
 
                 spawnEnemies(15, 6, 3, 0);
                 break;
-                
+
                 case(5):
 
                 spawnEnemies(16, 8, 4, 0);
                 break;
-                
+
                 case(6):
 
                 spawnEnemies(4, 3, 2, 1);
                 break;
-                
+
                 case(7):
 
                 spawnEnemies(40, 0, 0, 0);
                 break;
-                
+
                 case(8):
 
                 spawnEnemies(1, 2, 3, 2);
                 break;
-                
+
                 case(9):
 
                 spawnEnemies(1, 2, 3, 4);
                 break;
-                
+
                 case(10):
 
                 spawnEnemies(10, 10, 10, 5);
                 break;
-                
+
                 case(11):
 
                 spawnEnemies(0, 0, 0, 15);
                 break;
-                
-                case(20):
-                
+
+                // Boss fight
+                case(FINAL_WAVE):
+
                 spawnKraken();
                 break;
 
         }        
     }
 
-    // Spawn certain # enemies depending on the parameters (in order)
     private void spawnEnemies(int numBass, int numShark, int numWhale, int numSwordfish){
-        for(int i = 0; i < numBass; i++){
-            int spawnX = Greenfoot.getRandomNumber(WIDTH) - getScroller().getScrolledX();
-            int spawnY = Greenfoot.getRandomNumber(HEIGHT) - getScroller().getScrolledY();
-            //System.out.println("Added new Bass @ (" + spawnX + ", " + spawnY + ")");
+        for (int i = 0; i < numBass; i++){
+            int spawnX = WIDTH / 2 + getScroller().getScrolledX();
+            int spawnY = HEIGHT / 2 + getScroller().getScrolledY();
             addObject(new Bass(), spawnX, spawnY);
         }
-        for(int i = 0; i < numShark; i++){
-            int spawnX = Greenfoot.getRandomNumber(WIDTH) - getScroller().getScrolledX();
-            int spawnY = Greenfoot.getRandomNumber(HEIGHT) - getScroller().getScrolledY();
-            //System.out.println("Added new Shark @ (" + spawnX + ", " + spawnY + ")");
+        for (int i = 0; i < numShark; i++){
+            int spawnX = WIDTH / 2 + getScroller().getScrolledX();
+            int spawnY = HEIGHT / 2 + getScroller().getScrolledY();
             addObject(new Shark(), spawnX, spawnY);
         }
-        for(int i = 0; i < numWhale; i++){
-            int spawnX = Greenfoot.getRandomNumber(WIDTH) - getScroller().getScrolledX();
-            int spawnY = Greenfoot.getRandomNumber(HEIGHT) - getScroller().getScrolledY();
-            //System.out.println("Added new Whale @ (" + spawnX + ", " + spawnY + ")");
+        for (int i = 0; i < numWhale; i++){
+            int spawnX = WIDTH / 2 + getScroller().getScrolledX();
+            int spawnY = HEIGHT / 2 + getScroller().getScrolledY();
             addObject(new Whale(), spawnX, spawnY);
         }
-        for(int i = 0; i < numSwordfish; i++){
-            int spawnX = Greenfoot.getRandomNumber(WIDTH) - getScroller().getScrolledX();
-            int spawnY = Greenfoot.getRandomNumber(HEIGHT) - getScroller().getScrolledY();
-            //System.out.println("Added new Swordfish @ (" + spawnX + ", " + spawnY + ")");
+        for (int i = 0; i < numSwordfish; i++){
+            int spawnX = WIDTH / 2 + getScroller().getScrolledX();
+            int spawnY = HEIGHT / 2 + getScroller().getScrolledY();
             addObject(new Swordfish(), spawnX, spawnY);
         }
     }
+
+    /*
+    // Supplier to reduce redundancy
+    // Spawn certain # enemies depending on the parameters (in order)
+    private void spawnEnemies(int numBass, int numShark, int numWhale, int numSwordfish){
+    // Pass each constructor as supplier
+    spawnEnemyType(numBass, Bass::new);
+    spawnEnemyType(numShark, Shark::new);
+    spawnEnemyType(numWhale, Whale::new);
+    spawnEnemyType(numSwordfish, Swordfish::new);
+    }
+
+    // Helper method for spawnEnemies
+    private void spawnEnemyType(int count, Supplier<Enemy> enemySupplier) {
+    for (int i = 0; i < count; i++){
+    int spawnX = WIDTH / 2 + getScroller().getScrolledX();
+    int spawnY = HEIGHT / 2 + getScroller().getScrolledY();
+    // Gets the type of enemy from parameter
+    addObject(enemySupplier.get(), spawnX, spawnY);
+    }
+    }*/
 
     // Add a method to spawn the Kraken
     private void spawnKraken(){
