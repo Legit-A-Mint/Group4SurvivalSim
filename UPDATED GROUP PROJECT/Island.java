@@ -7,7 +7,7 @@ import java.util.*;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Island extends SuperSmoothMover
+public class Island extends Effects
 {
     private boolean createdHitbox;
     private GreenfootImage img;

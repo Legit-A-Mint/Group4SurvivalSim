@@ -8,7 +8,7 @@ import java.util.*;
  * @Logan
  * @1.0.0
  */
-public abstract class Hitbox extends SuperSmoothMover
+public abstract class Hitbox extends Effects
 {
     //image variables
     protected GreenfootImage box;
