@@ -22,11 +22,6 @@ public class Krakite extends Enemy
         isMovable = true;
         // vfx
         img[0] = new GreenfootImage("Krakite.png");
-        
-        // Added the method use it when you have the images drawn
-        for(int i = 0; i < img.length; i++){
-            img[i] = new GreenfootImage("KrakiteF" + (i+1) + ".png");
-        }
 
         setImage(img[0]);
     }

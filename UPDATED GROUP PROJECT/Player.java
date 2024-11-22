@@ -10,7 +10,7 @@ import greenfoot.*;
 
 public class Player extends Effects {
     // Manual movement mode : true -- AI movement: false
-    private static final boolean DEBUGMODE = false;
+    private static final boolean DEBUGMODE = true;
 
     // One second --> modify with * as needed
     private static final int ONE_SECOND = 60;
@@ -96,10 +96,10 @@ public class Player extends Effects {
         hp = maxHp;
         resetRotaCont = true;
 
-        weaponCDList[0] = 45;
-        weaponCDList[1] = 70;
-        weaponCDList[2] = 35;
-        weaponCDList[3] = 90;
+        weaponCDList[0] = 15;
+        weaponCDList[1] = 15;
+        weaponCDList[2] = 15;
+        weaponCDList[3] = 15;
 
         createdHitbox = false;
     }
@@ -143,12 +143,8 @@ public class Player extends Effects {
                 }
 
                 // Movement Action
-                System.out.println(checkForWall());
-                if(resetRotaCont){
-                    //findClosestEnemy();
-                    //rotaCont = getRotation();
-                }
-                
+
+                //System.out.println("Wall ahead: " + checkForWall());
                 if(!checkForWall()){
                     //if(distanceToClosestTarget(Enemy.class, 0, 100, 300) > 250){
                     if(fov.enemyDetected()){
