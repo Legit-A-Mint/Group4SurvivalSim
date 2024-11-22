@@ -13,7 +13,7 @@ public class SimulationWorld extends World{
     public Scroller scroller; // The scroll controller to manage the background
     private Player player; // This is the player actor
     private Lives lives; // This displays the amount of lives you have
-    private int waveCount, actCount; // Tracks and counts the number of waves and actions
+    private int actCount; // Tracks and counts the number of waves and actions
     private boolean spawnOnce, countOnce; // Used for one-time actions
     public static int killCount; // Counts for the kills across the game
     public static double diffMulti; // This multiplies the difficulty of the simulation
@@ -38,12 +38,18 @@ public class SimulationWorld extends World{
     private Label waveLabel; // Label to display the current wave number
     private boolean createdKraken; // The flag for Kraken 
 
+    // Variables for handling waves
+    private int waveCount;
+    private boolean firstWave;
+    private static final int FINAL_WAVE = 20;
+
     // Constructor for the world, initializes objects
     public SimulationWorld(String playerModel, int maxLives, int speed, double difficulty){
         super(1024, 576, 1, false); // Create world with size 1024x576 pixels
 
         // Initialize game variables
         waveCount = 0;  // Start at wave 0
+        firstWave = true; // Ensure start at first wave
         actCount = 0; // Start at action count 0
         spawnOnce = true; // The flag for spawning 
         delay = 30; // The delay variable
@@ -80,9 +86,10 @@ public class SimulationWorld extends World{
         // waveLabel = new Label("Wave " + (waveCount + 1), 40, 200, 25);  // Initialize label to show wave
         // addObject(waveLabel, 200, 25);  // Position the wave label on the screen
 
-        
         addObject(lives = new Lives(), getWidth()/2 - 290, 30);
         setPaintOrder(Lives.class, Interface.class, Projectile.class);
+        
+        
     }
 
     // Method that gets called when the world is added to the Greenfoot environment
@@ -109,8 +116,7 @@ public class SimulationWorld extends World{
         ambientSound.pause();
     }
 
-    // Empty addObject method
-    
+    // Empty addObject method    
     public void addObject(Actor a){
         // This empty method prevents other addObject calls from being overridden
     }
@@ -118,10 +124,8 @@ public class SimulationWorld extends World{
     // Main act method that runs on every frame of the game
     public void act(){
         if (acting){
-            actCount++;  // The increment action count
-
-            // Update coin spawn timer
-            coinSpawnTimer++;
+            actCount++;         // The increment action count
+            coinSpawnTimer++;   // Update coin spawn timer
 
             // If 30 seconds (900 ticks) have passed, spawn 5 coins
             if (coinSpawnTimer >= 450){  // 450 ticks = 15 seconds
@@ -129,41 +133,8 @@ public class SimulationWorld extends World{
                 coinSpawnTimer = 0;  // Reset coin spawn timer after spawning coins
             }
 
-            switch(waveCount) {
-                    case(0):
-                    if(spawnOnce){
-                        spawnOnce = false;
-                        for(int i = 0; i < 3; i++){
-                            addObject(new Bass(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
-                                Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
-                        }
-                    }
-                    break;
-                    
-                    case(1):
-                    delay--;
-                    if(delay == 0 && countOnce){
-                        spawnOnce = true;
-                        countOnce = false;
-                        
-                        if(spawnOnce){
-                            spawnOnce = false;
-                            for(int i = 0; i < 5; i++){
-                                addObject(new Shark(), Greenfoot.getRandomNumber (player.getX() + MAX_SPAWN_DISTANCE) + (player.getX() - MAX_SPAWN_DISTANCE), 
-                                    Greenfoot.getRandomNumber (player.getY() + MAX_SPAWN_DISTANCE) + (player.getY() - MAX_SPAWN_DISTANCE));
-                            }
-                        }
-                        break;
+            handleWaves();
 
-                    }
-
-                    if(actCount == 400 || (getObjects(Enemy.class).isEmpty() && countOnce == false)){
-                        waveCount++;
-                        actCount = 0;
-                        delay = 30;
-                        countOnce = true;
-                    }
-                }
             scroller.scroll(getWidth() / 2 - player.getX(), getHeight() / 2 - player.getY(), this, (ArrayList<Effects>) (getObjects(Effects.class)));
         }
 
@@ -176,10 +147,122 @@ public class SimulationWorld extends World{
                 ambientSound.pause();  // Pause ambient sound
             }
         }
+    }
 
-        // Check if Kraken is defeated and the wave count is 14 or higher before transitioning to the winning screen
-        if (isKrakenDefeated() && waveCount >= 14){
-            WinningScreen();  // Transition to the winning screen only if the Kraken is defeated after wave 14
+    private void handleWaves(){
+        // Begin with first wave always
+        if(firstWave){
+            //System.out.println("Current wave: " + waveCount);
+            startWave(0);
+            firstWave = false;
+        }
+        else if(!firstWave && this.getObjects(Enemy.class).isEmpty() && waveCount < FINAL_WAVE){
+            // Increment wave count to change wave
+            waveCount++;
+            startWave(waveCount);
+            //System.out.println("Current wave: " + waveCount);
+        }
+    }
+
+    private void startWave (int waveCount){ 
+        // Spawn different enemies in different waves
+        
+        // Edit the values in spawnEnemies parameter to change spawn amount of each enemy
+        switch(waveCount){
+
+                case(0):
+
+                spawnEnemies(3, 0, 0, 0);
+                break;
+
+                case(1):
+
+                spawnEnemies(5, 1, 0, 0);
+                break;
+
+                case(2):
+
+                spawnEnemies(7, 3, 0, 0);
+                break;
+
+                case(3):
+
+                spawnEnemies(10, 3, 1, 0);
+                break;
+                
+                case(4):
+
+                spawnEnemies(15, 6, 3, 0);
+                break;
+                
+                case(5):
+
+                spawnEnemies(16, 8, 4, 0);
+                break;
+                
+                case(6):
+
+                spawnEnemies(4, 3, 2, 1);
+                break;
+                
+                case(7):
+
+                spawnEnemies(40, 0, 0, 0);
+                break;
+                
+                case(8):
+
+                spawnEnemies(1, 2, 3, 2);
+                break;
+                
+                case(9):
+
+                spawnEnemies(1, 2, 3, 4);
+                break;
+                
+                case(10):
+
+                spawnEnemies(10, 10, 10, 5);
+                break;
+                
+                case(11):
+
+                spawnEnemies(0, 0, 0, 15);
+                break;
+                
+                case(20):
+                
+                spawnKraken();
+                break;
+
+        }        
+    }
+
+    // Spawn certain # enemies depending on the parameters (in order)
+    private void spawnEnemies(int numBass, int numShark, int numWhale, int numSwordfish){
+        for(int i = 0; i < numBass; i++){
+            int spawnX = Greenfoot.getRandomNumber(WIDTH) - getScroller().getScrolledX();
+            int spawnY = Greenfoot.getRandomNumber(HEIGHT) - getScroller().getScrolledY();
+            //System.out.println("Added new Bass @ (" + spawnX + ", " + spawnY + ")");
+            addObject(new Bass(), spawnX, spawnY);
+        }
+        for(int i = 0; i < numShark; i++){
+            int spawnX = Greenfoot.getRandomNumber(WIDTH) - getScroller().getScrolledX();
+            int spawnY = Greenfoot.getRandomNumber(HEIGHT) - getScroller().getScrolledY();
+            //System.out.println("Added new Shark @ (" + spawnX + ", " + spawnY + ")");
+            addObject(new Shark(), spawnX, spawnY);
+        }
+        for(int i = 0; i < numWhale; i++){
+            int spawnX = Greenfoot.getRandomNumber(WIDTH) - getScroller().getScrolledX();
+            int spawnY = Greenfoot.getRandomNumber(HEIGHT) - getScroller().getScrolledY();
+            //System.out.println("Added new Whale @ (" + spawnX + ", " + spawnY + ")");
+            addObject(new Whale(), spawnX, spawnY);
+        }
+        for(int i = 0; i < numSwordfish; i++){
+            int spawnX = Greenfoot.getRandomNumber(WIDTH) - getScroller().getScrolledX();
+            int spawnY = Greenfoot.getRandomNumber(HEIGHT) - getScroller().getScrolledY();
+            //System.out.println("Added new Swordfish @ (" + spawnX + ", " + spawnY + ")");
+            addObject(new Swordfish(), spawnX, spawnY);
         }
     }
 
@@ -188,9 +271,9 @@ public class SimulationWorld extends World{
         // Create a Kraken actor at a random position
         Kraken kraken = new Kraken();  // Instantiate the Kraken actor
         int spawnX = WIDTH/2 + getScroller().getScrolledX();
-        int spawnY = HEIGHT/2 + getScroller().getScrolledY();  // Random Y position within world height
+        int spawnY = HEIGHT/2 + getScroller().getScrolledY();
         System.out.println("Added new kraken @ (" + spawnX + ", " + spawnY + ")");
-        addObject(kraken, spawnX, spawnY);  // Add Kraken to the world at the random position
+        addObject(kraken, spawnX, spawnY);
     }
 
     // Method to spawn coins

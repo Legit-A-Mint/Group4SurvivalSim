@@ -51,7 +51,7 @@ public class Bass extends Enemy
     }
 
     public void attackAnimation(){
-        animate(this, img, img[0].getWidth(), img[0].getHeight(), 6, direction);
+        animate(this, img, img[0].getWidth(), img[0].getHeight(), attackCooldown, direction);
     }
 
     public boolean checkForCollision(){

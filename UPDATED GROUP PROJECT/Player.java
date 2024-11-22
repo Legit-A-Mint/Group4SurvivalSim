@@ -10,7 +10,7 @@ import greenfoot.*;
 
 public class Player extends Effects {
     // Manual movement mode : true -- AI movement: false
-    private static final boolean DEBUGMODE = false;
+    private static final boolean DEBUGMODE = true;
 
     // One second --> modify with * as needed
     private static final int ONE_SECOND = 60;
@@ -89,10 +89,10 @@ public class Player extends Effects {
         coinsStored = 0;
         hp = maxHp;
 
-        weaponCDList[0] = 45;
-        weaponCDList[1] = 70;
-        weaponCDList[2] = 35;
-        weaponCDList[3] = 90;
+        weaponCDList[0] = 15;
+        weaponCDList[1] = 15;
+        weaponCDList[2] = 15;
+        weaponCDList[3] = 15;
 
         createdHitbox = false;
     }
@@ -125,7 +125,7 @@ public class Player extends Effects {
                 }
 
                 // Movement Action
-                System.out.println(checkForWall());
+                //System.out.println("Wall ahead: " + checkForWall());
                 if(!checkForWall()){
                     if(distanceToClosestTarget(Enemy.class, 0, 100, 300) > 250){
                         speed = Math.abs(speed);
@@ -237,7 +237,7 @@ public class Player extends Effects {
         tempBox = new PlayerHitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight() / 2, 0, 0, this, 2.5);
         getWorld().addObject(tempBox,  (int)(nextX*speed), (int)(nextY*speed));
 
-        Actor wall = (Actor) findClosestTarget(Hitbox.class, 150, 200, 750);
+        Actor wall = (Actor) findClosestTarget(CollisionHitbox.class, 150, 200, 750);
 
         if(wall != null && tempBox.checkIntersection(wall)){
             getWorld().removeObject(tempBox);
