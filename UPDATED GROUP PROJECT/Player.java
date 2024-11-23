@@ -82,7 +82,7 @@ public class Player extends Effects {
     private boolean createdFovHitbox;
     private boolean lookingForCoins;
 
-    public Player(String playerModel, int choosenSpeed, Lives lives) {
+    public Player(String playerModel, double speedMulti, Lives lives) {
         // Vfx
         floatyImage[0] = new GreenfootImage("floaty.png");
         floatyImage[1] = new GreenfootImage("wood.png");
@@ -91,7 +91,7 @@ public class Player extends Effects {
         setRaft(0);
 
         // Instance variables
-        // speed = choosenSpeed;
+        // speed = speed*speedMulti;
         speed = 3;
         lives = lives;
         coinsStored = 0;

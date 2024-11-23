@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.target=Player
 comment0.text=\r\n\ @lumilk\r\n\ @andrew\r\n\ @1.0.0\r\n
-comment1.params=playerModel\ choosenSpeed\ lives
-comment1.target=Player(java.lang.String,\ int,\ Lives)
+comment1.params=playerModel\ speedMulti\ lives
+comment1.target=Player(java.lang.String,\ double,\ Lives)
 comment10.params=
 comment10.target=boolean\ checkForWall()
 comment11.params=type

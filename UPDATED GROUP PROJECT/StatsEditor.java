@@ -11,7 +11,7 @@ public class StatsEditor extends World
     String playerModel;
     
     private int health = 100;
-    private int speed = 10;
+    private double speed = 1;
     private int difficulty = 1;
     private int coins = 0;
     
@@ -64,7 +64,7 @@ public class StatsEditor extends World
         addObject(rightCoins = new RightButton(), getWidth()/4*3 + 200, 380);
         
         addObject(healthTxt = new StatsLabel(new GreenfootImage("Health: " + Integer.toString(health), 50, Color.WHITE, null)), getWidth()/4, 180);
-        addObject(speedTxt = new StatsLabel(new GreenfootImage("Speed: " + Integer.toString(speed), 50, Color.WHITE, null)), getWidth()/4*3, 180);
+        addObject(speedTxt = new StatsLabel(new GreenfootImage("Speed: " + Double.toString(speed) + "x", 50, Color.WHITE, null)), getWidth()/4*3, 180);
         addObject(diffTxt = new StatsLabel(new GreenfootImage(getDifficultyText(difficulty), 50, Color.WHITE, null)), getWidth()/4, 380);
         addObject(coinsTxt = new StatsLabel(new GreenfootImage("Coins: " + Integer.toString(coins), 50, Color.WHITE, null)), getWidth()/4*3, 380);
         
@@ -93,14 +93,18 @@ public class StatsEditor extends World
         if (Greenfoot.mouseClicked(leftSpeed))
         {
             if (speed > 0)
-                speed--;
-            speedTxt.setImage(new GreenfootImage("Speed: " + Integer.toString(speed), 50, Color.WHITE, null));
+                speed -= 0.1;
+            speed = Math.round(speed*100);
+            speed = speed/100;
+            speedTxt.setImage(new GreenfootImage("Speed: " + Double.toString(speed) + "x", 50, Color.WHITE, null));
         }
         if (Greenfoot.mouseClicked(rightSpeed))
         {
-            if (speed < 20)
-                speed++;
-            speedTxt.setImage(new GreenfootImage("Speed: " + Integer.toString(speed), 50, Color.WHITE, null));
+            if (speed < 2)
+                speed += 0.1;
+            speed = Math.round(speed*100);
+            speed = speed/100;
+            speedTxt.setImage(new GreenfootImage("Speed: " + Double.toString(speed) + "x", 50, Color.WHITE, null));
         }
         if (Greenfoot.mouseClicked(leftDifficulty))
         {
