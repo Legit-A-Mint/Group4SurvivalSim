@@ -57,23 +57,23 @@ public class StatsEditor extends World
         addObject(leftSpeed = new LeftButton(), getWidth()/4*3 - 200, 180);
         addObject(rightSpeed = new RightButton(), getWidth()/4*3 + 200, 180);
         
-        addObject(leftDifficulty = new LeftButton(), getWidth()/4 - 200, 420);
-        addObject(rightDifficulty = new RightButton(), getWidth()/4 + 200, 420);
+        addObject(leftDifficulty = new LeftButton(), getWidth()/4 - 200, 380);
+        addObject(rightDifficulty = new RightButton(), getWidth()/4 + 200, 380);
         
-        addObject(leftCoins = new LeftButton(), getWidth()/4*3 - 200, 420);
-        addObject(rightCoins = new RightButton(), getWidth()/4*3 + 200, 420);
+        addObject(leftCoins = new LeftButton(), getWidth()/4*3 - 200, 380);
+        addObject(rightCoins = new RightButton(), getWidth()/4*3 + 200, 380);
         
         addObject(healthTxt = new StatsLabel(new GreenfootImage("Health: " + Integer.toString(health), 50, Color.WHITE, null)), getWidth()/4, 180);
         addObject(speedTxt = new StatsLabel(new GreenfootImage("Speed: " + Integer.toString(speed), 50, Color.WHITE, null)), getWidth()/4*3, 180);
-        addObject(diffTxt = new StatsLabel(new GreenfootImage(getDifficultyText(difficulty), 50, Color.WHITE, null)), getWidth()/4, 420);
-        addObject(coinsTxt = new StatsLabel(new GreenfootImage("Coins: " + Integer.toString(coins), 50, Color.WHITE, null)), getWidth()/4*3, 420);
+        addObject(diffTxt = new StatsLabel(new GreenfootImage(getDifficultyText(difficulty), 50, Color.WHITE, null)), getWidth()/4, 380);
+        addObject(coinsTxt = new StatsLabel(new GreenfootImage("Coins: " + Integer.toString(coins), 50, Color.WHITE, null)), getWidth()/4*3, 380);
         
         addObject(heartImg = new StatsLabel(new GreenfootImage("pixel_Heart.png"), 80, 80), getWidth()/4, 100);
         addObject(speedImg = new StatsLabel(new GreenfootImage("pixel_Heart.png"), 80, 80), getWidth()/4*3, 100);
-        addObject(diffDisplay = new StatsLabel(new GreenfootImage(getDifficultyImage(difficulty)),80,80), getWidth()/4, 340);
-        addObject(coinsImg = new StatsLabel(new GreenfootImage("coin.png"),80,80), getWidth()/4*3, 340);
+        addObject(diffDisplay = new StatsLabel(new GreenfootImage(getDifficultyImage(difficulty)),80,80), getWidth()/4, 300);
+        addObject(coinsImg = new StatsLabel(new GreenfootImage("coin.png"),80,80), getWidth()/4*3, 300);
         
-        addObject(start = new NextButton(0), 512, 520);
+        addObject(start = new NextButton(0), 512, 500);
     }
     
     public void act()
