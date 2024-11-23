@@ -142,11 +142,7 @@ public class Player extends Effects {
                 }
 
                 // Movement Action
-                //System.out.println(checkForWall());
-                if(resetRotaCont){
-                    //findClosestEnemy();
-                    //rotaCont = getRotation();
-                }
+                //System.out.println(checkForWall())
 
                 if(!checkForWall()){
                     //if(distanceToClosestTarget(Enemy.class, 0, 100, 300) > 250){
@@ -155,34 +151,44 @@ public class Player extends Effects {
                             lookForCoins();
                             if(lookingForCoins){
                                 long rotationDiff = coinRota - getRotation();
-                                if(rotationDiff < 0){
-                                    rotationDiff = 360 + rotationDiff;
-                                }
+
                                 //System.out.println("money"); 
+
+                                if(rotationDiff >= 360){
+                                    rotationDiff =  0 + (rotationDiff - 360);
+                                }
+
+                                if(rotationDiff <= 0){
+                                    rotationDiff =  0 + (rotationDiff + 360); 
+                                }
+
                                 System.out.println(rotationDiff);
-                                if(rotationDiff > 0 && rotationDiff < 179){
+                                System.out.println("this rotation: " + rotaCont);
+                                if(rotationDiff > 0 && rotationDiff < 180){
                                     System.out.println("moneydown");
                                     rotaCont += 2;
                                 }
-                                if(rotationDiff > 180 && rotationDiff < 360){
+                                if(rotationDiff > 179 && rotationDiff <= 360){
                                     System.out.println("moneyup");
                                     rotaCont -= 2;
                                 }
                             }
                         }
-                        
+
                         /*
                         if(getRotation() < (coinRota + 2) && getRotation() > (coinRota - 2)){
-                            rotaCont += 2;
+                        rotaCont += 2;
                         }
-                        */
-                        
+                         */
+
                         //resetRotaCont = true;
+                        resetRota();
                         setRotation(rotaCont);
                         move(speed);
                     }else{
                         //resetRotaCont = false;
                         rotaCont -= 2;
+                        //resetRota();
                         setRotation(rotaCont);
                         move(speed-1);
                     }
@@ -255,6 +261,16 @@ public class Player extends Effects {
         }
     }
 
+    public void resetRota(){
+        if(rotaCont >= 360){
+            rotaCont =  0 + (rotaCont - 360);
+        }
+
+        if(rotaCont <= 0){
+            rotaCont =  0 + (rotaCont + 360); 
+        }
+    }
+
     // Buy Heal
     public void buyHealthPotion() {
         coinsStored -= POTION_COST;
@@ -271,17 +287,25 @@ public class Player extends Effects {
 
     public void lookForCoins(){
         storeRota = getRotation();
-        
+
         if(!getWorld().getObjects(Coins.class).isEmpty()){
             if(findClosestTarget(Coins.class, 150, 200, 2500) != null){
                 turnTowards(findClosestTarget(Coins.class, 150, 200, 2500));
                 coinRota = getRotation();
+                
+                if(coinRota <= 0){
+                    coinRota = 0 + (coinRota + 360);
+                }
+                if(coinRota >= 360){
+                    coinRota = 0 + (coinRota - 360);
+                }
+                
                 lookingForCoins = true;
             }
         }else{
             lookingForCoins = false;
         }
-        
+
         setRotation(storeRota);
     }
 
