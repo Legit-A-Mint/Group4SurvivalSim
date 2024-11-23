@@ -12,8 +12,20 @@ public class StatsLabel extends UI
     {
         setImage(img);
     }
+    
+    public StatsLabel(GreenfootImage img, int x, int y)
+    {
+        setImage(img);
+        getImage().scale(x,y);
+    }
+
     public void setText(GreenfootImage img)
     {
         setImage(img);
+    }
+
+    public void scale(int x, int y)
+    {
+        getImage().scale(x,y);
     }
 }
