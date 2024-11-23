@@ -10,7 +10,7 @@ import greenfoot.*;
 
 public class Player extends Effects {
     // Manual movement mode : true -- AI movement: false
-    private static final boolean DEBUGMODE = false;
+    private static final boolean DEBUGMODE = true;
 
     // One second --> modify with * as needed
     private static final int ONE_SECOND = 60;
@@ -92,7 +92,7 @@ public class Player extends Effects {
 
         // Instance variables
         // speed = choosenSpeed;
-        speed = 3;
+        speed = 10;
         lives = lives;
         coinsStored = 0;
         hp = maxHp;
@@ -128,7 +128,7 @@ public class Player extends Effects {
         }
 
         if (!createdFovHitbox){
-            createFov();
+            //createFov();
         }
 
         if (SimulationWorld.isActing()) {
