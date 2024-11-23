@@ -48,7 +48,7 @@ public class SimulationWorld extends World{
     private static final int SEAGULL_SPAWN_TIME = 500;
 
     // Constructor for the world, initializes objects
-    public SimulationWorld(String playerModel, int maxLives, int speed, double difficulty){
+    public SimulationWorld(String playerModel, int maxLives, double speed, double difficulty){
         super(1024, 576, 1, false); // Create world with size 1024x576 pixels
 
         // Initialize game variables

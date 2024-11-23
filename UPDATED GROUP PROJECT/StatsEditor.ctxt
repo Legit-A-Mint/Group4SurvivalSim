@@ -7,4 +7,6 @@ comment2.params=
 comment2.target=void\ act()
 comment3.params=difficulty
 comment3.target=java.lang.String\ getDifficultyText(int)
-numComments=4
+comment4.params=difficulty
+comment4.target=java.lang.String\ getDifficultyImage(int)
+numComments=5

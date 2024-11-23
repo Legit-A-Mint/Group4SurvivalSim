@@ -10,7 +10,7 @@ import greenfoot.*;
 
 public class Player extends Effects {
     // Manual movement mode : true -- AI movement: false
-    private static final boolean DEBUGMODE = true;
+    private static final boolean DEBUGMODE = false;
 
     // One second --> modify with * as needed
     private static final int ONE_SECOND = 60;
@@ -82,7 +82,7 @@ public class Player extends Effects {
     private boolean createdFovHitbox;
     private boolean lookingForCoins;
 
-    public Player(String playerModel, int choosenSpeed, Lives lives) {
+    public Player(String playerModel, double speedMulti, Lives lives) {
         // Vfx
         floatyImage[0] = new GreenfootImage("floaty.png");
         floatyImage[1] = new GreenfootImage("wood.png");
@@ -91,8 +91,8 @@ public class Player extends Effects {
         setRaft(0);
 
         // Instance variables
-        // speed = choosenSpeed;
-        speed = 10;
+        // speed = speed*speedMulti;
+        speed = 3;
         lives = lives;
         coinsStored = 0;
         hp = maxHp;
@@ -128,7 +128,7 @@ public class Player extends Effects {
         }
 
         if (!createdFovHitbox){
-            //createFov();
+            createFov();
         }
 
         if (SimulationWorld.isActing()) {
