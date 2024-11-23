@@ -69,7 +69,7 @@ public class StatsEditor extends World
         addObject(coinsTxt = new StatsLabel(new GreenfootImage("Coins: " + Integer.toString(coins), 50, Color.WHITE, null)), getWidth()/4*3, 380);
         
         addObject(heartImg = new StatsLabel(new GreenfootImage("pixel_Heart.png"), 80, 80), getWidth()/4, 100);
-        addObject(speedImg = new StatsLabel(new GreenfootImage("pixel_Heart.png"), 80, 80), getWidth()/4*3, 100);
+        addObject(speedImg = new StatsLabel(new GreenfootImage("SpeedIcon.png"), 80, 80), getWidth()/4*3, 100);
         addObject(diffDisplay = new StatsLabel(new GreenfootImage(getDifficultyImage(difficulty)),80,80), getWidth()/4, 300);
         addObject(coinsImg = new StatsLabel(new GreenfootImage("coin.png"),80,80), getWidth()/4*3, 300);
         
