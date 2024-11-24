@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class HealthPotIcon extends SuperSmoothMover
 {
-    public HealthPot()
+    public HealthPotIcon()
     {
         setImage(new GreenfootImage("ShopHeal.png"));
     }

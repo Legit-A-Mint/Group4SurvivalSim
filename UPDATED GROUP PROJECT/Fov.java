@@ -27,7 +27,7 @@ public class Fov extends Hitbox
         scaleFov();
     }
     
-    public boolean enemyDetected(){
+    public boolean enemyNotDetected(){
         if(this.getIntersectingObjects(EnemyHitbox.class).size() == 0){
             return true;
         }

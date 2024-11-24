@@ -19,7 +19,7 @@ public class SimulationWorld extends World{
     public static double diffMulti; // This multiplies the difficulty of the simulation
     // Used for the world size and maximum spawn distance
     private static final int MAX_SPAWN_DISTANCE = 200;
-    private static final int WIDTH = 2000, HEIGHT = 2000;
+    private static final int WIDTH = 2500, HEIGHT = 2500;
     private int delay; // This is used to delay variables
 
     private double exactY, exactX; // This tracks the exact coordinate

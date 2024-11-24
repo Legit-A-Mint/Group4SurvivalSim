@@ -46,9 +46,13 @@ public class Player extends Effects {
     private int direction; /** This will affect vfx */
 
     private long rotaCont;
-    private long storeRota;
+    // private long storeRota;
     private boolean resetRotaCont;
     private long coinRota;
+
+    private long enemyRota;
+
+    private int smartDodgeCounter;
 
     // Effects
     private int poisonCounter;
@@ -81,6 +85,7 @@ public class Player extends Effects {
     private int dx, dy;
     private boolean createdFovHitbox;
     private boolean lookingForCoins;
+    private boolean smartDodge;
 
     public Player(String playerModel, double speedMulti, Lives lives) {
         // Vfx
@@ -97,6 +102,7 @@ public class Player extends Effects {
         coinsStored = 0;
         hp = maxHp;
         resetRotaCont = true;
+        smartDodgeCounter = -1;
 
         weaponCDList[0] = 45;
         weaponCDList[1] = 45;
@@ -128,12 +134,18 @@ public class Player extends Effects {
         }
 
         if (!createdFovHitbox){
-            //createFov();
+            createFov();
         }
 
         if (SimulationWorld.isActing()) {
             // pre action handling
             handleCooldowns();
+
+            if(smartDodgeCounter >= 0){
+                smartDodge = true;
+            }else{
+                smartDodge = false;
+            }
 
             if(!DEBUGMODE){
                 determineWhatToBuy();
@@ -146,7 +158,13 @@ public class Player extends Effects {
 
                 if(!checkForWall()){
                     //if(distanceToClosestTarget(Enemy.class, 0, 100, 300) > 250){
-                    if(fov.enemyDetected()){
+                    if(fov.enemyNotDetected()){
+                        smartDodgeCounter--;
+                    }else{
+                        smartDodgeCounter = ONE_SECOND/20;
+                    }
+
+                    if(!smartDodge){
                         if(!doneUpgrades && !getWorld().getObjects(Coins.class).isEmpty()){
                             lookForCoins();
                             if(lookingForCoins){
@@ -165,33 +183,48 @@ public class Player extends Effects {
                                 //System.out.println(rotationDiff);
                                 //System.out.println("this rotation: " + rotaCont);
                                 if(rotationDiff > 0 && rotationDiff < 180){
-                                    System.out.println("moneydown");
                                     rotaCont += 2;
                                 }
                                 if(rotationDiff > 179 && rotationDiff <= 360){
-                                    System.out.println("moneyup");
                                     rotaCont -= 2;
                                 }
                             }
                         }
-
                         resetRota();
                         setRotation(rotaCont);
                         move(speed);
                     }else{
-                        rotaCont -= 2;
+
+                        long rotationDiff = enemyRota - getRotation();
+
+                        if(rotationDiff >= 360){
+                            rotationDiff =  0 + (rotationDiff - 360);
+                        }
+
+                        if(rotationDiff <= 0){
+                            rotationDiff =  0 + (rotationDiff + 360); 
+                        }
+                        
+                        System.out.println(rotationDiff);
+
+                        if(rotationDiff > 0 && rotationDiff < 180){
+                            rotaCont += 2;
+                        }
+                        if(rotationDiff > 179 && rotationDiff <= 360){
+                            rotaCont -= 2;
+                        }
+                        
                         resetRota();
                         setRotation(rotaCont);
                         move(speed-1);
                     }
                 }
-                else{
-                    //turn(15);
-                }
+                
                 if(cooldown <= 0){
                     spawnProjectile(weaponIndex);
                     cooldown = weaponCDList[weaponIndex];
                 }
+                
             }
             else if(DEBUGMODE){
                 handleMovement();
@@ -270,28 +303,41 @@ public class Player extends Effects {
     }
 
     public void findClosestEnemy(){
+        long storeRota = getRotation();
+
         if(!getWorld().getObjects(Enemy.class).isEmpty()){
             if(findClosestTarget(Enemy.class, 150, 200, 2500) != null){
                 turnTowards(findClosestTarget(Enemy.class, 150, 200, 2500));
+                enemyRota = getRotation();
+
+                if(enemyRota <= 0){
+                    enemyRota = 0 + (enemyRota + 360);
+                }
+                if(coinRota >= 360){
+                    enemyRota = 0 + (enemyRota - 360);
+                }
+
             }
         }
+
+        setRotation(storeRota);
     }
 
     public void lookForCoins(){
-        storeRota = getRotation();
+        long storeRota = getRotation();
 
         if(!getWorld().getObjects(Coins.class).isEmpty()){
             if(findClosestTarget(Coins.class, 150, 200, 2500) != null){
                 turnTowards(findClosestTarget(Coins.class, 150, 200, 2500));
                 coinRota = getRotation();
-                
+
                 if(coinRota <= 0){
                     coinRota = 0 + (coinRota + 360);
                 }
                 if(coinRota >= 360){
                     coinRota = 0 + (coinRota - 360);
                 }
-                
+
                 lookingForCoins = true;
             }
         }else{
@@ -306,15 +352,15 @@ public class Player extends Effects {
         double nextY = getPreciseY() + (double) Math.round(Math.sin(Math.toRadians(getRotation()))) * speed*2;
 
         tempBox = new PlayerHitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight() / 2, (int) nextX, (int) nextY, this, 2.5, false);
-        
-        System.out.println(nextX);
-        System.out.println(nextY);
-        
+
+        // System.out.println(nextX);
+        // System.out.println(nextY);
+
         getWorld().addObject(tempBox,  (int)(nextX), (int)(nextY));
-        
-        System.out.println(tempBox.getX());
-        System.out.println(tempBox.getY());
-        
+
+        // System.out.println(tempBox.getX());
+        // System.out.println(tempBox.getY());
+
         Actor wall = (Actor) findClosestTarget(CollisionHitbox.class, 0, 200, 750);
 
         //System.out.println(tempBox.checkIntersection(wall));
