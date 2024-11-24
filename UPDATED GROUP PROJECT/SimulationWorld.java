@@ -138,7 +138,6 @@ public class SimulationWorld extends World{
 
             // If 30 seconds (900 ticks) have passed, spawn 5 coins
             if (coinSpawnTimer >= 450){  // 450 ticks = 15 seconds
-                spawnCoins();
                 coinSpawnTimer = 0;  // Reset coin spawn timer after spawning coins
             }
 
@@ -301,13 +300,6 @@ public class SimulationWorld extends World{
         int spawnY = HEIGHT/2 + getScroller().getScrolledY();
         System.out.println("Added new kraken @ (" + spawnX + ", " + spawnY + ")");
         addObject(kraken, spawnX, spawnY);
-    }
-
-    // Method to spawn coins
-    private void spawnCoins(){
-        int x = Greenfoot.getRandomNumber(WIDTH); // Random x-coordinate
-        int y = Greenfoot.getRandomNumber(HEIGHT); // Random y-coordinate
-        // addObject(new Coins(), x, y); // Add coin at the random position
     }
 
     // Spawn ambient seagulls

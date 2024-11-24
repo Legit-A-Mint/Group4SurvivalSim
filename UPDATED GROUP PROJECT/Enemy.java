@@ -96,6 +96,10 @@ public abstract class Enemy extends Effects
             }
 
             if(removeMe){
+                // Spawn a coin at my location
+                getWorld().addObject(new Coins(), getX(), getY());
+                
+                // Remove related objects
                 getWorld().removeObject(hitbox);
                 getWorld().removeObject(this);
             }
