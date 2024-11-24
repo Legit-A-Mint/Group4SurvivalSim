@@ -8,12 +8,22 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class PlayerHitbox extends Hitbox
 {
-    public PlayerHitbox(int h, int w, int offsetX, int offsetY, Actor owner, double boundingFactor){
+    private boolean follow;
+    public PlayerHitbox(int h, int w, int offsetX, int offsetY, Actor owner, double boundingFactor, boolean follow){
         super(h, w, offsetX, offsetY, owner, boundingFactor);
+        this.follow = follow;
     }
     
     public void act()
     {
-        super.act();
+        if(follow){
+            super.act();
+        }else{
+            //
+        }
+    }
+    
+    public void hitWall(){
+        //
     }
 }

@@ -50,7 +50,7 @@ public abstract class Enemy extends Effects
 
     public void act(){
         if(!createdHitbox){
-            //createHitbox();
+            createHitbox();
         }
 
         if (SimulationWorld.isActing())

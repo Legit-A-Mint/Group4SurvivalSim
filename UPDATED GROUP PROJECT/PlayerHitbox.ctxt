@@ -1,8 +1,10 @@
 #BlueJ class context
 comment0.target=PlayerHitbox
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ PlayerHitbox\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-comment1.params=h\ w\ offsetX\ offsetY\ owner\ boundingFactor
-comment1.target=PlayerHitbox(int,\ int,\ int,\ int,\ greenfoot.Actor,\ double)
+comment1.params=h\ w\ offsetX\ offsetY\ owner\ boundingFactor\ follow
+comment1.target=PlayerHitbox(int,\ int,\ int,\ int,\ greenfoot.Actor,\ double,\ boolean)
 comment2.params=
 comment2.target=void\ act()
-numComments=3
+comment3.params=
+comment3.target=void\ hitWall()
+numComments=4

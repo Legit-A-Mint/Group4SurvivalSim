@@ -98,10 +98,10 @@ public class Player extends Effects {
         hp = maxHp;
         resetRotaCont = true;
 
-        weaponCDList[0] = 15;
-        weaponCDList[1] = 15;
-        weaponCDList[2] = 15;
-        weaponCDList[3] = 15;
+        weaponCDList[0] = 45;
+        weaponCDList[1] = 45;
+        weaponCDList[2] = 45;
+        weaponCDList[3] = 45;
 
         createdHitbox = false;
         enableStaticRotation();
@@ -110,7 +110,7 @@ public class Player extends Effects {
     /** try to make this added to world, if doesnt work keep it as is */
     // Create the player's hitbox
     private void createHitbox() {
-        hitbox = new PlayerHitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight() / 2, 0, 0, this, 2.5);
+        hitbox = new PlayerHitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight() / 2, 0, 0, this, 2.5, true);
         getWorld().addObject(hitbox, getX(), getY());
         createdHitbox = true;
     }
@@ -142,7 +142,7 @@ public class Player extends Effects {
                 }
 
                 // Movement Action
-                //System.out.println(checkForWall())
+                //System.out.println(checkForWall());
 
                 if(!checkForWall()){
                     //if(distanceToClosestTarget(Enemy.class, 0, 100, 300) > 250){
@@ -162,8 +162,8 @@ public class Player extends Effects {
                                     rotationDiff =  0 + (rotationDiff + 360); 
                                 }
 
-                                System.out.println(rotationDiff);
-                                System.out.println("this rotation: " + rotaCont);
+                                //System.out.println(rotationDiff);
+                                //System.out.println("this rotation: " + rotaCont);
                                 if(rotationDiff > 0 && rotationDiff < 180){
                                     System.out.println("moneydown");
                                     rotaCont += 2;
@@ -175,20 +175,12 @@ public class Player extends Effects {
                             }
                         }
 
-                        /*
-                        if(getRotation() < (coinRota + 2) && getRotation() > (coinRota - 2)){
-                        rotaCont += 2;
-                        }
-                         */
-
-                        //resetRotaCont = true;
                         resetRota();
                         setRotation(rotaCont);
                         move(speed);
                     }else{
-                        //resetRotaCont = false;
                         rotaCont -= 2;
-                        //resetRota();
+                        resetRota();
                         setRotation(rotaCont);
                         move(speed-1);
                     }
@@ -310,19 +302,22 @@ public class Player extends Effects {
     }
 
     public boolean checkForWall(){
-        double nextX = getPreciseX() + (double) Math.round(Math.cos(Math.toRadians(getRotation()))) * speed + getImage().getWidth()
-        ;
-        double nextY = getPreciseY() + (double) Math.round(Math.sin(Math.toRadians(getRotation()))) * speed + getImage().getHeight()
-        ;
+        double nextX = getPreciseX() + (double) Math.round(Math.cos(Math.toRadians(getRotation()))) * speed*2;
+        double nextY = getPreciseY() + (double) Math.round(Math.sin(Math.toRadians(getRotation()))) * speed*2;
 
-        nextX += getImage().getWidth();
-        nextY += getImage().getHeight();
-
-        tempBox = new PlayerHitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight() / 2, 0, 0, this, 2.5);
+        tempBox = new PlayerHitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight() / 2, (int) nextX, (int) nextY, this, 2.5, false);
+        
+        System.out.println(nextX);
+        System.out.println(nextY);
+        
         getWorld().addObject(tempBox,  (int)(nextX), (int)(nextY));
+        
+        System.out.println(tempBox.getX());
+        System.out.println(tempBox.getY());
+        
+        Actor wall = (Actor) findClosestTarget(CollisionHitbox.class, 0, 200, 750);
 
-        Actor wall = (Actor) findClosestTarget(Hitbox.class, 0, 200, 750);
-
+        //System.out.println(tempBox.checkIntersection(wall));
         if(wall != null && tempBox.checkIntersection(wall)){
             getWorld().removeObject(tempBox);
             return true;
