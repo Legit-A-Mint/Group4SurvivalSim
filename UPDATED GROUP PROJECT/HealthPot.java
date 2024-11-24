@@ -8,10 +8,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class HealthPot extends SuperSmoothMover
 {
-    /**
-     * Act - do whatever the HealthPot wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    public HealthPot()
+    {
+        setImage(new GreenfootImage("ShopHeal.png"));
+    }
     public void act()
     {
         // Add your action code here.

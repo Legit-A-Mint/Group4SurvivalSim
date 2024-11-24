@@ -8,10 +8,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class ShurikenShopIcon extends SuperSmoothMover
 {
-    /**
-     * Act - do whatever the ShurikenShopIcon wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    public ShurikenShopIcon()
+    {
+        setImage(new GreenfootImage("ShopShuriken.png"));
+    }
     public void act()
     {
         // Add your action code here.

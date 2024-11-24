@@ -1,16 +1,16 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class NetShopIcon here.
+ * Write a description of class DaggerShopIcon here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class NetShopIcon extends SuperSmoothMover
+public class DaggerShopIcon extends SuperSmoothMover
 {
-    public NetShopIcon()
+    public DaggerShopIcon()
     {
-        setImage(new GreenfootImage("ShopNet.png"));
+        setImage(new GreenfootImage("ShopDagger.png"));
     }
     public void act()
     {

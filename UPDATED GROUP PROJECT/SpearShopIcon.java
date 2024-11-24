@@ -8,10 +8,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class SpearShopIcon extends SuperSmoothMover
 {
-    /**
-     * Act - do whatever the SpearShopIcon wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    public SpearShopIcon()
+    {
+        setImage(new GreenfootImage("ShopSpear.png"));
+    }
     public void act()
     {
         // Add your action code here.
