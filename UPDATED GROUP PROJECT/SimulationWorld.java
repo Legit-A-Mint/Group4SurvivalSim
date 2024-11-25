@@ -94,8 +94,8 @@ public class SimulationWorld extends World{
         addObject(new Island(new GreenfootImage("island.png")), 2100 - getScroller().getScrolledX(), 2100 - getScroller().getScrolledY());
 
         // Add GUI elements like pause button and slider
-        addObject(pauseButton = new Button("PauseButton", new String[]{"db_1.png", "db_2.png", "db_3.png"}, true, 1, 1, true), 55, 35);  
-        addObject(shopButton = new Button("ShopButton" , new String[]{"db_1.png", "db_2.png", "db_3.png"}, true, 1, 1, true), 55, 100);
+        addObject(pauseButton = new Button("PauseButton", new String[]{"pause1.png", "pause2.png", "pause3.png"}, true, 1, 1, true), 55, 35);  
+        addObject(shopButton = new Button("ShopButton" , new String[]{"Shop1.png", "Shop2.png", "Shop3.png"}, true, 1, 1, true), 55, 100);
         
         //addObject(slider = new Slider("TestSlider.", "rail.png", "circle.png", 1, 130), 180, getHeight() - 50);  
 
