@@ -6,12 +6,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class EndScreen extends World
+public class LosingScreen extends World
 {
     Button restart;
     ImageDisplay dead;
     
-    public EndScreen()
+    public LosingScreen()
     {    
         super(1024, 576, 1, false);
         
