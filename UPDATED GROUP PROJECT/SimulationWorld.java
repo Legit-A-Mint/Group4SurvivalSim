@@ -89,8 +89,8 @@ public class SimulationWorld extends World{
         addObject(new Island(new GreenfootImage("island.png")), 2100 - getScroller().getScrolledX(), 2100 - getScroller().getScrolledY());
 
         // Add GUI elements like pause button and slider
-        addObject(pauseButton = new Button("PauseButton", new String[]{"db_1.png", "db_2.png", "db_3.png"}, true, 1), 55, 35);
-        addObject(slider = new Slider("TestSlider.", "rail.png", "circle.png", 1, 130), 180, getHeight() - 50);  
+        addObject(pauseButton = new Button("PauseButton", new String[]{"db_1.png", "db_2.png", "db_3.png"}, true, 1, 1, true), 55, 35);
+        //addObject(slider = new Slider("TestSlider.", "rail.png", "circle.png", 1, 130), 180, getHeight() - 50);  
 
         addObject(shop = new Shop(), 600, getHeight() - 90);  
         // Add a label to display the wave number
@@ -98,7 +98,7 @@ public class SimulationWorld extends World{
         // addObject(waveLabel, 200, 25);  // Position the wave label on the screen
 
         //Add a label to display the wave number
-        waveLabel = new Label("Wave " + (waveCount + 1), 40);  // Initialize label to show wave
+        waveLabel = new Label("Wave " + (waveCount + 1), 40, false);  // Initialize label to show wave
         addObject(waveLabel, getWidth() - 100, 25);  // Position the wave label on the screen
 
         // Always keep in world

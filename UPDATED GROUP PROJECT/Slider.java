@@ -21,9 +21,9 @@ public class Slider extends Interface
 
     private boolean createdSlider;
 
-    public Slider(String name, String image, String sliderImage, double scale, int offset){
+    public Slider(String name, String image, String sliderImage, double scale, int offset, boolean canFade){
         myName = name;
-        
+        this.canFade = canFade;
         this.sliderImage = sliderImage;
         this.scale = scale;
         this.offset = offset;
@@ -37,7 +37,7 @@ public class Slider extends Interface
         super.act();
         if(!createdSlider){
             //create slider with max offset
-            slider = new SliderObject("", offset, this.getX(), sliderImage, scale);
+            slider = new SliderObject("", offset, this.getX(), sliderImage, scale, canFade);
             getWorld().addObject(slider, this.getX(), this.getY());
             createdSlider = true;
         }

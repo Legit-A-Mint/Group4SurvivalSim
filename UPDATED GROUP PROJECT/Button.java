@@ -34,20 +34,26 @@ public class Button extends Interface
         
         setImage(img[0]);
     }
-    public Button(String name, String[] images, boolean isAnimated , double scale){
+    
+    public Button(String name, String[] images, boolean isAnimated , double scale, int direction, boolean canFade){
         this.isAnimated = isAnimated;
+        this.canFade = canFade;
         myName = name;
         
         img = new GreenfootImage[3];
         for(int i = 0; i < img.length; i++){
             img[i] = new GreenfootImage(images[i]);
             img[i].scale((int)(img[i].getWidth() * scale), (int)(img[i].getHeight() * scale));
+            
+            if(direction == -1){
+                img[i].mirrorHorizontally();
+            }
         }
         
         setImage(img[0]);
     }
     //constructor supports Color class in an array use Color.COLOR to set a color
-    public Button(String name, int width, int height, Color[] colors, boolean isAnimated){
+    public Button(String name, int width, int height, Color[] colors, boolean isAnimated, int direction, boolean canFade){
         myName = name;
         
         this.isAnimated = isAnimated;
@@ -57,6 +63,10 @@ public class Button extends Interface
             img[i] = new GreenfootImage(width, height);
             img[i].setColor(colors[i]);
             img[i].fill();
+            
+            if(direction == -1){
+                img[i].mirrorHorizontally();
+            }
         }
         
         setImage(img[0]);
@@ -113,7 +123,7 @@ public class Button extends Interface
     }
     
     @Override
-    protected boolean isUserInteracting() {
+    protected boolean isUserInteracting(){
         return Greenfoot.mouseMoved(this);
     }
 }
