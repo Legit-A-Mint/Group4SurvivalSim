@@ -115,17 +115,12 @@ public class SimulationWorld extends World{
 
         // Add lives
         addObject(lives = new Lives(), getWidth()/2 - 290, 30);
-<<<<<<< Updated upstream
-        setPaintOrder(Image.class, Shop.class, Seagull.class, Lives.class, Interface.class, Projectile.class);
-=======
         
         // Add coins
         addObject(this.coin = new ImageDisplay("coin.png"), getWidth() - 150, getHeight() - 40);
         addObject(displayCoins = new ImageDisplay(new GreenfootImage(Integer.toString(coinDisplay), 50, Color.WHITE, null)), getWidth() - 75, getHeight() - 40);
         
         setPaintOrder(ImageDisplay.class, Image.class, Seagull.class, Lives.class, Interface.class, Projectile.class);
->>>>>>> Stashed changes
-
     }
     // Method that gets called when the world is added to the Greenfoot environment
     public void addedToWorld ()
