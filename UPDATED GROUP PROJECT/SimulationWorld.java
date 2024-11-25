@@ -384,7 +384,7 @@ public class SimulationWorld extends World{
 
     public void updateCoins(int num)
     {
-        coinDisplay += num;
+        coinDisplay = num;
         removeObject(displayCoins);
         addObject(displayCoins = new ImageDisplay(new GreenfootImage(Integer.toString(coinDisplay), 50, Color.WHITE, null)), 215, 100);
     }

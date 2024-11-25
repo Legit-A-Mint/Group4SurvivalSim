@@ -306,7 +306,7 @@ public class Player extends Effects {
             // End Action
             collectCoins();
             checkEffects();
-
+            ((SimulationWorld)getWorld()).updateCoins(coinsStored);
         }
     }
 
@@ -363,25 +363,28 @@ public class Player extends Effects {
 
         // skip other ifs (optimization)
         if(!doneUpgrades){
-            if(!netBought && (coinsStored > NET_COST && buyCooldown <= 0)){
+            if(!netBought && (coinsStored >= NET_COST && buyCooldown <= 0)){
                 weaponIndex++;
                 netBought = true;
+                coinsStored -= NET_COST;
                 Greenfoot.playSound("item_Buy.mp3");
                 buyCooldown = ONE_SECOND;
                 return;
             }
 
-            if(!shurikenBought && (coinsStored > SHURIKEN_COST && buyCooldown <= 0)){
+            if(!shurikenBought && (coinsStored >= SHURIKEN_COST && buyCooldown <= 0)){
                 weaponIndex++;
                 shurikenBought = true;
+                coinsStored -= SHURIKEN_COST;
                 Greenfoot.playSound("item_Buy.mp3");
                 buyCooldown = ONE_SECOND;
                 return;
             }
 
-            if(!harpoonBought && (coinsStored > HARPOON_COST && buyCooldown <= 0)){
+            if(!harpoonBought && (coinsStored >= HARPOON_COST && buyCooldown <= 0)){
                 weaponIndex++;
                 harpoonBought = true;
+                coinsStored -= HARPOON_COST;
                 Greenfoot.playSound("item_Buy.mp3");
                 buyCooldown = ONE_SECOND;
                 return;
@@ -527,7 +530,6 @@ public class Player extends Effects {
         if (coin != null) {
             Coins c = (Coins) coin;
             coinsStored++;  // Add coins to player
-            ((SimulationWorld)getWorld()).updateCoins(1);
             getWorld().removeObject(c);  // Remove coin from world
             Greenfoot.playSound("coin_pickUp.mp3");
         }
