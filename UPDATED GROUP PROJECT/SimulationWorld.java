@@ -326,6 +326,7 @@ public class SimulationWorld extends World{
     /*
     // Supplier to reduce redundancy
     // Spawn certain # enemies depending on the parameters (in order)
+    // NOT WORKING AS OF NOW
     private void spawnEnemies(int numBass, int numShark, int numWhale, int numSwordfish){
     // Pass each constructor as supplier
     spawnEnemyType(numBass, Bass::new);
