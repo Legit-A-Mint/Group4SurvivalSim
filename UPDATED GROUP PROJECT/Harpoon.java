@@ -12,7 +12,7 @@ public class Harpoon extends Projectile
         speed = 4.75;
         damage = 4;
         attackSpeed = 90;
-        lifeSpan = 600;
+        lifeSpan = 300;
     }
     
     public void act()

@@ -53,7 +53,6 @@ public class SimulationWorld extends World{
     // Ambient class spawnage
     private int seagullTimer;
     private static final int SEAGULL_SPAWN_TIME = 500;
-    
 
     // Constructor for the world, initializes objects
     public SimulationWorld(String playerModel, int maxLives, double speed, double difficulty, int coin){
@@ -86,17 +85,17 @@ public class SimulationWorld extends World{
         addObject(new CollisionHitbox(100, HEIGHT, 2.5), 0, HEIGHT / 2); // Left border
 
         // Add islands to the world
-        addObject(new Island(new GreenfootImage("island.png")), 500 - getScroller().getScrolledX(), 500 - getScroller().getScrolledY());
-        addObject(new Island(new GreenfootImage("island.png")), 600 - getScroller().getScrolledX(), 2100 - getScroller().getScrolledY());
+        addObject(new Island(new GreenfootImage("island.png")), 520 - getScroller().getScrolledX(), 520 - getScroller().getScrolledY());
+        addObject(new Island(new GreenfootImage("island.png")), 620 - getScroller().getScrolledX(), 2000 - getScroller().getScrolledY());
         addObject(new Island(new GreenfootImage("island.png")), 1750 - getScroller().getScrolledX(), 1200 - getScroller().getScrolledY());
         addObject(new Island(new GreenfootImage("island.png")), 1500 - getScroller().getScrolledX(), 550 - getScroller().getScrolledY());
         addObject(new Island(new GreenfootImage("island.png")), 1200 - getScroller().getScrolledX(), 1500 - getScroller().getScrolledY());
-        addObject(new Island(new GreenfootImage("island.png")), 2100 - getScroller().getScrolledX(), 2100 - getScroller().getScrolledY());
+        addObject(new Island(new GreenfootImage("island.png")), 1900 - getScroller().getScrolledX(), 1900 - getScroller().getScrolledY());
 
         // Add GUI elements like pause button and slider
         addObject(pauseButton = new Button("PauseButton", new String[]{"pause1.png", "pause2.png", "pause3.png"}, true, 1, 1, false), 55, 35);  
         addObject(shopButton = new Button("ShopButton" , new String[]{"Shop1.png", "Shop2.png", "Shop3.png"}, true, 1, 1, false), 55, 100);
-        
+
         //addObject(slider = new Slider("TestSlider.", "rail.png", "circle.png", 1, 130), 180, getHeight() - 50);  
 
         addObject(shop = new Shop(), 725, getHeight() - 90);  
@@ -115,11 +114,11 @@ public class SimulationWorld extends World{
 
         // Add lives
         addObject(lives = new Lives(), 235, 30);
-        
+
         // Add coins
         addObject(this.coin = new ImageDisplay("coin.png"), 150, 100);
         addObject(displayCoins = new ImageDisplay(new GreenfootImage(Integer.toString(coinDisplay), 50, Color.WHITE, null)), 215, 100);
-        
+
         setPaintOrder(ImageDisplay.class, Shop.class, Image.class, Seagull.class, Lives.class, Interface.class, Projectile.class);
     }
     // Method that gets called when the world is added to the Greenfoot environment
@@ -183,7 +182,7 @@ public class SimulationWorld extends World{
                 ambientSound.pause();  // Pause ambient sound
             }
         }
-        
+
         if (shopButton.checkClicked()){
             shopToggled = !shopToggled; // Flip state 
             shop.showShop(shopToggled);
@@ -238,6 +237,7 @@ public class SimulationWorld extends World{
                 case(3):
 
                 spawnEnemies(10, 0, 1, 0, 0, 0);
+                spawnKraken();
                 break;
 
                 case(4):
@@ -281,11 +281,11 @@ public class SimulationWorld extends World{
                 break;
 
                 // Boss fight
+                /*
                 case(FINAL_WAVE):
-
                 spawnKraken();
                 break;
-
+                */
         }        
     }
 
@@ -320,7 +320,7 @@ public class SimulationWorld extends World{
             int spawnY = HEIGHT / 2 + getScroller().getScrolledY() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
             addObject(new Manatee(), spawnX, spawnY);
         }
-        
+
     }
 
     /*
@@ -381,7 +381,7 @@ public class SimulationWorld extends World{
     public void addObject(Actor object, double x, double y){
         super.addObject(object, (int) (x + 0.5), (int) (y + 0.5));
     }
-    
+
     public void updateCoins(int num)
     {
         coinDisplay += num;

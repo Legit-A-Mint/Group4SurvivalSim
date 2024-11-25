@@ -10,7 +10,7 @@ public class Net extends Projectile
 {
     public Net(){
         speed = 3;
-        damage = 1;
+        damage = 3;
         attackSpeed = 70;
         lifeSpan = 250;
         removeMe = false;
