@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class WinningScreen extends World
 {
     Button restart;
-    StatsLabel dead;
+    ImageDisplay dead;
     
     public WinningScreen()
     {    
@@ -20,7 +20,7 @@ public class WinningScreen extends World
         background.fill();
         setBackground(background);
         
-        addObject(dead = new StatsLabel(new GreenfootImage("YOU WIN", 100, Color.WHITE, null)), getWidth()/2, 200);
+        addObject(dead = new ImageDisplay(new GreenfootImage("YOU WIN", 100, Color.WHITE, null)), getWidth()/2, 200);
         
         addObject(restart = new Button("restart",new String[]{"PlayButton.png","PlayButton.png","PlayButton.png"}, false, 0.5, 1, false), 512, 400);
     }
