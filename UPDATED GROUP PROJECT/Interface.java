@@ -15,26 +15,29 @@ public abstract class Interface extends SuperSmoothMover{
 
     //inherited variables
     protected String name;
-    /**  delete later */protected int myX, myY;
+    protected boolean canFade;
 
+    /**  delete later */protected int myX, myY;
     //every subclass must contain a check to see if the user interacts with object
     protected abstract boolean isUserInteracting();
-    
+
     public void act() {
-        if(isUserInteracting()){ 
-            lastInteractionTime = 0;  //reset global timer
-            resetTransparency();
-        } 
-        else{
-            if(lastInteractionTime > MAX_IDLE_TIME){  // check shared idle time for all instances    
-                fadeTransparency();                  
+        if(canFade){
+            if(isUserInteracting()){ 
+                lastInteractionTime = 0;  //reset global timer
+                resetTransparency();
             } 
             else{
-                resetTransparency();
+                if(lastInteractionTime > MAX_IDLE_TIME){  // check shared idle time for all instances    
+                    fadeTransparency();                  
+                } 
+                else{
+                    resetTransparency();
+                }
             }
+            //continue to increase
+            lastInteractionTime++;
         }
-        //continue to increase
-        lastInteractionTime++;
     }
 
     //handle transparency
@@ -53,5 +56,4 @@ public abstract class Interface extends SuperSmoothMover{
         }
     }
 }
-
 

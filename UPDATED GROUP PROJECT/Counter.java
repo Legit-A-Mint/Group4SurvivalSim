@@ -21,8 +21,8 @@ public class Counter extends Interface
         setCount();
     }
 
-    public Counter(String name, String image, double scale, boolean isDouble){
-        
+    public Counter(String name, String image, double scale, boolean isDouble, boolean canFade){
+        this.canFade = canFade;
         myImage = image;
         imgBase = new GreenfootImage(image);
 

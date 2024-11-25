@@ -5,7 +5,8 @@ public class Label extends Interface {
     private String text;
     private int fontSize;
 
-    public Label(String text, int fontSize) {
+    public Label(String text, int fontSize, boolean canFade) {
+        this.canFade = canFade;
         this.text = text;
         this.fontSize = fontSize;
         updateImage();

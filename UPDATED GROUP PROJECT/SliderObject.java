@@ -12,8 +12,9 @@ public class SliderObject extends Interface
     private int maxOffset;
     private int refX, refY; 
     
-    public SliderObject(String name, int max, int refX, String image, double scale){
+    public SliderObject(String name, int max, int refX, String image, double scale, boolean canFade){
         
+        this.canFade = canFade;
         img = new GreenfootImage(image);
         setImage(img);
         img.scale((int)(img.getWidth() * scale), 
