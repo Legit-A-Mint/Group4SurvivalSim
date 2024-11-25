@@ -312,7 +312,7 @@ public class Player extends Effects {
                     }
                 }
 
-                if(cooldown <= 0){
+                if(cooldown <= 0 && isThereACloseEnemy(0, 800)){
                     spawnProjectile(weaponIndex);
                     cooldown = weaponCDList[weaponIndex];
                 }
@@ -456,9 +456,9 @@ public class Player extends Effects {
         return false;
     }
     
-    public boolean isThereACloseEnemy(){
+    public boolean isThereACloseEnemy(int min, int max){
         if(!getWorld().getObjects(Enemy.class).isEmpty()){
-            if(findClosestTarget(Enemy.class, 0, 70, 400) != null){
+            if(findClosestTarget(Enemy.class, min, 100, max) != null){
                 return true;
             }else{
                 return false;

@@ -12,7 +12,7 @@ public class Shark extends Enemy
         super();
         img = new GreenfootImage[2];
         speed = 2.3;
-        hp = 5;
+        hp = 7;
         damage = 4;
         attackCooldown = 60;
         isMovable = true;

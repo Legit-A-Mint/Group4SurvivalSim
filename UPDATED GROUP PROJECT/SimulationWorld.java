@@ -28,6 +28,7 @@ public class SimulationWorld extends World{
     private Button pauseButton; // The pause button for the gameplay
     private Slider slider; // The slider shown on the bottom left
     private static boolean acting; // Used to check if the game is active and running
+    private Shop shop;
 
     private int coinSpawnTimer;  // Timer to track coin spawning time
     private int coinDisplay; // Used to track how many coins to display
@@ -81,15 +82,20 @@ public class SimulationWorld extends World{
 
         // Add islands to the world
         addObject(new Island(new GreenfootImage("island.png")), 500 - getScroller().getScrolledX(), 500 - getScroller().getScrolledY());
-        addObject(new Island(new GreenfootImage("island.png")), 600 - getScroller().getScrolledX(), 2000 - getScroller().getScrolledY());
-        addObject(new Island(new GreenfootImage("island.png")), 1750 - getScroller().getScrolledX(), 900 - getScroller().getScrolledY());
-        addObject(new Island(new GreenfootImage("island.png")), 1500 - getScroller().getScrolledX(), 250 - getScroller().getScrolledY());
+        addObject(new Island(new GreenfootImage("island.png")), 600 - getScroller().getScrolledX(), 2100 - getScroller().getScrolledY());
+        addObject(new Island(new GreenfootImage("island.png")), 1750 - getScroller().getScrolledX(), 1200 - getScroller().getScrolledY());
+        addObject(new Island(new GreenfootImage("island.png")), 1500 - getScroller().getScrolledX(), 550 - getScroller().getScrolledY());
         addObject(new Island(new GreenfootImage("island.png")), 1200 - getScroller().getScrolledX(), 1500 - getScroller().getScrolledY());
-        addObject(new Island(new GreenfootImage("island.png")), 2000 - getScroller().getScrolledX(), 2000 - getScroller().getScrolledY());
+        addObject(new Island(new GreenfootImage("island.png")), 2100 - getScroller().getScrolledX(), 2100 - getScroller().getScrolledY());
 
         // Add GUI elements like pause button and slider
         addObject(pauseButton = new Button("PauseButton", new String[]{"db_1.png", "db_2.png", "db_3.png"}, true, 1), 55, 35);
         addObject(slider = new Slider("TestSlider.", "rail.png", "circle.png", 1, 130), 180, getHeight() - 50);  
+
+        addObject(shop = new Shop(), 600, getHeight() - 90);  
+        // Add a label to display the wave number
+        // waveLabel = new Label("Wave " + (waveCount + 1), 40, 200, 25);  // Initialize label to show wave
+        // addObject(waveLabel, 200, 25);  // Position the wave label on the screen
 
         //Add a label to display the wave number
         waveLabel = new Label("Wave " + (waveCount + 1), 40);  // Initialize label to show wave
@@ -204,27 +210,27 @@ public class SimulationWorld extends World{
 
                 case(1):
 
-                spawnEnemies(5, 1, 0, 0);
+                spawnEnemies(4, 1, 0, 0);
                 break;
 
                 case(2):
 
-                spawnEnemies(7, 3, 0, 0);
+                spawnEnemies(3, 4, 0, 0);
                 break;
 
                 case(3):
 
-                spawnEnemies(10, 3, 1, 0);
+                spawnEnemies(10, 0, 1, 0);
                 break;
 
                 case(4):
 
-                spawnEnemies(15, 6, 3, 0);
+                spawnEnemies(5, 5, 5, 0);
                 break;
 
                 case(5):
 
-                spawnEnemies(16, 8, 4, 0);
+                spawnEnemies(9, 8, 4, 0);
                 break;
 
                 case(6):
