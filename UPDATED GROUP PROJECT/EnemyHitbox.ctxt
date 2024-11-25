@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=EnemyHitbox
-comment0.text=\r\n\ Full\ hitbox\ class\r\n\ \r\n\ @Andrew\ Xu\r\n\ @1.0.0\r\n
+comment0.text=\n\ Full\ hitbox\ class\n\ \n\ @Andrew\ Xu\n\ @1.0.0\n
 comment1.params=h\ w\ offsetX\ offsetY\ owner\ boundingFactor\ visable
 comment1.target=EnemyHitbox(int,\ int,\ int,\ int,\ greenfoot.Actor,\ double,\ boolean)
 numComments=2

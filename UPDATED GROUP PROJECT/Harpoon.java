@@ -8,11 +8,20 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Harpoon extends Projectile
 {
+    //Harpoon shooting sound effect
+    private static final GreenfootSound fireSfx = new GreenfootSound("Harpoon.mp3");
+    
     public Harpoon(){
         speed = 4.75;
         damage = 4;
         attackSpeed = 90;
+<<<<<<< Updated upstream
         lifeSpan = 300;
+=======
+        lifeSpan = 600;
+        
+        playHarpoonSound();
+>>>>>>> Stashed changes
     }
     
     public void act()
@@ -30,5 +39,10 @@ public class Harpoon extends Projectile
                 speed = 0;
             }
         }
+    }
+    
+    // Play the firing sound effect
+    private void playHarpoonSound() {
+        fireSfx.play();
     }
 }

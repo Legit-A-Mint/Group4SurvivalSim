@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=CollisionHitbox
-comment0.text=\r\n\ Full\ hitbox\ class\r\n\ \r\n\ @Logan\r\n\ @1.0.0\r\n
+comment0.text=\n\ Full\ hitbox\ class\n\ \n\ @Logan\n\ @1.0.0\n
 comment1.params=h\ w\ offsetX\ offsetY\ owner\ boundingFactor
 comment1.target=CollisionHitbox(int,\ int,\ int,\ int,\ greenfoot.Actor,\ double)
 comment2.params=h\ w\ boundingFactor

@@ -8,12 +8,17 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Net extends Projectile
 {
+    
+    private static final GreenfootSound fireSfx = new GreenfootSound("Net.mp3");
+    
     public Net(){
         speed = 3;
         damage = 3;
         attackSpeed = 70;
         lifeSpan = 250;
         removeMe = false;
+        
+        playNetSound();
     }
 
     public void act()
@@ -32,5 +37,10 @@ public class Net extends Projectile
                 speed = 0;
             }
         }
+    }
+    
+    // Play the firing sound effect
+    private void playNetSound() {
+        fireSfx.play();
     }
 }

@@ -48,6 +48,7 @@ public class Bass extends Enemy
 
     public void attack(){
         getPlayer().damageMe(damage);
+        Greenfoot.playSound("Bite_1.mp3");
     }
 
     public void attackAnimation(){

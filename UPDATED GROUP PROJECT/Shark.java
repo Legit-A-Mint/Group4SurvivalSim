@@ -47,6 +47,7 @@ public class Shark extends Enemy
 
     public void attack(){
         getPlayer().damageMe(damage);
+        Greenfoot.playSound("Bite_2.mp3");
     }
 
     public void attackAnimation(){

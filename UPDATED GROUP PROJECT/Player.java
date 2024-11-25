@@ -356,6 +356,7 @@ public class Player extends Effects {
     private void determineWhatToBuy(){
         if((coinsStored > POTION_COST && buyCooldown <= 0) && hp < maxHp){
             buyHealthPotion();
+            Greenfoot.playSound("item_Buy.mp3");
             buyCooldown = ONE_SECOND;
             return;
         }
@@ -365,6 +366,7 @@ public class Player extends Effects {
             if(!netBought && (coinsStored > NET_COST && buyCooldown <= 0)){
                 weaponIndex++;
                 netBought = true;
+                Greenfoot.playSound("item_Buy.mp3");
                 buyCooldown = ONE_SECOND;
                 return;
             }
@@ -372,6 +374,7 @@ public class Player extends Effects {
             if(!shurikenBought && (coinsStored > SHURIKEN_COST && buyCooldown <= 0)){
                 weaponIndex++;
                 shurikenBought = true;
+                Greenfoot.playSound("item_Buy.mp3");
                 buyCooldown = ONE_SECOND;
                 return;
             }
@@ -379,6 +382,7 @@ public class Player extends Effects {
             if(!harpoonBought && (coinsStored > HARPOON_COST && buyCooldown <= 0)){
                 weaponIndex++;
                 harpoonBought = true;
+                Greenfoot.playSound("item_Buy.mp3");
                 buyCooldown = ONE_SECOND;
                 return;
             }
@@ -525,6 +529,7 @@ public class Player extends Effects {
             coinsStored++;  // Add coins to player
             ((SimulationWorld)getWorld()).updateCoins(1);
             getWorld().removeObject(c);  // Remove coin from world
+            Greenfoot.playSound("coin_pickUp.mp3");
         }
     }
 

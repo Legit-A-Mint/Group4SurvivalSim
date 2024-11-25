@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Player
-comment0.text=\r\n\ @lumilk\r\n\ @andrew\r\n\ @1.0.0\r\n
+comment0.text=\n\ @lumilk\n\ @andrew\n\ @1.0.0\n
 comment1.params=playerModel\ speedMulti\ lives\ coins
 comment1.target=Player(java.lang.String,\ double,\ Lives,\ int)
 comment10.params=

@@ -43,6 +43,7 @@ public class Lionfish extends Enemy
 
     public void attack(){
         getPlayer().poisonMe(damage, 10);
+        Greenfoot.playSound("Bite_2.mp3");
     }
 
     public void attackAnimation(){

@@ -26,7 +26,7 @@ public abstract class Projectile extends Effects{
     
     private int fadeLength;
     protected boolean removeMe;
-
+    
     public Projectile(){
         removeMe = false;
         fadeLength = 100;
