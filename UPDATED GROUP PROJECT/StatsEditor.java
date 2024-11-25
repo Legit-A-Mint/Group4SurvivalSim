@@ -51,17 +51,17 @@ public class StatsEditor extends World
         this.playerModel = playerModel;
         
         addObject(new Background(), 512, 288);
-        addObject(leftHealth = new Button("leftHealth", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 2 , -1, false), getWidth()/4 - 200, 180);
-        addObject(rightHealth = new Button("rightHealth", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 2, 1, false), getWidth()/4 + 200, 180);
+        addObject(leftHealth = new Button("leftHealth", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 1.5 , -1, false), getWidth()/4 - 200, 180);
+        addObject(rightHealth = new Button("rightHealth", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 1.5, 1, false), getWidth()/4 + 200, 180);
         
-        addObject(leftSpeed = new Button("leftSpeed", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 2, -1, false), getWidth()/4*3 - 200, 180);
-        addObject(rightSpeed = new Button("rightSpeed", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 2, 1, false), getWidth()/4*3 + 200, 180);
+        addObject(leftSpeed = new Button("leftSpeed", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 1.5, -1, false), getWidth()/4*3 - 200, 180);
+        addObject(rightSpeed = new Button("rightSpeed", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 1.5, 1, false), getWidth()/4*3 + 200, 180);
         
-        addObject(leftDifficulty = new Button("leftDiff", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 2, -1, false), getWidth()/4 - 200, 380);
-        addObject(rightDifficulty = new Button("rightDiff", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 2, 1, false), getWidth()/4 + 200, 380);
+        addObject(leftDifficulty = new Button("leftDiff", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 1.5, -1, false), getWidth()/4 - 200, 380);
+        addObject(rightDifficulty = new Button("rightDiff", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 1.5, 1, false), getWidth()/4 + 200, 380);
         
-        addObject(leftCoins = new Button("leftCoins", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 2, -1, false), getWidth()/4*3 - 200, 380);
-        addObject(rightCoins = new Button("rightCoins", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 2, 1, false), getWidth()/4*3 + 200, 380);
+        addObject(leftCoins = new Button("leftCoins", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 1.5, -1, false), getWidth()/4*3 - 200, 380);
+        addObject(rightCoins = new Button("rightCoins", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 1.5, 1, false), getWidth()/4*3 + 200, 380);
         
         addObject(healthTxt = new ImageDisplay(new GreenfootImage("Health: " + Integer.toString(health), 50, Color.WHITE, null)), getWidth()/4, 180);
         addObject(speedTxt = new ImageDisplay(new GreenfootImage("Speed: " + Double.toString(speed) + "x", 50, Color.WHITE, null)), getWidth()/4*3, 180);

@@ -22,7 +22,7 @@ public class EndScreen extends World
         
         addObject(dead = new ImageDisplay(new GreenfootImage("GAME OVER", 100, Color.WHITE, null)), getWidth()/2, 200);
         
-        addObject(restart = new Button("restart",new String[]{"PlayButton.png","PlayButton.png","PlayButton.png"}, false, 0.5), 512, 400);
+        addObject(restart = new Button("restart",new String[]{"PlayButton.png","PlayButton.png","PlayButton.png"}, false, 0.5, 1, false), 512, 400);
     }
     
     public void act()
