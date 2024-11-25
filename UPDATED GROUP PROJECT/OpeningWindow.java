@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class OpeningWindow extends World
 {
-    NextButton start;
+    Button start;
     
     public OpeningWindow()
     {    
@@ -16,7 +16,7 @@ public class OpeningWindow extends World
         super(1024, 576, 1, false); 
         addObject(new Background(), 512, 288);
         addObject(new Title(), 512, 180);
-        addObject(start = new NextButton(0), 512, 300);
+        addObject(start = new Button("start",new String[]{"PlayButton.png","PlayButton.png","PlayButton.png"}, false, 0.5), 512, 340);
     }
     
     public void act()

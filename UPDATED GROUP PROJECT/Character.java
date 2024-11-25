@@ -12,9 +12,9 @@ public class Character extends World
     StatsLabel characterLabel;
     Button textBack;
     
-    LeftButton left;
-    RightButton right;
-    NextButton finish;
+    Button left;
+    Button right;
+    Button next;
     
     private String[] listOfCharacters = {"boy.png","girl.png","sus.png"};
     protected static int characterNum = 0;
@@ -25,9 +25,9 @@ public class Character extends World
         addObject(new Background(), 512, 288);
         addObject(characterLabel = new StatsLabel(new GreenfootImage("CHARACTER", 100, Color.WHITE, null)), getWidth()/2, 100);
         addObject(display = new Image(getPlayerModel(), 300, 300), 512, 288);
-        addObject(left = new LeftButton(), 362, 288);
-        addObject(right = new RightButton(), 662, 288);
-        addObject(finish = new NextButton(1), 512, 475);
+        addObject(left = new Button("left", new String[]{"charArror.png","charArror.png","charArror.png"}, false, 5), 362, 288);
+        addObject(right = new Button("right", new String[]{"charArror.png","charArror.png","charArror.png"}, false, 5), 662, 288);
+        addObject(next = new Button("next", new String[]{"PlayButton.png","PlayButton.png","PlayButton.png"}, false, 0.5), 512, 475);
     }
     
     public void act()
@@ -42,7 +42,7 @@ public class Character extends World
             characterNum++;
             setDisplay();
         }
-        if (Greenfoot.mouseClicked(finish))
+        if (Greenfoot.mouseClicked(next))
         {
             Greenfoot.setWorld(new StatsEditor(getPlayerModel()));
         }
