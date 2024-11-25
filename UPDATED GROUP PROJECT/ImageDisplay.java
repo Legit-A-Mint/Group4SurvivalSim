@@ -6,14 +6,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class StatsLabel extends UI
+public class ImageDisplay extends UI
 {
-    public StatsLabel(GreenfootImage img)
+    public ImageDisplay(GreenfootImage img)
     {
         setImage(img);
     }
     
-    public StatsLabel(GreenfootImage img, int x, int y)
+    public ImageDisplay(GreenfootImage img, int x, int y)
     {
         setImage(img);
         getImage().scale(x,y);

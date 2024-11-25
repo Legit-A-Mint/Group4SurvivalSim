@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Character extends World
 {
     Image display;
-    StatsLabel characterLabel;
+    ImageDisplay characterLabel;
     Button textBack;
     
     Button left;
@@ -23,7 +23,7 @@ public class Character extends World
         //create an unbounded world 
         super(1024, 576, 1, false);
         addObject(new Background(), 512, 288);
-        addObject(characterLabel = new StatsLabel(new GreenfootImage("CHARACTER", 100, Color.WHITE, null)), getWidth()/2, 100);
+        addObject(characterLabel = new ImageDisplay(new GreenfootImage("CHARACTER", 100, Color.WHITE, null)), getWidth()/2, 100);
         addObject(display = new Image(getPlayerModel(), 300, 300), 512, 288);
         addObject(left = new Button("left", new String[]{"charArror.png","charArror.png","charArror.png"}, false, 5), 362, 288);
         addObject(right = new Button("right", new String[]{"charArror.png","charArror.png","charArror.png"}, false, 5), 662, 288);
