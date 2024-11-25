@@ -3,8 +3,8 @@ comment0.target=SimulationWorld
 comment0.text=\r\n\ Full\ SimulationWorld\r\n\ @Darius\r\n\ @Logan\r\n\ @Jonathan\r\n
 comment1.params=playerModel\ maxLives\ speed\ difficulty\ coin
 comment1.target=SimulationWorld(java.lang.String,\ int,\ double,\ double,\ int)
-comment10.params=numBass\ numShark\ numWhale\ numSwordfish
-comment10.target=void\ spawnEnemies(int,\ int,\ int,\ int)
+comment10.params=numBass\ numLionfish\ numShark\ numWhale\ numSwordfish\ numManatee
+comment10.target=void\ spawnEnemies(int,\ int,\ int,\ int,\ int,\ int)
 comment11.params=
 comment11.target=void\ spawnKraken()
 comment11.text=\r\n\ \ \ \ //\ Supplier\ to\ reduce\ redundancy\r\n\ \ \ \ //\ Spawn\ certain\ \#\ enemies\ depending\ on\ the\ parameters\ (in\ order)\r\n\ \ \ \ private\ void\ spawnEnemies(int\ numBass,\ int\ numShark,\ int\ numWhale,\ int\ numSwordfish){\r\n\ \ \ \ //\ Pass\ each\ constructor\ as\ supplier\r\n\ \ \ \ spawnEnemyType(numBass,\ Bass\:\:new);\r\n\ \ \ \ spawnEnemyType(numShark,\ Shark\:\:new);\r\n\ \ \ \ spawnEnemyType(numWhale,\ Whale\:\:new);\r\n\ \ \ \ spawnEnemyType(numSwordfish,\ Swordfish\:\:new);\r\n\ \ \ \ }\r\n\r\n\ \ \ \ //\ Helper\ method\ for\ spawnEnemies\r\n\ \ \ \ private\ void\ spawnEnemyType(int\ count,\ Supplier<Enemy>\ enemySupplier)\ {\r\n\ \ \ \ for\ (int\ i\ \=\ 0;\ i\ <\ count;\ i++){\r\n\ \ \ \ int\ spawnX\ \=\ WIDTH\ /\ 2\ +\ getScroller().getScrolledX();\r\n\ \ \ \ int\ spawnY\ \=\ HEIGHT\ /\ 2\ +\ getScroller().getScrolledY();\r\n\ \ \ \ //\ Gets\ the\ type\ of\ enemy\ from\ parameter\r\n\ \ \ \ addObject(enemySupplier.get(),\ spawnX,\ spawnY);\r\n\ \ \ \ }\r\n}

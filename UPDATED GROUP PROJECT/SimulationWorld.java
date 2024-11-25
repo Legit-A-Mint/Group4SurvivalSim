@@ -94,8 +94,8 @@ public class SimulationWorld extends World{
         addObject(new Island(new GreenfootImage("island.png")), 2100 - getScroller().getScrolledX(), 2100 - getScroller().getScrolledY());
 
         // Add GUI elements like pause button and slider
-        addObject(pauseButton = new Button("PauseButton", new String[]{"pause1.png", "pause2.png", "pause3.png"}, true, 1, 1, true), 55, 35);  
-        addObject(shopButton = new Button("ShopButton" , new String[]{"Shop1.png", "Shop2.png", "Shop3.png"}, true, 1, 1, true), 55, 100);
+        addObject(pauseButton = new Button("PauseButton", new String[]{"pause1.png", "pause2.png", "pause3.png"}, true, 1, 1, false), 55, 35);  
+        addObject(shopButton = new Button("ShopButton" , new String[]{"Shop1.png", "Shop2.png", "Shop3.png"}, true, 1, 1, false), 55, 100);
         
         //addObject(slider = new Slider("TestSlider.", "rail.png", "circle.png", 1, 130), 180, getHeight() - 50);  
 
@@ -114,13 +114,13 @@ public class SimulationWorld extends World{
         waveClearImage.getImage().setTransparency(0);
 
         // Add lives
-        addObject(lives = new Lives(), getWidth()/2 - 290, 30);
+        addObject(lives = new Lives(), 235, 30);
         
         // Add coins
-        addObject(this.coin = new ImageDisplay("coin.png"), getWidth() - 150, getHeight() - 40);
-        addObject(displayCoins = new ImageDisplay(new GreenfootImage(Integer.toString(coinDisplay), 50, Color.WHITE, null)), getWidth() - 75, getHeight() - 40);
+        addObject(this.coin = new ImageDisplay("coin.png"), 150, 100);
+        addObject(displayCoins = new ImageDisplay(new GreenfootImage(Integer.toString(coinDisplay), 50, Color.WHITE, null)), 215, 100);
         
-        setPaintOrder(ImageDisplay.class, Image.class, Seagull.class, Lives.class, Interface.class, Projectile.class);
+        setPaintOrder(ImageDisplay.class, Shop.class, Image.class, Seagull.class, Lives.class, Interface.class, Projectile.class);
     }
     // Method that gets called when the world is added to the Greenfoot environment
     public void addedToWorld ()
@@ -222,62 +222,62 @@ public class SimulationWorld extends World{
 
                 case(0):
 
-                spawnEnemies(3, 0, 0, 0);
+                spawnEnemies(1, 1, 1, 1, 1, 1);
                 break;
 
                 case(1):
 
-                spawnEnemies(4, 1, 0, 0);
+                spawnEnemies(4, 1, 0, 0, 0, 0);
                 break;
 
                 case(2):
 
-                spawnEnemies(3, 4, 0, 0);
+                spawnEnemies(3, 4, 0, 0, 0, 0);
                 break;
 
                 case(3):
 
-                spawnEnemies(10, 0, 1, 0);
+                spawnEnemies(10, 0, 1, 0, 0, 0);
                 break;
 
                 case(4):
 
-                spawnEnemies(5, 5, 5, 0);
+                spawnEnemies(5, 5, 5, 0, 0, 0);
                 break;
 
                 case(5):
 
-                spawnEnemies(9, 8, 4, 0);
+                spawnEnemies(9, 8, 4, 0, 0, 0);
                 break;
 
                 case(6):
 
-                spawnEnemies(4, 3, 2, 1);
+                spawnEnemies(4, 3, 2, 1, 0, 0);
                 break;
 
                 case(7):
 
-                spawnEnemies(40, 0, 0, 0);
+                spawnEnemies(40, 0, 0, 0, 0, 0);
                 break;
 
                 case(8):
 
-                spawnEnemies(1, 2, 3, 2);
+                spawnEnemies(1, 2, 3, 2, 0, 0);
                 break;
 
                 case(9):
 
-                spawnEnemies(1, 2, 3, 4);
+                spawnEnemies(1, 2, 3, 4, 0 ,0);
                 break;
 
                 case(10):
 
-                spawnEnemies(10, 10, 10, 5);
+                spawnEnemies(10, 10, 10, 5, 0, 0);
                 break;
 
                 case(11):
 
-                spawnEnemies(0, 0, 0, 15);
+                spawnEnemies(0, 0, 0, 15, 0, 0);
                 break;
 
                 // Boss fight
@@ -289,11 +289,16 @@ public class SimulationWorld extends World{
         }        
     }
 
-    private void spawnEnemies(int numBass, int numShark, int numWhale, int numSwordfish){
+    private void spawnEnemies(int numBass, int numLionfish, int numShark, int numWhale, int numSwordfish, int numManatee){
         for (int i = 0; i < numBass; i++){
             int spawnX = WIDTH / 2 + getScroller().getScrolledX() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
             int spawnY = HEIGHT / 2 + getScroller().getScrolledY() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
             addObject(new Bass(), spawnX, spawnY);
+        }
+        for (int i = 0; i < numLionfish; i++){
+            int spawnX = WIDTH / 2 + getScroller().getScrolledX() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11)) ;
+            int spawnY = HEIGHT / 2 + getScroller().getScrolledY() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
+            addObject(new Lionfish(), spawnX, spawnY);
         }
         for (int i = 0; i < numShark; i++){
             int spawnX = WIDTH / 2 + getScroller().getScrolledX() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
@@ -310,6 +315,12 @@ public class SimulationWorld extends World{
             int spawnY = HEIGHT / 2 + getScroller().getScrolledY() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
             addObject(new Swordfish(), spawnX, spawnY);
         }
+        for (int i = 0; i < numManatee; i++){
+            int spawnX = WIDTH / 2 + getScroller().getScrolledX() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11)) ;
+            int spawnY = HEIGHT / 2 + getScroller().getScrolledY() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
+            addObject(new Manatee(), spawnX, spawnY);
+        }
+        
     }
 
     /*
@@ -374,7 +385,7 @@ public class SimulationWorld extends World{
     {
         coinDisplay += num;
         removeObject(displayCoins);
-        addObject(displayCoins = new ImageDisplay(new GreenfootImage(Integer.toString(coinDisplay), 50, Color.WHITE, null)), getWidth() - 75, getHeight() - 40);
+        addObject(displayCoins = new ImageDisplay(new GreenfootImage(Integer.toString(coinDisplay), 50, Color.WHITE, null)), 215, 100);
     }
 
     // Static method to calculate the distance between two actors
