@@ -14,7 +14,7 @@ public abstract class Hitbox extends Effects
     protected GreenfootImage box;
     protected Actor owner;
     protected String type;
-    private static final boolean visible = true;
+    private static final boolean visible = false;
     
     protected int offsetX, offsetY;
     protected double boundingFactor;

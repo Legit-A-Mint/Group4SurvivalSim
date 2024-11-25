@@ -96,7 +96,7 @@ public class SimulationWorld extends World{
         addObject(waveLabel, getWidth() - 100, 25);  // Position the wave label on the screen
 
         // Always keep in world
-        addObject(waveClearImage = new Image("WaveClear.png"), getWidth()/2, getHeight()/2);
+        addObject(waveClearImage = new Image("WaveClear.png"), getWidth()/2, getHeight()/2 - 100);
         waveClearImage.getImage().setTransparency(0);
 
         // Add lives
