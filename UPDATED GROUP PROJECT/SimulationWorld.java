@@ -29,6 +29,7 @@ public class SimulationWorld extends World{
     private Slider slider; // The slider shown on the bottom left
     private static boolean acting; // Used to check if the game is active and running
     private Shop shop;
+    private boolean shopToggled = false;
 
     private int coinSpawnTimer;  // Timer to track coin spawning time
     private int coinDisplay; // Used to track how many coins to display
@@ -50,6 +51,7 @@ public class SimulationWorld extends World{
     // Ambient class spawnage
     private int seagullTimer;
     private static final int SEAGULL_SPAWN_TIME = 500;
+    
 
     // Constructor for the world, initializes objects
     public SimulationWorld(String playerModel, int maxLives, double speed, double difficulty){
@@ -89,20 +91,17 @@ public class SimulationWorld extends World{
         addObject(new Island(new GreenfootImage("island.png")), 2100 - getScroller().getScrolledX(), 2100 - getScroller().getScrolledY());
 
         // Add GUI elements like pause button and slider
-<<<<<<< HEAD
         addObject(pauseButton = new Button("PauseButton", new String[]{"db_1.png", "db_2.png", "db_3.png"}, true, 1, 1, true), 55, 35);  
         addObject(shopButton = new Button("ShopButton" , new String[]{"db_1.png", "db_2.png", "db_3.png"}, true, 1, 1, true), 55, 100);
         
-=======
-        addObject(pauseButton = new Button("PauseButton", new String[]{"db_1.png", "db_2.png", "db_3.png"}, true, 1, 1, true), 55, 35);
         //addObject(slider = new Slider("TestSlider.", "rail.png", "circle.png", 1, 130), 180, getHeight() - 50);  
 
-        addObject(shop = new Shop(), 600, getHeight() - 90);  
+        addObject(shop = new Shop(), 725, getHeight() - 90);  
+        shop.showShop(false);
         // Add a label to display the wave number
         // waveLabel = new Label("Wave " + (waveCount + 1), 40, 200, 25);  // Initialize label to show wave
         // addObject(waveLabel, 200, 25);  // Position the wave label on the screen
 
->>>>>>> 70f42e9dd1d18d5c60585e7d48ed2c949ce8aa13
         //Add a label to display the wave number
         waveLabel = new Label("Wave " + (waveCount + 1), 40, false);  // Initialize label to show wave
         addObject(waveLabel, getWidth() - 100, 25);  // Position the wave label on the screen
@@ -113,7 +112,7 @@ public class SimulationWorld extends World{
 
         // Add lives
         addObject(lives = new Lives(), getWidth()/2 - 290, 30);
-        setPaintOrder(Image.class, Seagull.class, Lives.class, Interface.class, Projectile.class);
+        setPaintOrder(Image.class, Shop.class, Seagull.class, Lives.class, Interface.class, Projectile.class);
 
     }
     // Method that gets called when the world is added to the Greenfoot environment
@@ -169,13 +168,18 @@ public class SimulationWorld extends World{
         }
 
         // Check if the pause button is clicked
-        if (Greenfoot.mouseClicked(pauseButton)){
+        if (pauseButton.checkClicked()){
             acting = !acting;  // Toggle the game state between active and paused
             if (acting){
                 ambientSound.playLoop();  // Resume ambient sound
             } else{
                 ambientSound.pause();  // Pause ambient sound
             }
+        }
+        
+        if (shopButton.checkClicked()){
+            shopToggled = !shopToggled; // Flip state 
+            shop.showShop(shopToggled);
         }
     }
 

@@ -16,4 +16,13 @@ public class Shop extends SuperSmoothMover
     {
         
     }
+    
+    public void showShop(boolean show){
+        if(show){
+            shopBackground.setTransparency(255);
+        }
+        else{
+            shopBackground.setTransparency(0);
+        }
+    }
 }

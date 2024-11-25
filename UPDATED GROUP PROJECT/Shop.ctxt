@@ -4,4 +4,6 @@ comment1.params=
 comment1.target=Shop()
 comment2.params=
 comment2.target=void\ displayItems()
-numComments=3
+comment3.params=show
+comment3.target=void\ showShop(boolean)
+numComments=4
