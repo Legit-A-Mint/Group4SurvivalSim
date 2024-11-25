@@ -21,12 +21,15 @@ public class Player extends Effects {
 
     // Price of Items
     private static final int POTION_COST = 4;
+    private static final int WOODRAFT_COST = 10;
+    private static final int METALRAFT_COST = 30;
     private static final int NET_COST = 8;
     private static final int SHURIKEN_COST = 15;
     private static final int HARPOON_COST = 25;
-    private static final int RAFT_COST = 15;
 
     // Item variables
+    private boolean woodRaftBought;
+    private boolean metalRaftBought;
     private boolean netBought;
     private boolean shurikenBought;
     private boolean harpoonBought;
@@ -363,6 +366,26 @@ public class Player extends Effects {
 
         // skip other ifs (optimization)
         if(!doneUpgrades){
+            if (!woodRaftBought && (coinsStored >= WOODRAFT_COST && buyCooldown <=0)){
+                floatyNum++;
+                woodRaftBought = true;
+                coinsStored -= WOODRAFT_COST;
+                Greenfoot.playSound("item_Buy.mp3");
+                buyCooldown = ONE_SECOND;
+                setRaft(floatyNum);
+                return;
+            }
+            
+            if (!metalRaftBought && (coinsStored >= METALRAFT_COST && buyCooldown <=0)){
+                floatyNum++;
+                metalRaftBought = true;
+                coinsStored -= METALRAFT_COST;
+                Greenfoot.playSound("item_Buy.mp3");
+                buyCooldown = ONE_SECOND;
+                setRaft(floatyNum);
+                return;
+            }
+            
             if(!netBought && (coinsStored >= NET_COST && buyCooldown <= 0)){
                 weaponIndex++;
                 netBought = true;
@@ -391,7 +414,7 @@ public class Player extends Effects {
             }
         }
 
-        if(harpoonBought && shurikenBought && netBought && allRaftUpgradesBought){
+        if(woodRaftBought && metalRaftBought && harpoonBought && shurikenBought && netBought && allRaftUpgradesBought){
             doneUpgrades = true;
         }
     }
