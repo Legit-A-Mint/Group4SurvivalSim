@@ -15,13 +15,9 @@ public class Harpoon extends Projectile
         speed = 4.75;
         damage = 4;
         attackSpeed = 90;
-<<<<<<< Updated upstream
         lifeSpan = 300;
-=======
-        lifeSpan = 600;
         
         playHarpoonSound();
->>>>>>> Stashed changes
     }
     
     public void act()
