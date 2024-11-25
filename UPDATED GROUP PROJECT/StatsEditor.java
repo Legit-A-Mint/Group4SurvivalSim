@@ -135,7 +135,7 @@ public class StatsEditor extends World
         }
         if (Greenfoot.mouseClicked(start))
         {
-            Greenfoot.setWorld(new SimulationWorld(playerModel, health, speed, diffMulti[difficulty]));
+            Greenfoot.setWorld(new SimulationWorld(playerModel, health, speed, diffMulti[difficulty], coins));
             SimulationWorld.ambientSound.playLoop();
         }
     }

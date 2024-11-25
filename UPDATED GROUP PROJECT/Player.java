@@ -95,7 +95,7 @@ public class Player extends Effects {
     private boolean createdFovHitboxTwo;
     private long collisionHitboxRota;
 
-    public Player(String playerModel, double speedMulti, Lives lives) {
+    public Player(String playerModel, double speedMulti, Lives lives, int coins) {
         // Vfx
         floatyImage[0] = new GreenfootImage("floaty.png");
         floatyImage[1] = new GreenfootImage("wood.png");
@@ -108,7 +108,7 @@ public class Player extends Effects {
         speed = 3.5;
         turnSpeed = 2.5;
         lives = lives;
-        coinsStored = 0;
+        coinsStored = coins;
         hp = maxHp;
         resetRotaCont = true;
         smartDodgeCounter = -1;
@@ -546,6 +546,7 @@ public class Player extends Effects {
         if (coin != null) {
             Coins c = (Coins) coin;
             coinsStored++;  // Add coins to player
+            ((SimulationWorld)getWorld()).updateCoins(1);
             getWorld().removeObject(c);  // Remove coin from world
         }
     }

@@ -13,6 +13,11 @@ public class ImageDisplay extends UI
         setImage(img);
     }
     
+    public ImageDisplay(String img)
+    {
+        setImage(img);
+    }
+    
     public ImageDisplay(GreenfootImage img, int x, int y)
     {
         setImage(img);

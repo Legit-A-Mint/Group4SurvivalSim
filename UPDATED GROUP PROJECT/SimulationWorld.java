@@ -13,6 +13,8 @@ public class SimulationWorld extends World{
     public Scroller scroller; // The scroll controller to manage the background
     private Player player; // This is the player actor
     private Lives lives; // This displays the amount of lives you have
+    private ImageDisplay coin; // The coin image
+    private ImageDisplay displayCoins; // Display number of coins
     private int actCount; // Tracks and counts the number of waves and actions
     private boolean spawnOnce, countOnce; // Used for one-time actions
     public static int killCount; // Counts for the kills across the game
@@ -54,7 +56,7 @@ public class SimulationWorld extends World{
     
 
     // Constructor for the world, initializes objects
-    public SimulationWorld(String playerModel, int maxLives, double speed, double difficulty){
+    public SimulationWorld(String playerModel, int maxLives, double speed, double difficulty, int coin){
         super(1024, 576, 1, false); // Create world with size 1024x576 pixels
 
         // Initialize game variables
@@ -63,6 +65,7 @@ public class SimulationWorld extends World{
         actCount = 0; // Start at action count 0
         spawnOnce = true; // The flag for spawning 
         delay = 30; // The delay variable
+        coinDisplay = coin;
 
         acting = true; // Set the game to be active and running
 
@@ -74,7 +77,7 @@ public class SimulationWorld extends World{
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, HEIGHT));
 
         // Add player to the center of the screen
-        addObject(player = new Player(playerModel, speed, lives), this.getWidth() / 2, this.getHeight() / 2);
+        addObject(player = new Player(playerModel, speed, lives, coinDisplay), this.getWidth() / 2, this.getHeight() / 2);
 
         // Add border hitboxes to prevent the player from going outside the world
         addObject(new CollisionHitbox(WIDTH, 100, 2.5), WIDTH / 2, HEIGHT); // Bottom border
@@ -112,7 +115,16 @@ public class SimulationWorld extends World{
 
         // Add lives
         addObject(lives = new Lives(), getWidth()/2 - 290, 30);
+<<<<<<< Updated upstream
         setPaintOrder(Image.class, Shop.class, Seagull.class, Lives.class, Interface.class, Projectile.class);
+=======
+        
+        // Add coins
+        addObject(this.coin = new ImageDisplay("coin.png"), getWidth() - 150, getHeight() - 40);
+        addObject(displayCoins = new ImageDisplay(new GreenfootImage(Integer.toString(coinDisplay), 50, Color.WHITE, null)), getWidth() - 75, getHeight() - 40);
+        
+        setPaintOrder(ImageDisplay.class, Image.class, Seagull.class, Lives.class, Interface.class, Projectile.class);
+>>>>>>> Stashed changes
 
     }
     // Method that gets called when the world is added to the Greenfoot environment
@@ -361,6 +373,13 @@ public class SimulationWorld extends World{
     // Override to add objects with precise coordinates (not currently used)
     public void addObject(Actor object, double x, double y){
         super.addObject(object, (int) (x + 0.5), (int) (y + 0.5));
+    }
+    
+    public void updateCoins(int num)
+    {
+        coinDisplay += num;
+        removeObject(displayCoins);
+        addObject(displayCoins = new ImageDisplay(new GreenfootImage(Integer.toString(coinDisplay), 50, Color.WHITE, null)), getWidth() - 75, getHeight() - 40);
     }
 
     // Static method to calculate the distance between two actors
