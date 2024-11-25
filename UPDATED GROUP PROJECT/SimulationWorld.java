@@ -39,9 +39,12 @@ public class SimulationWorld extends World{
     private boolean createdKraken; // The flag for Kraken 
 
     // Variables for handling waves
+    private int waveTimer;
     private int waveCount;
     private boolean firstWave;
     private static final int FINAL_WAVE = 20;
+    private static final int WAVE_IDLE_TIME = 500; // Adjust idle time for wave
+    private Image waveClearImage;
 
     // Ambient class spawnage
     private int seagullTimer;
@@ -87,12 +90,18 @@ public class SimulationWorld extends World{
         // Add GUI elements like pause button and slider
         addObject(pauseButton = new Button("PauseButton", new String[]{"db_1.png", "db_2.png", "db_3.png"}, true, 1), 55, 35);
         addObject(slider = new Slider("TestSlider.", "rail.png", "circle.png", 1, 130), 180, getHeight() - 50);  
-        // Add a label to display the wave number
-        // waveLabel = new Label("Wave " + (waveCount + 1), 40, 200, 25);  // Initialize label to show wave
-        // addObject(waveLabel, 200, 25);  // Position the wave label on the screen
 
+        //Add a label to display the wave number
+        waveLabel = new Label("Wave " + (waveCount + 1), 40);  // Initialize label to show wave
+        addObject(waveLabel, getWidth() - 100, 25);  // Position the wave label on the screen
+
+        // Always keep in world
+        addObject(waveClearImage = new Image("WaveClear.png"), getWidth()/2, getHeight()/2);
+        waveClearImage.getImage().setTransparency(0);
+
+        // Add lives
         addObject(lives = new Lives(), getWidth()/2 - 290, 30);
-        setPaintOrder(Seagull.class, Lives.class, Interface.class, Projectile.class);
+        setPaintOrder(Image.class, Seagull.class, Lives.class, Interface.class, Projectile.class);
 
     }
     // Method that gets called when the world is added to the Greenfoot environment
@@ -166,11 +175,20 @@ public class SimulationWorld extends World{
             firstWave = false;
         }
         else if(!firstWave && this.getObjects(Enemy.class).isEmpty() && waveCount < FINAL_WAVE){
-            // Increment wave count to change wave
-            waveCount++;
-            startWave(waveCount);
-            //System.out.println("Current wave: " + waveCount);
-        }
+            if(waveTimer == 0){
+                // Increment wave count to change wave
+                waveCount++;
+                startWave(waveCount);
+                waveClearImage.getImage().setTransparency(0);
+                waveLabel.setText("Wave " + (waveCount + 1));
+                waveTimer = WAVE_IDLE_TIME;
+            }
+            else if(waveTimer > 0){
+                waveTimer--;
+                waveClearImage.getImage().setTransparency(255);
+                //System.out.println("Wave timer: " + waveTimer);
+            }
+        }   
     }
 
     private void startWave (int waveCount){ 
@@ -181,7 +199,6 @@ public class SimulationWorld extends World{
 
                 case(0):
 
-                spawnKraken();
                 spawnEnemies(3, 0, 0, 0);
                 break;
 
@@ -299,7 +316,7 @@ public class SimulationWorld extends World{
         Kraken kraken = new Kraken();  // Instantiate the Kraken actor
         int spawnX = WIDTH/2 + getScroller().getScrolledX();
         int spawnY = HEIGHT/2 + getScroller().getScrolledY();
-        System.out.println("Added new kraken @ (" + spawnX + ", " + spawnY + ")");
+        //System.out.println("Added new kraken @ (" + spawnX + ", " + spawnY + ")");
         addObject(kraken, spawnX, spawnY);
     }
 
@@ -309,12 +326,11 @@ public class SimulationWorld extends World{
 
         int spawnSide = Greenfoot.getRandomNumber(2) * 2 - 1;
         int spawnY = Greenfoot.getRandomNumber(HEIGHT - 500) +  getScroller().getScrolledY();
-        System.out.println("Added new SEAGULL @ (" + (spawnSide * WIDTH + getScroller().getScrolledX())  + ", " + spawnY + ")");
+        //System.out.println("Added new SEAGULL @ (" + (spawnSide * WIDTH + getScroller().getScrolledX())  + ", " + spawnY + ")");
         addObject(new Seagull(true, -spawnSide, 2), spawnSide * WIDTH + getScroller().getScrolledX() , spawnY);
-        
+
     }
 
-    
     // Method to check if the Kraken is defeated
     private boolean isKrakenDefeated(){
         return getObjects(Kraken.class).isEmpty();  // Return true if the Kraken has been defeated

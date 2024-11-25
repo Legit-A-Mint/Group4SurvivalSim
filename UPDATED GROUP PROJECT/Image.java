@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.GreenfootImage;
 
 /**
  * Write a description of class DisplayCharacter here.
@@ -8,8 +9,15 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Image extends UI
 {
+    private GreenfootImage img;
+    public Image (String img)
+    {
+        this.img = new GreenfootImage(img);
+        setImage(img);
+    }
     public Image (String img, int x, int y)
     {
+        this.img = new GreenfootImage(img);
         setImage(img);
         getImage().scale(x,y);
     }

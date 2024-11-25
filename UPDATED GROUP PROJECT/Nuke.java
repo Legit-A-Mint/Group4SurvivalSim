@@ -1,18 +1,18 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Spear here.
+ * Write a description of class Nuke here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Spear extends Projectile
+public class Nuke extends Projectile
 {
-    public Spear(){
-        speed = 4;
-        damage = 4;
-        attackSpeed = 45;
-        lifeSpan = 250;
+    public Nuke(){
+        speed = 7;
+        damage = 50;
+        attackSpeed = 200;
+        lifeSpan = 600;
     }
     
     public void act()
@@ -25,7 +25,7 @@ public class Spear extends Projectile
         if(getOneIntersectingObject(Enemy.class) != null){
             hitEnemy = (Enemy) getOneIntersectingObject(Enemy.class);
             hitEnemy.damageMe(damage);
-            removeMe = true;
+            hitEnemy.slowMe();
             if(getOneIntersectingObject(CollisionHitbox.class) != null){
                 speed = 0;
             }
