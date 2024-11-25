@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Button
-comment0.text=\n\ Write\ a\ description\ of\ class\ Button\ here.\n\ \n\ @lumilk\n\ @version\ 1.0.0\n
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Button\ here.\r\n\ \r\n\ @lumilk\r\n\ @version\ 1.0.0\r\n
 comment1.params=name
 comment1.target=Button(java.lang.String)
 comment2.params=name\ images\ isAnimated\ scale\ direction\ canFade

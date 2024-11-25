@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Spear
-comment0.text=\n\ This\ weapon\ is\ what\ the\ player\ starts\ off\ with\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\r\n\ This\ weapon\ is\ what\ the\ player\ starts\ off\ with\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=
 comment1.target=Spear()
 comment2.params=

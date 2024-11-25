@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Lives
-comment0.text=\n\ A\ class\ to\ represent\ the\ player's\ health\ bar\ (lives)\ and\ handle\ game\ over\ logic.\n\ \n\ @Jonathan\n\ @1.0.0\n
+comment0.text=\r\n\ A\ class\ to\ represent\ the\ player's\ health\ bar\ (lives)\ and\ handle\ game\ over\ logic.\r\n\ \r\n\ @Jonathan\r\n\ @1.0.0\r\n
 comment1.params=
 comment1.target=Lives()
 comment2.params=

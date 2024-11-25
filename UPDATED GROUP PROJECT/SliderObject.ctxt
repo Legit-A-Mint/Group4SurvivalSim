@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=SliderObject
-comment0.text=\n\ Write\ a\ description\ of\ class\ SliderObject\ here.\n\ \n\ @lumilk\n\ @version\ 1.0.0\n
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ SliderObject\ here.\r\n\ \r\n\ @lumilk\r\n\ @version\ 1.0.0\r\n
 comment1.params=name\ max\ refX\ image\ scale\ canFade
 comment1.target=SliderObject(java.lang.String,\ int,\ int,\ java.lang.String,\ double,\ boolean)
 comment2.params=

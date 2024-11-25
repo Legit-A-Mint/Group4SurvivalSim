@@ -65,7 +65,9 @@ public class Kraken extends Enemy
             for(Tentacle t: tentacles){
                 t.damageMe(999999);
             }
-
+            // Stops music
+            bossMusic.pause();
+            
             // Remove related objects to me
             getWorld().removeObject(hitbox);
             getWorld().removeObject(this);

@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Enemy
-comment0.text=\n\ Write\ a\ description\ of\ class\ Enemies\ here.\n\ \n\ @lumilk\n\ @Andrew\n\ @1.0.2\n
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Enemies\ here.\r\n\ \r\n\ @lumilk\r\n\ @Andrew\r\n\ @1.0.2\r\n
 comment1.params=
 comment1.target=Enemy()
 comment10.params=
@@ -18,9 +18,11 @@ comment15.target=void\ checkForBlockages()
 comment16.params=direction
 comment16.target=boolean\ isBlockedInDirection(java.lang.String)
 comment17.params=
-comment17.target=boolean\ getMovable()
+comment17.target=EnemyHitbox\ getHitbox()
 comment18.params=
-comment18.target=Player\ getPlayer()
+comment18.target=boolean\ getMovable()
+comment19.params=
+comment19.target=Player\ getPlayer()
 comment2.params=
 comment2.target=void\ attack()
 comment3.params=
@@ -37,4 +39,4 @@ comment8.params=damage
 comment8.target=void\ damageMe(int)
 comment9.params=
 comment9.target=void\ slowMe()
-numComments=19
+numComments=20
