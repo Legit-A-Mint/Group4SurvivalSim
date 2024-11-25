@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Spear extends Projectile
 {
     public Spear(){
-        speed = 3;
+        speed = 4;
         damage = 10000;
         attackSpeed = 45;
         lifeSpan = 250;

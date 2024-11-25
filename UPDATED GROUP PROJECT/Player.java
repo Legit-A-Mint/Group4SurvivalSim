@@ -10,7 +10,7 @@ import greenfoot.*;
 
 public class Player extends Effects {
     // Manual movement mode : true -- AI movement: false
-    private static final boolean DEBUGMODE = true;
+    private static final boolean DEBUGMODE = false;
 
     // One second --> modify with * as needed
     private static final int ONE_SECOND = 60;
@@ -39,6 +39,7 @@ public class Player extends Effects {
 
     // Instance variables
     private double speed;
+    private double turnSpeed;
     private int hp, maxHp;
     private int cooldown;
     private int coinsStored;
@@ -81,11 +82,18 @@ public class Player extends Effects {
     protected Enemy enemy;
     private Projectile projectile;
     private Fov fov;
+    private Fov fov2;
 
     private int dx, dy;
     private boolean createdFovHitbox;
     private boolean lookingForCoins;
     private boolean smartDodge;
+    private boolean foundEnemy;
+    private int overSwing;
+    private boolean commitTurn;
+    private int turnOver;
+    private boolean createdFovHitboxTwo;
+    private long collisionHitboxRota;
 
     public Player(String playerModel, double speedMulti, Lives lives) {
         // Vfx
@@ -97,12 +105,14 @@ public class Player extends Effects {
 
         // Instance variables
         // speed = speed*speedMulti;
-        speed = 3;
+        speed = 3.5;
+        turnSpeed = 2.5;
         lives = lives;
         coinsStored = 0;
         hp = maxHp;
         resetRotaCont = true;
         smartDodgeCounter = -1;
+        overSwing = -1;
 
         weaponCDList[0] = 45;
         weaponCDList[1] = 45;
@@ -122,9 +132,15 @@ public class Player extends Effects {
     }
 
     private void createFov() {
-        fov = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5);
+        fov = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 3.745, 3.69, 1.3, 1.2);
         getWorld().addObject(fov, getX() + 55, getY() + 55);
         createdFovHitbox = true;
+    }
+    
+    private void createFov2() {
+        fov2 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 1.2, 1.2, 0.2 , 0.2);
+        getWorld().addObject(fov2, getX() + 55, getY() + 55);
+        createdFovHitboxTwo = true;
     }
 
     public void act() {
@@ -136,10 +152,15 @@ public class Player extends Effects {
         if (!createdFovHitbox){
             createFov();
         }
+        
+        if (!createdFovHitboxTwo){
+            createFov2();
+        }
 
         if (SimulationWorld.isActing()) {
             // pre action handling
             handleCooldowns();
+            turnOver--;
 
             if(smartDodgeCounter >= 0){
                 smartDodge = true;
@@ -149,6 +170,7 @@ public class Player extends Effects {
 
             if(!DEBUGMODE){
                 determineWhatToBuy();
+
                 if(!getWorld().getObjects(Enemy.class).isEmpty()){
                     //findClosestEnemy();
                 }
@@ -158,44 +180,89 @@ public class Player extends Effects {
 
                 if(!checkForWall()){
                     //if(distanceToClosestTarget(Enemy.class, 0, 100, 300) > 250){
+                        
+                    /**
                     if(fov.enemyNotDetected()){
                         smartDodgeCounter--;
                     }else{
                         smartDodgeCounter = ONE_SECOND/20;
                     }
-
-                    if(!smartDodge){
-                        if(!doneUpgrades && !getWorld().getObjects(Coins.class).isEmpty()){
-                            lookForCoins();
-                            if(lookingForCoins){
-                                long rotationDiff = coinRota - getRotation();
-
-                                //System.out.println("money"); 
-
-                                if(rotationDiff >= 360){
-                                    rotationDiff =  0 + (rotationDiff - 360);
-                                }
-
-                                if(rotationDiff <= 0){
-                                    rotationDiff =  0 + (rotationDiff + 360); 
-                                }
-
-                                //System.out.println(rotationDiff);
-                                //System.out.println("this rotation: " + rotaCont);
-                                if(rotationDiff > 0 && rotationDiff < 180){
-                                    rotaCont += 2;
-                                }
-                                if(rotationDiff > 179 && rotationDiff <= 360){
-                                    rotaCont -= 2;
+                    */
+                    
+                    if(fov2.wallNotDetected()){
+                        if(/*!smartDodge || */ !findClosestEnemy()){
+                            if(!doneUpgrades && !getWorld().getObjects(Coins.class).isEmpty()){
+                                lookForCoins();
+                                if(lookingForCoins){
+                                    long rotationDiff = coinRota - getRotation();
+    
+                                    //System.out.println("money"); 
+    
+                                    if(rotationDiff >= 360){
+                                        rotationDiff =  0 + (rotationDiff - 360);
+                                    }
+    
+                                    if(rotationDiff <= 0){
+                                        rotationDiff =  0 + (rotationDiff + 360); 
+                                    }
+    
+                                    //System.out.println(rotationDiff);
+                                    //System.out.println("this rotation: " + rotaCont);
+                                    if(rotationDiff > 0 && rotationDiff < 180){
+                                        rotaCont += turnSpeed;
+                                    }
+                                    if(rotationDiff > 179 && rotationDiff <= 360){
+                                        rotaCont -= turnSpeed;
+                                    }
                                 }
                             }
+                            resetRota();
+                            setRotation(rotaCont);
+                            move(speed);
+                        }else{
+    
+                            long rotationDiff = enemyRota - getRotation();
+                            rotationDiff += 180;
+    
+                            if(rotationDiff >= 360){
+                                rotationDiff =  0 + (rotationDiff - 360);
+                            }
+    
+                            if(rotationDiff <= 0){
+                                rotationDiff =  0 + (rotationDiff + 360); 
+                            }
+    
+                            // System.out.println(rotationDiff);
+    
+                            if(rotationDiff > 0 && rotationDiff < 180){
+                                rotaCont += turnSpeed;
+                            }
+                            if(rotationDiff > 179 && rotationDiff <= 360){
+                                rotaCont -= turnSpeed;
+                            }
+    
+                            resetRota();
+                            setRotation(rotaCont);
+                            move(speed-0.5);
                         }
+                    }else{
+                        rotaCont -= turnSpeed;
                         resetRota();
                         setRotation(rotaCont);
-                        move(speed);
-                    }else{
-
+                        move(speed-0.5);
+                    }
+                }else{
+                    if(false/*isThereACloseEnemy()*/){
+                        
+                        /*
+                        System.out.println(commitTurn);
+                        if(!commitTurn){
+                            findClosestEnemy();
+                        }
+                        
+                        
                         long rotationDiff = enemyRota - getRotation();
+                        rotationDiff += 180;
 
                         if(rotationDiff >= 360){
                             rotationDiff =  0 + (rotationDiff - 360);
@@ -204,27 +271,52 @@ public class Player extends Effects {
                         if(rotationDiff <= 0){
                             rotationDiff =  0 + (rotationDiff + 360); 
                         }
-                        
-                        System.out.println(rotationDiff);
 
-                        if(rotationDiff > 0 && rotationDiff < 180){
-                            rotaCont += 2;
+                        System.out.println(rotationDiff);
+                        
+                        if(rotationDiff > 0 && rotationDiff < 180 && !commitTurn){
+                            overSwing = ONE_SECOND/15;
+                            commitTurn = true;
+                            turnOver = Math.abs(overSwing) + 7;
                         }
-                        if(rotationDiff > 179 && rotationDiff <= 360){
-                            rotaCont -= 2;
+                        if(rotationDiff > 179 && rotationDiff <= 360 && !commitTurn){
+                            overSwing = -ONE_SECOND/15;
+                            commitTurn = true;
+                            //rotaCont -= turnSpeed*2;
+                            turnOver = Math.abs(overSwing) + 7;
                         }
                         
+                        if(overSwing > 0){
+                            rotaCont += turnSpeed*2;
+                            overSwing--;
+                        }else{
+                            rotaCont -= turnSpeed*2;
+                            overSwing++;
+                        }
+                        
+                        if(turnOver <= 0){
+                            commitTurn = false;
+                        }
+                        */
+                        
+                        
+                        rotaCont += turnSpeed*2;
+                        System.out.println("Current Rotation: " + rotaCont);
                         resetRota();
                         setRotation(rotaCont);
-                        move(speed-1);
+                    }else{
+                        setCollisionRotation();
+                        resetRota();
+                        setRotation(rotaCont);
+                        move(speed);
                     }
                 }
-                
+
                 if(cooldown <= 0){
                     spawnProjectile(weaponIndex);
                     cooldown = weaponCDList[weaponIndex];
                 }
-                
+
             }
             else if(DEBUGMODE){
                 handleMovement();
@@ -247,6 +339,42 @@ public class Player extends Effects {
     private void handleCooldowns(){
         if(cooldown > 0){
             cooldown--;
+        }
+    }
+    
+    private void setCollisionRotation(){
+        long storeRota = getRotation();
+        
+        if(!getWorld().getObjects(CollisionHitbox.class).isEmpty()){
+            if(findClosestTarget(CollisionHitbox.class, 0, 150, 550) != null){
+                turnTowards(findClosestTarget(CollisionHitbox.class, 0, 200, 550));
+                collisionHitboxRota = getRotation();
+
+                if(collisionHitboxRota <= 0){
+                    collisionHitboxRota = 0 + (collisionHitboxRota + 360);
+                }
+                if(collisionHitboxRota >= 360){
+                    collisionHitboxRota = 0 + (collisionHitboxRota - 360);
+                }
+            }else{
+                setRotation(storeRota);
+                return;
+            }            
+        }
+        if((collisionHitboxRota > 0 && collisionHitboxRota <= 45) || (collisionHitboxRota > 135 && collisionHitboxRota <= 180)){
+            rotaCont = 270;
+        }
+        
+        if((collisionHitboxRota > 180 && collisionHitboxRota <= 225) || (collisionHitboxRota > 315 && collisionHitboxRota <= 360)){
+            rotaCont = 90;
+        }
+        
+        if((collisionHitboxRota > 45 && collisionHitboxRota <= 90) || (collisionHitboxRota > 270 && collisionHitboxRota <= 315)){
+            rotaCont = 180;
+        }
+        
+        if((collisionHitboxRota > 90 && collisionHitboxRota <= 135) || (collisionHitboxRota > 225 && collisionHitboxRota <= 270)){
+            rotaCont = 0;
         }
     }
 
@@ -302,12 +430,12 @@ public class Player extends Effects {
         hp ++; 
     }
 
-    public void findClosestEnemy(){
+    public boolean findClosestEnemy(){
         long storeRota = getRotation();
 
         if(!getWorld().getObjects(Enemy.class).isEmpty()){
-            if(findClosestTarget(Enemy.class, 150, 200, 2500) != null){
-                turnTowards(findClosestTarget(Enemy.class, 150, 200, 2500));
+            if(findClosestTarget(Enemy.class, 0, 150, 550) != null){
+                turnTowards(findClosestTarget(Enemy.class, 0, 200, 550));
                 enemyRota = getRotation();
 
                 if(enemyRota <= 0){
@@ -316,11 +444,27 @@ public class Player extends Effects {
                 if(coinRota >= 360){
                     enemyRota = 0 + (enemyRota - 360);
                 }
-
+                foundEnemy = true;
+            }else{
+                foundEnemy = false;
             }
         }
-
         setRotation(storeRota);
+        if(foundEnemy){
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean isThereACloseEnemy(){
+        if(!getWorld().getObjects(Enemy.class).isEmpty()){
+            if(findClosestTarget(Enemy.class, 0, 70, 400) != null){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
     }
 
     public void lookForCoins(){
@@ -348,10 +492,10 @@ public class Player extends Effects {
     }
 
     public boolean checkForWall(){
-        double nextX = getPreciseX() + (double) Math.round(Math.cos(Math.toRadians(getRotation()))) * speed*2;
-        double nextY = getPreciseY() + (double) Math.round(Math.sin(Math.toRadians(getRotation()))) * speed*2;
+        double nextX = getPreciseX() + (double) Math.round(Math.cos(Math.toRadians(getRotation()))) * speed*2.1;
+        double nextY = getPreciseY() + (double) Math.round(Math.sin(Math.toRadians(getRotation()))) * speed*2.1;
 
-        tempBox = new PlayerHitbox(playerImage[0].getWidth() - 30, playerImage[0].getHeight() / 2, (int) nextX, (int) nextY, this, 2.5, false);
+        tempBox = new PlayerHitbox(playerImage[0].getWidth() - 24, (int)(playerImage[0].getHeight() /1.9), (int) nextX, (int) nextY, this, 2.5, false);
 
         // System.out.println(nextX);
         // System.out.println(nextY);
@@ -361,7 +505,7 @@ public class Player extends Effects {
         // System.out.println(tempBox.getX());
         // System.out.println(tempBox.getY());
 
-        Actor wall = (Actor) findClosestTarget(CollisionHitbox.class, 0, 200, 750);
+        Actor wall = (Actor) findClosestTarget(CollisionHitbox.class, 0, 400, 750);
 
         //System.out.println(tempBox.checkIntersection(wall));
         if(wall != null && tempBox.checkIntersection(wall)){

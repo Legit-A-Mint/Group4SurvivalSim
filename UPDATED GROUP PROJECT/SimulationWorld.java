@@ -250,23 +250,23 @@ public class SimulationWorld extends World{
 
     private void spawnEnemies(int numBass, int numShark, int numWhale, int numSwordfish){
         for (int i = 0; i < numBass; i++){
-            int spawnX = WIDTH / 2 + getScroller().getScrolledX();
-            int spawnY = HEIGHT / 2 + getScroller().getScrolledY();
+            int spawnX = WIDTH / 2 + getScroller().getScrolledX() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
+            int spawnY = HEIGHT / 2 + getScroller().getScrolledY() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
             addObject(new Bass(), spawnX, spawnY);
         }
         for (int i = 0; i < numShark; i++){
-            int spawnX = WIDTH / 2 + getScroller().getScrolledX();
-            int spawnY = HEIGHT / 2 + getScroller().getScrolledY();
+            int spawnX = WIDTH / 2 + getScroller().getScrolledX() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
+            int spawnY = HEIGHT / 2 + getScroller().getScrolledY() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11)) ;
             addObject(new Shark(), spawnX, spawnY);
         }
         for (int i = 0; i < numWhale; i++){
-            int spawnX = WIDTH / 2 + getScroller().getScrolledX();
-            int spawnY = HEIGHT / 2 + getScroller().getScrolledY();
+            int spawnX = WIDTH / 2 + getScroller().getScrolledX() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
+            int spawnY = HEIGHT / 2 + getScroller().getScrolledY() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
             addObject(new Whale(), spawnX, spawnY);
         }
         for (int i = 0; i < numSwordfish; i++){
-            int spawnX = WIDTH / 2 + getScroller().getScrolledX();
-            int spawnY = HEIGHT / 2 + getScroller().getScrolledY();
+            int spawnX = WIDTH / 2 + getScroller().getScrolledX() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11)) ;
+            int spawnY = HEIGHT / 2 + getScroller().getScrolledY() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
             addObject(new Swordfish(), spawnX, spawnY);
         }
     }

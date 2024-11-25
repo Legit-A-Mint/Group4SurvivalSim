@@ -17,7 +17,7 @@ public class Shuriken extends Projectile
     private int hitCount;
     
     public Shuriken(){
-        speed = 2.25;
+        speed = 4.4;
         damage = 1;
         attackSpeed = 35;
         lifeSpan = 100;

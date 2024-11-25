@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Harpoon extends Projectile
 {
     public Harpoon(){
-        speed = 2.5;
+        speed = 4.75;
         damage = 4;
         attackSpeed = 90;
         lifeSpan = 600;

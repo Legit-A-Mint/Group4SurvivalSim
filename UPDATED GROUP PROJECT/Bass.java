@@ -11,7 +11,7 @@ public class Bass extends Enemy
     public Bass(){
         super();
         img = new GreenfootImage[2];
-        speed = 1;
+        speed = 0.9;
         hp = 3;
         damage = 1;
         attackCooldown = 20;

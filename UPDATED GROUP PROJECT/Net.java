@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Net extends Projectile
 {
     public Net(){
-        speed = 1.25;
+        speed = 3;
         damage = 1;
         attackSpeed = 70;
         lifeSpan = 250;
