@@ -35,6 +35,10 @@ public abstract class Enemy extends Effects
 
     SimulationWorld world;
     protected boolean removeMe;
+    private int myActNumber;
+    
+    // Static
+    private static int nextActNumber = -1;
 
     public Enemy(){
         minSpeed = 0.5;
@@ -42,6 +46,8 @@ public abstract class Enemy extends Effects
         attackTimer = 0;
         removeMe = false;
         createdHitbox = false;
+        
+        myActNumber = getNextActNumber();
     }
 
     protected abstract void attack();
@@ -69,8 +75,9 @@ public abstract class Enemy extends Effects
             }
 
             if(isMovable){
-
-                lookForTarget();
+                if(SimulationWorld.getActNumber() == myActNumber){
+                    lookForTarget();
+                }
                 repel();
                 // Check for path blockages
                 checkForBlockages();
@@ -226,6 +233,24 @@ public abstract class Enemy extends Effects
         downBlocked = isBlockedInDirection("down");
         leftBlocked = isBlockedInDirection("left");
         rightBlocked = isBlockedInDirection("right");
+    }
+    
+    private static int getNextActNumber () {
+        if (nextActNumber == -1){
+            nextActNumber = 1;
+        }
+        if (nextActNumber > 4){
+            nextActNumber = 1; // goes back to 1 - Zero (0) is reserved for UI refresh
+        }
+        return nextActNumber++;
+    }
+    
+    public void refreshActNumber() {
+        myActNumber = getNextActNumber();
+    }
+    
+    public static void resetActDistribution(){
+        nextActNumber = 1;
     }
 
     private boolean isBlockedInDirection(String direction) {

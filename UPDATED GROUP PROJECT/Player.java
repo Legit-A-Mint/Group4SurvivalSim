@@ -35,7 +35,7 @@ public class Player extends Effects {
     private boolean harpoonBought;
     private boolean allRaftUpgradesBought;
     private boolean doneUpgrades;
-    
+
     private int healAmount;
 
     private int weaponIndex;
@@ -163,7 +163,6 @@ public class Player extends Effects {
     getWorld().addObject(fov2, getX() + 55, getY() + 55);
     }
 
-
     private void createFov4() {
     fov4 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 0.3, 0.3, 0.03, 0.03, 90);
     getWorld().addObject(fov4, getX() + 55, getY() + 55);
@@ -218,9 +217,8 @@ public class Player extends Effects {
 
                     // System.out.println(fov2.wallNotDetected());
                     if(fov3.wallNotDetected()){
-                        if(/*!smartDodge || */ !findClosestEnemy()){
+                        if(/*!smartDodge || */ !findClosestEnemy(0, 550)){
                             if(!doneUpgrades && !getWorld().getObjects(Coins.class).isEmpty()){
-                                System.out.println(lookingForCoins);
                                 lookForCoins();
                                 if(lookingForCoins){
                                     long rotationDiff = coinRota - getRotation();
@@ -244,10 +242,58 @@ public class Player extends Effects {
                                         rotaCont -= turnSpeed;
                                     }
                                 }
+
+                                resetRota();
+                                setRotation(rotaCont);
+                                move(speed);
+
+                                if(cooldown <= 0 && isThereACloseEnemy(0, 700)){
+                                    spawnProjectile(weaponIndex);
+                                    cooldown = weaponCDList[weaponIndex];
+                                }
+
+                                collectCoins();
+                                checkEffects();
+                                ((SimulationWorld)getWorld()).updateCoins(coinsStored);
+                                return;
+                            }else{
+                                if(!getWorld().getObjects(Enemy.class).isEmpty()){
+                                    if(findClosestEnemy(800, 2000)){
+                                        long rotationDiff = enemyRota - getRotation();
+
+                                        if(rotationDiff >= 360){
+                                            rotationDiff =  0 + (rotationDiff - 360);
+                                        }
+
+                                        if(rotationDiff <= 0){
+                                            rotationDiff =  0 + (rotationDiff + 360); 
+                                        }
+
+                                        // System.out.println(rotationDiff);
+
+                                        if(rotationDiff > 0 && rotationDiff < 180){
+                                            rotaCont += turnSpeed;
+                                        }
+                                        if(rotationDiff > 179 && rotationDiff <= 360){
+                                            rotaCont -= turnSpeed;
+                                        }
+
+                                        resetRota();
+                                        setRotation(rotaCont);
+                                        move(speed-0.4);
+
+                                        if(cooldown <= 0 && isThereACloseEnemy(0, 700)){
+                                            spawnProjectile(weaponIndex);
+                                            cooldown = weaponCDList[weaponIndex];
+                                        }
+
+                                        collectCoins();
+                                        checkEffects();
+                                        ((SimulationWorld)getWorld()).updateCoins(coinsStored);
+                                        return;
+                                    }
+                                }
                             }
-                            resetRota();
-                            setRotation(rotaCont);
-                            move(speed);
                         }else{
 
                             long rotationDiff = enemyRota - getRotation();
@@ -273,6 +319,16 @@ public class Player extends Effects {
                             resetRota();
                             setRotation(rotaCont);
                             move(speed-0.4);
+
+                            if(cooldown <= 0 && isThereACloseEnemy(0, 700)){
+                                spawnProjectile(weaponIndex);
+                                cooldown = weaponCDList[weaponIndex];
+                            }
+
+                            collectCoins();
+                            checkEffects();
+                            ((SimulationWorld)getWorld()).updateCoins(coinsStored);
+                            return;
                         }
                     }else{
 
@@ -299,6 +355,10 @@ public class Player extends Effects {
                     cooldown = weaponCDList[weaponIndex];
                 }
 
+                collectCoins();
+                checkEffects();
+                ((SimulationWorld)getWorld()).updateCoins(coinsStored);
+                return;
             }
             else if(DEBUGMODE){
                 handleMovement();
@@ -312,9 +372,11 @@ public class Player extends Effects {
             }
 
             // End Action
-            collectCoins();
-            checkEffects();
-            ((SimulationWorld)getWorld()).updateCoins(coinsStored);
+            /*
+             * collectCoins();
+             * checkEffects();
+             * ((SimulationWorld)getWorld()).updateCoins(coinsStored);
+             */
         }
     }
 
@@ -448,16 +510,18 @@ public class Player extends Effects {
 
     // Buy Heal
     public void buyHealthPotion() {
-        coinsStored -= POTION_COST;
-        hp += healAmount; 
+        if(hp <= maxHp + healAmount){
+            coinsStored -= POTION_COST;
+            hp += healAmount; 
+        }
     }
 
-    public boolean findClosestEnemy(){
+    public boolean findClosestEnemy(int min, int max){
         long storeRota = getRotation();
 
         if(!getWorld().getObjects(Enemy.class).isEmpty()){
-            if(findClosestTarget(Enemy.class, 0, 150, 550) != null){
-                turnTowards(findClosestTarget(Enemy.class, 0, 200, 550));
+            if(findClosestTarget(Enemy.class, min, 150, max) != null){
+                turnTowards(findClosestTarget(Enemy.class, min, 200, max));
                 enemyRota = getRotation();
 
                 if(enemyRota <= 0){
@@ -515,30 +579,32 @@ public class Player extends Effects {
         setRotation(storeRota);
     }
 
+    /**
     public boolean checkForWall(){
-        double nextX = getPreciseX() + (double) Math.round(Math.cos(Math.toRadians(getRotation()))) * speed*2.1;
-        double nextY = getPreciseY() + (double) Math.round(Math.sin(Math.toRadians(getRotation()))) * speed*2.1;
+    double nextX = getPreciseX() + (double) Math.round(Math.cos(Math.toRadians(getRotation()))) * speed*2.1;
+    double nextY = getPreciseY() + (double) Math.round(Math.sin(Math.toRadians(getRotation()))) * speed*2.1;
 
-        tempBox = new PlayerHitbox(playerImage[0].getWidth() - 24, (int)(playerImage[0].getHeight() /1.9), (int) nextX, (int) nextY, this, 2.5, false);
+    tempBox = new PlayerHitbox(playerImage[0].getWidth() - 24, (int)(playerImage[0].getHeight() /1.9), (int) nextX, (int) nextY, this, 2.5, false);
 
-        // System.out.println(nextX);
-        // System.out.println(nextY);
+    // System.out.println(nextX);
+    // System.out.println(nextY);
 
-        getWorld().addObject(tempBox,  (int)(nextX), (int)(nextY));
+    getWorld().addObject(tempBox,  (int)(nextX), (int)(nextY));
 
-        // System.out.println(tempBox.getX());
-        // System.out.println(tempBox.getY());
+    // System.out.println(tempBox.getX());
+    // System.out.println(tempBox.getY());
 
-        Actor wall = (Actor) findClosestTarget(CollisionHitbox.class, 0, 400, 750);
+    Actor wall = (Actor) findClosestTarget(CollisionHitbox.class, 0, 400, 750);
 
-        //System.out.println(tempBox.checkIntersection(wall));
-        if(wall != null && tempBox.checkIntersection(wall)){
-            getWorld().removeObject(tempBox);
-            return true;
-        }
-        getWorld().removeObject(tempBox);
-        return false;
+    //System.out.println(tempBox.checkIntersection(wall));
+    if(wall != null && tempBox.checkIntersection(wall)){
+    getWorld().removeObject(tempBox);
+    return true;
     }
+    getWorld().removeObject(tempBox);
+    return false;
+    }
+     */
 
     private void spawnProjectile(int type){
         switch(type){
