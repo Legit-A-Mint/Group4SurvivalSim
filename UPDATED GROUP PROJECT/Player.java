@@ -35,7 +35,7 @@ public class Player extends Effects {
     private boolean harpoonBought;
     private boolean allRaftUpgradesBought;
     private boolean doneUpgrades;
-    
+
     private int healAmount;
 
     private int weaponIndex;
@@ -163,7 +163,6 @@ public class Player extends Effects {
     getWorld().addObject(fov2, getX() + 55, getY() + 55);
     }
 
-
     private void createFov4() {
     fov4 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 0.3, 0.3, 0.03, 0.03, 90);
     getWorld().addObject(fov4, getX() + 55, getY() + 55);
@@ -218,9 +217,8 @@ public class Player extends Effects {
 
                     // System.out.println(fov2.wallNotDetected());
                     if(fov3.wallNotDetected()){
-                        if(/*!smartDodge || */ !findClosestEnemy()){
+                        if(/*!smartDodge || */ !findClosestEnemy(0, 550)){
                             if(!doneUpgrades && !getWorld().getObjects(Coins.class).isEmpty()){
-                                System.out.println(lookingForCoins);
                                 lookForCoins();
                                 if(lookingForCoins){
                                     long rotationDiff = coinRota - getRotation();
@@ -244,10 +242,38 @@ public class Player extends Effects {
                                         rotaCont -= turnSpeed;
                                     }
                                 }
+
+                                resetRota();
+                                setRotation(rotaCont);
+                                move(speed);
+                            }else{
+                                if(!getWorld().getObjects(Enemy.class).isEmpty()){
+                                    if(findClosestEnemy(800, 2000)){
+                                        long rotationDiff = enemyRota - getRotation();
+
+                                        if(rotationDiff >= 360){
+                                            rotationDiff =  0 + (rotationDiff - 360);
+                                        }
+
+                                        if(rotationDiff <= 0){
+                                            rotationDiff =  0 + (rotationDiff + 360); 
+                                        }
+
+                                        // System.out.println(rotationDiff);
+
+                                        if(rotationDiff > 0 && rotationDiff < 180){
+                                            rotaCont += turnSpeed;
+                                        }
+                                        if(rotationDiff > 179 && rotationDiff <= 360){
+                                            rotaCont -= turnSpeed;
+                                        }
+
+                                        resetRota();
+                                        setRotation(rotaCont);
+                                        move(speed-0.4);
+                                    }
+                                }
                             }
-                            resetRota();
-                            setRotation(rotaCont);
-                            move(speed);
                         }else{
 
                             long rotationDiff = enemyRota - getRotation();
@@ -452,12 +478,12 @@ public class Player extends Effects {
         hp += healAmount; 
     }
 
-    public boolean findClosestEnemy(){
+    public boolean findClosestEnemy(int min, int max){
         long storeRota = getRotation();
 
         if(!getWorld().getObjects(Enemy.class).isEmpty()){
-            if(findClosestTarget(Enemy.class, 0, 150, 550) != null){
-                turnTowards(findClosestTarget(Enemy.class, 0, 200, 550));
+            if(findClosestTarget(Enemy.class, min, 150, max) != null){
+                turnTowards(findClosestTarget(Enemy.class, min, 200, max));
                 enemyRota = getRotation();
 
                 if(enemyRota <= 0){

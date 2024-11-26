@@ -47,7 +47,7 @@ public class SimulationWorld extends World{
     private int waveCount;
     private boolean firstWave;
     private static final int FINAL_WAVE = 20;
-    private static final int WAVE_IDLE_TIME = 500; // Adjust idle time for wave
+    private static final int WAVE_IDLE_TIME = 300; // Adjust idle time for wave
     private Image waveClearImage;
 
     // Heart counter variables
@@ -56,6 +56,8 @@ public class SimulationWorld extends World{
     // Ambient class spawnage
     private int seagullTimer;
     private static final int SEAGULL_SPAWN_TIME = 500;
+    
+    private static int actCounter;
 
     // Constructor for the world, initializes objects
     public SimulationWorld(String playerModel, int maxLives, double speed, double difficulty, int coin){
@@ -68,6 +70,7 @@ public class SimulationWorld extends World{
         spawnOnce = true; // The flag for spawning 
         delay = 30; // The delay variable
         coinDisplay = coin;
+        actCounter = 0;
 
         acting = true; // Set the game to be active and running
 
@@ -155,10 +158,16 @@ public class SimulationWorld extends World{
     public void addObject(Actor a){
         // This empty method prevents other addObject calls from being overridden
     }
+    
+    public static int getActNumber() {
+        // return a number from 0 - 59
+        return actCounter % 20;
+    }
 
     // Main act method that runs on every frame of the game
     public void act(){
         if (acting){
+            actCounter++;
             actCount++;         // The increment action count
             coinSpawnTimer++;   // Update coin spawn timer
 
@@ -192,6 +201,13 @@ public class SimulationWorld extends World{
         if (shopButton.checkClicked()){
             shopToggled = !shopToggled; // Flip state 
             shop.showShop(shopToggled);
+        }
+        
+        if (actCounter % 3000 == 0){ // redistribute every 3000 acts ( to even out bug pathings per act
+            Enemy.resetActDistribution();
+            for (Enemy E : getObjects(Enemy.class)){
+                E.refreshActNumber();
+            }
         }
     }
 

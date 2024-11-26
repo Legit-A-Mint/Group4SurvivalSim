@@ -3,8 +3,8 @@ comment0.target=Player
 comment0.text=\r\n\ @lumilk\r\n\ @andrew\r\n\ @1.0.0\r\n
 comment1.params=playerModel\ speedMulti\ maxHp\ coins
 comment1.target=Player(java.lang.String,\ double,\ int,\ int)
-comment10.params=
-comment10.target=boolean\ findClosestEnemy()
+comment10.params=min\ max
+comment10.target=boolean\ findClosestEnemy(int,\ int)
 comment11.params=min\ max
 comment11.target=boolean\ isThereACloseEnemy(int,\ int)
 comment12.params=
@@ -52,7 +52,7 @@ comment30.params=
 comment30.target=int\ getMaxHp()
 comment4.params=
 comment4.target=void\ act()
-comment4.text=\r\n\ \ \ \ private\ void\ createFov()\ {\r\n\ \ \ \ fov\ \=\ new\ Fov(playerImage[0].getWidth()*6\ \ ,\ (int)\ (((double)playerImage[0].getHeight())*4.5),\ 0,\ 0,\ this,\ 2.5,\ 3.745,\ 3.69,\ 1.3,\ 3);\r\n\ \ \ \ getWorld().addObject(fov,\ getX()\ +\ 55,\ getY()\ +\ 55);\r\n\r\n\ \ \ \ }\r\n\r\n\ \ \ \ private\ void\ createFov2()\ {\r\n\ \ \ \ fov2\ \=\ new\ Fov(playerImage[0].getWidth()*6\ \ ,\ (int)\ (((double)playerImage[0].getHeight())*4.5),\ 0,\ 0,\ this,\ 2.5,\ 1.2,\ 1.2,\ 0.2\ ,\ 0.5);\r\n\ \ \ \ getWorld().addObject(fov2,\ getX()\ +\ 55,\ getY()\ +\ 55);\r\n\ \ \ \ }\r\n\r\n\r\n\ \ \ \ private\ void\ createFov4()\ {\r\n\ \ \ \ fov4\ \=\ new\ Fov(playerImage[0].getWidth()*6\ \ ,\ (int)\ (((double)playerImage[0].getHeight())*4.5),\ 0,\ 0,\ this,\ 2.5,\ 0.3,\ 0.3,\ 0.03,\ 0.03,\ 90);\r\n\ \ \ \ getWorld().addObject(fov4,\ getX()\ +\ 55,\ getY()\ +\ 55);\r\n\ \ \ \ }\ \r\n\r\n\ \ \ \ private\ void\ createFov5()\ {\r\n\ \ \ \ fov5\ \=\ new\ Fov(playerImage[0].getWidth()*6\ \ ,\ (int)\ (((double)playerImage[0].getHeight())*4.5),\ 0,\ 0,\ this,\ 2.5,\ 0.3,\ 0.3,\ 0.03,\ 0.03,\ -90);\r\n\ \ \ \ getWorld().addObject(fov5,\ getX()\ +\ 55,\ getY()\ +\ 55);\r\n\ \ \ \ }\ \ \r\n
+comment4.text=\r\n\ \ \ \ private\ void\ createFov()\ {\r\n\ \ \ \ fov\ \=\ new\ Fov(playerImage[0].getWidth()*6\ \ ,\ (int)\ (((double)playerImage[0].getHeight())*4.5),\ 0,\ 0,\ this,\ 2.5,\ 3.745,\ 3.69,\ 1.3,\ 3);\r\n\ \ \ \ getWorld().addObject(fov,\ getX()\ +\ 55,\ getY()\ +\ 55);\r\n\r\n\ \ \ \ }\r\n\r\n\ \ \ \ private\ void\ createFov2()\ {\r\n\ \ \ \ fov2\ \=\ new\ Fov(playerImage[0].getWidth()*6\ \ ,\ (int)\ (((double)playerImage[0].getHeight())*4.5),\ 0,\ 0,\ this,\ 2.5,\ 1.2,\ 1.2,\ 0.2\ ,\ 0.5);\r\n\ \ \ \ getWorld().addObject(fov2,\ getX()\ +\ 55,\ getY()\ +\ 55);\r\n\ \ \ \ }\r\n\r\n\ \ \ \ private\ void\ createFov4()\ {\r\n\ \ \ \ fov4\ \=\ new\ Fov(playerImage[0].getWidth()*6\ \ ,\ (int)\ (((double)playerImage[0].getHeight())*4.5),\ 0,\ 0,\ this,\ 2.5,\ 0.3,\ 0.3,\ 0.03,\ 0.03,\ 90);\r\n\ \ \ \ getWorld().addObject(fov4,\ getX()\ +\ 55,\ getY()\ +\ 55);\r\n\ \ \ \ }\ \r\n\r\n\ \ \ \ private\ void\ createFov5()\ {\r\n\ \ \ \ fov5\ \=\ new\ Fov(playerImage[0].getWidth()*6\ \ ,\ (int)\ (((double)playerImage[0].getHeight())*4.5),\ 0,\ 0,\ this,\ 2.5,\ 0.3,\ 0.3,\ 0.03,\ 0.03,\ -90);\r\n\ \ \ \ getWorld().addObject(fov5,\ getX()\ +\ 55,\ getY()\ +\ 55);\r\n\ \ \ \ }\ \ \r\n
 comment5.params=
 comment5.target=void\ handleCooldowns()
 comment6.params=
