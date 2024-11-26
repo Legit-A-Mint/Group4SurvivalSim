@@ -223,7 +223,7 @@ public class Player extends Effects {
                                 if(lookingForCoins){
                                     long rotationDiff = coinRota - getRotation();
 
-                                    System.out.println("money"); 
+                                    //System.out.println("money"); 
 
                                     if(rotationDiff >= 360){
                                         rotationDiff =  0 + (rotationDiff - 360);
@@ -233,7 +233,7 @@ public class Player extends Effects {
                                         rotationDiff =  0 + (rotationDiff + 360); 
                                     }
 
-                                    System.out.println(rotationDiff);
+                                    //System.out.println(rotationDiff);
                                     //System.out.println("this rotation: " + rotaCont);
                                     if(rotationDiff > 0 && rotationDiff < 180){
                                         rotaCont += turnSpeed;

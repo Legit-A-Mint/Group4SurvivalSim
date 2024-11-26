@@ -102,7 +102,7 @@ public class SimulationWorld extends World{
         addObject(pauseButton = new Button("PauseButton", new String[]{"pause1.png", "pause2.png", "pause3.png"}, true, 1, 1, false), 55, 35);  
         addObject(shopButton = new Button("ShopButton" , new String[]{"Shop1.png", "Shop2.png", "Shop3.png"}, true, 1, 1, false), 55, 100);
 
-        //addObject(slider = new Slider("TestSlider.", "rail.png", "circle.png", 1, 130), 180, getHeight() - 50);  
+        addObject(slider = new Slider("TestSlider.", "rail.png", "circle.png", 1, 130, false), 180, getHeight() - 50);  
 
         addObject(shop = new Shop(), 725, getHeight() - 90);  
         shop.showShop(false);
@@ -269,6 +269,7 @@ public class SimulationWorld extends World{
                 spawnEnemies(5, 5, 5, 5, 5, 5); // Continued balance scaling
                 break;
             case 9:
+                ambientSound.stop();
                 spawnKraken(); 
                 break;
             case 10:
@@ -359,7 +360,8 @@ public class SimulationWorld extends World{
     }
     // Transition to losing screen
     public void losingScreen(){
-        // Transition logic for winning the game after defeating the Kraken in wave 20
+        // Transition logic for winning the game after defeating the Kraken in wave 10
+        ambientSound.stop();
         Greenfoot.setWorld(new LosingScreen(waveCount + 1));
     }
 
