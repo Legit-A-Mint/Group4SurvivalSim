@@ -35,8 +35,8 @@ public class Player extends Effects {
     private boolean harpoonBought;
     private boolean allRaftUpgradesBought;
     private boolean doneUpgrades;
-
-    private int healAmount = 20;
+    
+    private int healAmount;
 
     private int weaponIndex;
 
@@ -121,6 +121,7 @@ public class Player extends Effects {
         coinsStored = coins;
         this.maxHp = maxHp;
         hp = maxHp;
+        healAmount = (int)(maxHp*0.2);
         resetRotaCont = true;
         smartDodgeCounter = -1;
         overSwing = -1;
@@ -376,6 +377,9 @@ public class Player extends Effects {
                 Greenfoot.playSound("item_Buy.mp3");
                 buyCooldown = ONE_SECOND;
                 setRaft(floatyNum);
+                // Give wood raft buffs
+                maxHp = (int)(maxHp*1.5);
+                hp += (int)(maxHp*0.5);
                 return;
             }
 
@@ -386,6 +390,9 @@ public class Player extends Effects {
                 Greenfoot.playSound("item_Buy.mp3");
                 buyCooldown = ONE_SECOND;
                 setRaft(floatyNum);
+                // Give metal raft buffs
+                maxHp = (int)(maxHp*2);
+                hp += maxHp;
                 return;
             }
 
