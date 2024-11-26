@@ -36,7 +36,7 @@ public class Player extends Effects {
     private boolean allRaftUpgradesBought;
     private boolean doneUpgrades;
     
-    private int healAmount = 10;
+    private int healAmount = 20;
 
     private int weaponIndex;
 
