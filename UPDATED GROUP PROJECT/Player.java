@@ -21,7 +21,7 @@ public class Player extends Effects {
 
     // Price of Items
     private static final int POTION_COST = 4;
-    private static final int WOODRAFT_COST = 10;
+    private static final int WOODRAFT_COST = 7;
     private static final int METALRAFT_COST = 30;
     private static final int NET_COST = 8;
     private static final int SHURIKEN_COST = 15;
@@ -78,6 +78,7 @@ public class Player extends Effects {
     private GreenfootImage playerImg;
     private GreenfootImage tempImg;
     private int floatyNum = 0;
+    private double speedMulti;
 
     // Other classes
     private SimulationWorld world;
@@ -115,8 +116,8 @@ public class Player extends Effects {
         setRaft(0);
 
         // Instance variables
-        // speed = speed*speedMulti;
-        speed = 3.5;
+        this.speedMulti = speedMulti;
+        speed = 3*speedMulti;
         turnSpeed = 2.5;
         coinsStored = coins;
         this.maxHp = maxHp;
@@ -379,7 +380,10 @@ public class Player extends Effects {
                 setRaft(floatyNum);
                 // Give wood raft buffs
                 maxHp = (int)(maxHp*1.5);
-                hp += (int)(maxHp*0.5);
+                hp += (int)(maxHp/3);
+                if (hp > maxHp)
+                    hp = maxHp;
+                speed = 5*speedMulti;
                 return;
             }
 
@@ -392,7 +396,10 @@ public class Player extends Effects {
                 setRaft(floatyNum);
                 // Give metal raft buffs
                 maxHp = (int)(maxHp*2);
-                hp += maxHp;
+                hp += maxHp/2;
+                if (hp > maxHp)
+                    hp = maxHp;
+                speed = 7*speedMulti;
                 return;
             }
 
