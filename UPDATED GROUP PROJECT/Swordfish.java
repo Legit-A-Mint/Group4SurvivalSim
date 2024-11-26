@@ -15,8 +15,8 @@ public class Swordfish extends Enemy
         super();
         img = new GreenfootImage[1];
         speed = 8;
-        hp = (int)(16*diffMulti);
-        damage = (int)(5*diffMulti);
+        hp = (int)(3*diffMulti);
+        damage = (int)(25*diffMulti);
         attackCooldown = 60;
         speedCooldown = 0;
         isMovable = true;

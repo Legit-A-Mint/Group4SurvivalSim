@@ -18,7 +18,7 @@ public class Tentacle extends Kraken {
 
     public Tentacle(double diffMulti) {
         super(diffMulti);
-        hp = (int)(300*diffMulti);
+        hp = (int)(3000*diffMulti);
         damage = (int)(100*diffMulti);
         attackCooldown = 30;
         img = new GreenfootImage[3];

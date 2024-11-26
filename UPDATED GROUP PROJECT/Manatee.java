@@ -11,9 +11,9 @@ public class Manatee extends Enemy
     public Manatee(double diffMulti){
         super();
         img = new GreenfootImage[1];
-        speed = 0.8;
-        hp = (int)(100*diffMulti);
-        damage = (int)(20*diffMulti);
+        speed = 1.8;
+        hp = (int)(250*diffMulti);
+        damage = (int)(30*diffMulti);
         attackCooldown = 60;
         isMovable = true;
         // vfx

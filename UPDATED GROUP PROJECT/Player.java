@@ -35,7 +35,7 @@ public class Player extends Effects {
     private boolean harpoonBought;
     private boolean allRaftUpgradesBought;
     private boolean doneUpgrades;
-    
+
     private int healAmount = 20;
 
     private int weaponIndex;
@@ -143,34 +143,35 @@ public class Player extends Effects {
     }
 
     private void createFov3() {
-        fov3 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 0.8, 0.8, 0.004 , 0.004);
-        getWorld().addObject(fov3, getX() + 55, getY() + 55);
+        if(!DEBUGMODE){
+            fov3 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 0.8, 0.8, 0.004 , 0.004);
+            getWorld().addObject(fov3, getX() + 55, getY() + 55);
+        }
     }   
-    
+
     /**
     private void createFov() {
-        fov = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 3.745, 3.69, 1.3, 3);
-        getWorld().addObject(fov, getX() + 55, getY() + 55);
+    fov = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 3.745, 3.69, 1.3, 3);
+    getWorld().addObject(fov, getX() + 55, getY() + 55);
 
     }
 
     private void createFov2() {
-        fov2 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 1.2, 1.2, 0.2 , 0.5);
-        getWorld().addObject(fov2, getX() + 55, getY() + 55);
+    fov2 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 1.2, 1.2, 0.2 , 0.5);
+    getWorld().addObject(fov2, getX() + 55, getY() + 55);
     }
 
-    
 
     private void createFov4() {
-        fov4 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 0.3, 0.3, 0.03, 0.03, 90);
-        getWorld().addObject(fov4, getX() + 55, getY() + 55);
+    fov4 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 0.3, 0.3, 0.03, 0.03, 90);
+    getWorld().addObject(fov4, getX() + 55, getY() + 55);
     } 
 
     private void createFov5() {
-        fov5 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 0.3, 0.3, 0.03, 0.03, -90);
-        getWorld().addObject(fov5, getX() + 55, getY() + 55);
+    fov5 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 0.3, 0.3, 0.03, 0.03, -90);
+    getWorld().addObject(fov5, getX() + 55, getY() + 55);
     }  
-    */
+     */
 
     public void act() {
         // Make a hitbox
@@ -283,13 +284,13 @@ public class Player extends Effects {
                 }else{
                     keepTurning = 5;
                 }
-                
+
                 if(keepTurning > 0){
-                        rotaCont -= turnSpeed*1.2;
-                        resetRota();
-                        setRotation(rotaCont);
-                        move(speed-0.75);
-                    }
+                    rotaCont -= turnSpeed*1.2;
+                    resetRota();
+                    setRotation(rotaCont);
+                    move(speed-0.75);
+                }
 
                 if(cooldown <= 0 && isThereACloseEnemy(0, 700)){
                     spawnProjectile(weaponIndex);
@@ -377,7 +378,7 @@ public class Player extends Effects {
                 setRaft(floatyNum);
                 return;
             }
-            
+
             if (!metalRaftBought && (coinsStored >= METALRAFT_COST && buyCooldown <=0)){
                 floatyNum++;
                 metalRaftBought = true;
@@ -387,7 +388,7 @@ public class Player extends Effects {
                 setRaft(floatyNum);
                 return;
             }
-            
+
             if(!netBought && (coinsStored >= NET_COST && buyCooldown <= 0)){
                 weaponIndex++;
                 netBought = true;
@@ -700,10 +701,10 @@ public class Player extends Effects {
         if (hp > 0) {
             hp -= damage;
             ((SimulationWorld)(getWorld())).updateHP(hp); // Update the Lives display
-            
+
             // If hp < 0 enable losing screen
             if (hp <= 0)((SimulationWorld)(getWorld())).losingScreen();
-        
+
         }
         // Ensure losing screen
         else if (hp <= 0){

@@ -26,8 +26,8 @@ public class Kraken extends Enemy
         this.diffMulti = diffMulti;
         img = new GreenfootImage[12];
         createdHitbox = false;
-        hp = (int)(1000*diffMulti);
-        damage = (int)(50*diffMulti);
+        hp = (int)(100000*diffMulti);
+        damage = (int)(500*diffMulti);
         attackCooldown = 100;
         attackTimer = 0;
 

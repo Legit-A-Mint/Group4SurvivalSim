@@ -11,9 +11,9 @@ public class Whale extends Enemy
     public Whale(double diffMulti){
         super();
         img = new GreenfootImage[2];
-        speed = 0.8;
-        hp = (int)(35*diffMulti);
-        damage = (int)(10*diffMulti);
+        speed = 1.4;
+        hp = (int)(500*diffMulti);
+        damage = (int)(20*diffMulti);
         attackCooldown = 60;
         isMovable = true;
         // vfx

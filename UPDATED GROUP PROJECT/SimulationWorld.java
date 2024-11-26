@@ -49,7 +49,7 @@ public class SimulationWorld extends World{
     private static final int FINAL_WAVE = 20;
     private static final int WAVE_IDLE_TIME = 500; // Adjust idle time for wave
     private Image waveClearImage;
-    
+
     // Heart counter variables
     private ImageDisplay heartCounter;
 
@@ -124,7 +124,7 @@ public class SimulationWorld extends World{
 
         addObject(new ImageDisplay("pixel_Heart.png"), 150, 30);
         addObject(heartCounter = new ImageDisplay(new GreenfootImage(Integer.toString(player.getHP()), 50, Color.WHITE, null)), 215, 30);
-        
+
         setPaintOrder(ImageDisplay.class, Shop.class, Image.class, Interface.class, Seagull.class, Lives.class, Projectile.class);
     }
     // Method that gets called when the world is added to the Greenfoot environment
@@ -225,73 +225,57 @@ public class SimulationWorld extends World{
         // Edit the values in spawnEnemies parameter to change spawn amount of each enemy
         switch(waveCount){
 
-                case(0):
+            case 0:
+                spawnEnemies(3, 0, 0, 0, 0, 0); // Easy introduction with Bass
+                break;
+            case 1:
+                spawnEnemies(4, 1, 0, 0, 0, 0); // Introduce Lionfish
+                break;
+            case 2:
+                spawnEnemies(6, 2, 0, 0, 0, 0); // Increase Bass and Lionfish
+                break;
+            case 3:
+                spawnEnemies(8, 2, 1, 0, 0, 0); // Introduce Shark
+                break;
+            case 4:
+                spawnEnemies(10, 4, 1, 0, 0, 0); // Mix of Bass and Lionfish
+                break;
+            case 5:
+                spawnEnemies(12, 5, 2, 0, 0, 0); // Slight Shark increment
+                break;
+            case 6:
+                spawnEnemies(10, 8, 3, 1, 0, 0); // Introduce Whale
+                break;
+            case 7:
+                spawnEnemies(15, 10, 5, 2, 0, 0); // Whale becomes a challenge
+                break;
+            case 8:
+                spawnEnemies(18, 12, 6, 2, 0, 0); // Continued balance scaling
+                break;
+            case 9:
+                spawnEnemies(20, 15, 8, 3, 1, 0); // Introduce Swordfish
+                break;
+            case 10:
+                spawnEnemies(25, 18, 10, 5, 2, 0); // Gradual increase
+                break;
+            case 11:
+                spawnEnemies(30, 20, 12, 7, 3, 0); // Whale becomes prominent
+                break;
+            case 12:
+                spawnEnemies(35, 25, 15, 10, 5, 0); // Larger numbers overall
+                break;
+            case 13:
+                spawnEnemies(40, 30, 18, 12, 6, 0); // High wave challenge
+                break;
+            case 14:
+                spawnEnemies(45, 35, 20, 15, 8, 2); // Introduce Manatee
+                break;
+            case 15:
+                spawnEnemies(10, 10, 10, 10, 10, 10); // Bossfight with peons
 
-                spawnEnemies(1, 1, 1, 1, 1, 1);
+                spawnKraken(); 
                 break;
 
-                case(1):
-
-                spawnEnemies(4, 1, 0, 0, 0, 0);
-                break;
-
-                case(2):
-
-                spawnEnemies(3, 4, 0, 0, 0, 0);
-                break;
-
-                case(3):
-
-                spawnEnemies(10, 0, 1, 0, 0, 0);
-                spawnKraken();
-                break;
-
-                case(4):
-
-                spawnEnemies(5, 5, 5, 0, 0, 0);
-                break;
-
-                case(5):
-
-                spawnEnemies(9, 8, 4, 0, 0, 0);
-                break;
-
-                case(6):
-
-                spawnEnemies(4, 3, 2, 1, 0, 0);
-                break;
-
-                case(7):
-
-                spawnEnemies(40, 0, 0, 0, 0, 0);
-                break;
-
-                case(8):
-
-                spawnEnemies(1, 2, 3, 2, 0, 0);
-                break;
-
-                case(9):
-
-                spawnEnemies(1, 2, 3, 4, 0 ,0);
-                break;
-
-                case(10):
-
-                spawnEnemies(10, 10, 10, 5, 0, 0);
-                break;
-
-                case(11):
-
-                spawnEnemies(0, 0, 0, 15, 0, 0);
-                break;
-
-                // Boss fight
-                /*
-                case(FINAL_WAVE):
-                spawnKraken();
-                break;
-                */
         }        
     }
 
@@ -381,7 +365,7 @@ public class SimulationWorld extends World{
         // Transition logic for winning the game after defeating the Kraken in wave 20
         Greenfoot.setWorld(new LosingScreen());
     }
-    
+
     // Transition to the winning screen
     private void winningScreen(){
         // Transition logic for winning the game after defeating the Kraken in wave 20
@@ -399,6 +383,7 @@ public class SimulationWorld extends World{
         removeObject(displayCoins);
         addObject(displayCoins = new ImageDisplay(new GreenfootImage(Integer.toString(coinDisplay), 50, Color.WHITE, null)), 215, 100);
     }
+
     public void updateHP(int hp){
         removeObject(heartCounter);
         addObject(heartCounter = new ImageDisplay(new GreenfootImage(Integer.toString(hp), 50, Color.WHITE, null)), 215, 30);
