@@ -6,14 +6,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class raft2ShopIcon extends SuperSmoothMover
+public class raft2ShopIcon extends Shop
 {
-    /**
-     * Act - do whatever the raft2ShopIcon wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act()
+    public raft2ShopIcon()
     {
-        // Add your action code here.
+        setImage(new GreenfootImage("raftUI.png"));
+        getImage().scale(64,64);
     }
 }

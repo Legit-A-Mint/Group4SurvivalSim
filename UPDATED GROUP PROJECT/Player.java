@@ -383,7 +383,7 @@ public class Player extends Effects {
                 hp += (int)(maxHp/3);
                 if (hp > maxHp)
                     hp = maxHp;
-                speed = 5*speedMulti;
+                speed = 4*speedMulti;
                 return;
             }
 
@@ -399,7 +399,7 @@ public class Player extends Effects {
                 hp += maxHp/2;
                 if (hp > maxHp)
                     hp = maxHp;
-                speed = 7*speedMulti;
+                speed = 5*speedMulti;
                 return;
             }
 

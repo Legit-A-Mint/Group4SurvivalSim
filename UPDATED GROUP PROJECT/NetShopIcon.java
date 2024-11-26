@@ -6,14 +6,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class NetShopIcon extends SuperSmoothMover
+public class NetShopIcon extends Shop
 {
     public NetShopIcon()
     {
         setImage(new GreenfootImage("ShopNet.png"));
-    }
-    public void act()
-    {
-        // Add your action code here.
     }
 }
