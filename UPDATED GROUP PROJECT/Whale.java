@@ -8,12 +8,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Whale extends Enemy
 {
-    public Whale(){
+    public Whale(double diffMulti){
         super();
         img = new GreenfootImage[2];
-        speed = 0.8;
-        hp = 35;
-        damage = 10;
+        speed = 1.4;
+        hp = (int)(500*diffMulti);
+        damage = (int)(20*diffMulti);
         attackCooldown = 60;
         isMovable = true;
         // vfx
@@ -46,6 +46,7 @@ public class Whale extends Enemy
 
     public void attack(){
         getPlayer().damageMe(damage);
+        Greenfoot.playSound("Bite_1.mp3");
     }
 
     public void attackAnimation(){

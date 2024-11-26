@@ -8,12 +8,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Manatee extends Enemy
 {
-    public Manatee(){
+    public Manatee(double diffMulti){
         super();
         img = new GreenfootImage[1];
-        speed = 0.8;
-        hp = 100;
-        damage = 20;
+        speed = 1.8;
+        hp = (int)(250*diffMulti);
+        damage = (int)(30*diffMulti);
         attackCooldown = 60;
         isMovable = true;
         // vfx
@@ -42,6 +42,7 @@ public class Manatee extends Enemy
 
     public void attack(){
         getPlayer().damageMe(damage);
+        Greenfoot.playSound("Bite_1.mp3");
     }
 
     public void attackAnimation(){

@@ -7,4 +7,6 @@ comment2.params=img\ x\ y
 comment2.target=Image(java.lang.String,\ int,\ int)
 comment3.params=img\ x\ y
 comment3.target=void\ changeImg(java.lang.String,\ int,\ int)
-numComments=4
+comment4.params=
+comment4.target=boolean\ isUserInteracting()
+numComments=5

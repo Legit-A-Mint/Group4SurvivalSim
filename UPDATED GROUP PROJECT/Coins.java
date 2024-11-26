@@ -22,9 +22,9 @@ public class Coins extends Effects
         if(despawnTimer > 0){
             despawnTimer --;
         }
+        //animate(this, img, img[0].getWidth(), img[0].getHeight(), 10, 1);
         if(despawnTimer == 0){
             getWorld().removeObject(this);
         }
-        animate(this, img, img[0].getWidth(), img[0].getHeight(), 10, 1);
     }
 }

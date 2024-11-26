@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class ImageDisplay extends UI
+public class ImageDisplay extends Interface
 {
     public ImageDisplay(GreenfootImage img)
     {
@@ -32,5 +32,10 @@ public class ImageDisplay extends UI
     public void scale(int x, int y)
     {
         getImage().scale(x,y);
+    }
+    
+    @Override
+    protected boolean isUserInteracting(){
+        return Greenfoot.mouseMoved(this);
     }
 }

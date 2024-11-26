@@ -16,12 +16,16 @@ public class Shuriken extends Projectile
     private static final int PIERCE_CAP = 2;
     private int hitCount;
     
+    private static final GreenfootSound fireSfx = new GreenfootSound("Shuriken.mp3");
+    
     public Shuriken(){
         speed = 4.4;
         damage = 1;
         attackSpeed = 35;
         lifeSpan = 100;
         hitCount = 0;
+        
+        playShurikenSound();
     }
     
     public void act()
@@ -42,5 +46,9 @@ public class Shuriken extends Projectile
                 speed = 0;
             }
         }
+    }
+    
+    private void playShurikenSound() {
+        fireSfx.play();
     }
 }

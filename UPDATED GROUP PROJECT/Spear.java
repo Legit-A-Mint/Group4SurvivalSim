@@ -1,18 +1,23 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Spear here.
+ * This weapon is what the player starts off with
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
 public class Spear extends Projectile
 {
+    private static final GreenfootSound fireSfx = new GreenfootSound("Spear.mp3");
+    
     public Spear(){
         speed = 4;
         damage = 4;
         attackSpeed = 45;
         lifeSpan = 250;
+         
+        //Plays the spear sfx
+        playSpearSound();
     }
     
     public void act()
@@ -30,5 +35,9 @@ public class Spear extends Projectile
                 speed = 0;
             }
         }
+    }
+    
+    private void playSpearSound(){
+        fireSfx.play();
     }
 }

@@ -6,14 +6,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class SpearShopIcon extends SuperSmoothMover
+public class SpearShopIcon extends Shop
 {
     public SpearShopIcon()
     {
         setImage(new GreenfootImage("ShopSpear.png"));
-    }
-    public void act()
-    {
-        // Add your action code here.
     }
 }

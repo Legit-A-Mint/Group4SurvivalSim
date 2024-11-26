@@ -8,12 +8,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Lionfish extends Enemy
 {
-    public Lionfish(){
+    public Lionfish(double diffMulti){
         super();
         img = new GreenfootImage[1];
-        speed = 2;
-        hp = 2;
-        damage = 2;
+        speed = 2.6;
+        hp = (int)(2*diffMulti);
+        damage = (int)(7*diffMulti);
         attackCooldown = 20;
         isMovable = true;
         // vfx
@@ -43,6 +43,7 @@ public class Lionfish extends Enemy
 
     public void attack(){
         getPlayer().poisonMe(damage, 10);
+        Greenfoot.playSound("Bite_2.mp3");
     }
 
     public void attackAnimation(){

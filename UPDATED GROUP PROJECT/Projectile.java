@@ -23,7 +23,7 @@ public abstract class Projectile extends Effects{
     protected int damage;
     protected int attackSpeed;
     protected int lifeSpan;
-    
+
     private int fadeLength;
     protected boolean removeMe;
 
@@ -31,7 +31,7 @@ public abstract class Projectile extends Effects{
         removeMe = false;
         fadeLength = 100;
     }
-    
+
     public abstract void hitSomething();
 
     public void act(){
@@ -55,7 +55,6 @@ public abstract class Projectile extends Effects{
             }
             move(speed);
         }
-        
         if(removeMe){
             getWorld().removeObject(this);
         }
@@ -107,11 +106,11 @@ public abstract class Projectile extends Effects{
             turnTowards(enemy);
         }
     }
-    
+
     public void markForRemoval(){
         removeMe = true;
     }
-    
+
     public int getWeaponCooldown(){
         return attackSpeed;
     }

@@ -21,17 +21,22 @@ public class Player extends Effects {
 
     // Price of Items
     private static final int POTION_COST = 4;
+    private static final int WOODRAFT_COST = 7;
+    private static final int METALRAFT_COST = 30;
     private static final int NET_COST = 8;
     private static final int SHURIKEN_COST = 15;
     private static final int HARPOON_COST = 25;
-    private static final int RAFT_COST = 15;
 
     // Item variables
+    private boolean woodRaftBought;
+    private boolean metalRaftBought;
     private boolean netBought;
     private boolean shurikenBought;
     private boolean harpoonBought;
     private boolean allRaftUpgradesBought;
     private boolean doneUpgrades;
+    
+    private int healAmount;
 
     private int weaponIndex;
 
@@ -73,6 +78,7 @@ public class Player extends Effects {
     private GreenfootImage playerImg;
     private GreenfootImage tempImg;
     private int floatyNum = 0;
+    private double speedMulti;
 
     // Other classes
     private SimulationWorld world;
@@ -83,6 +89,7 @@ public class Player extends Effects {
     private Projectile projectile;
     private Fov fov;
     private Fov fov2;
+    private Fov fov3;
 
     private int dx, dy;
     private boolean createdFovHitbox;
@@ -94,8 +101,13 @@ public class Player extends Effects {
     private int turnOver;
     private boolean createdFovHitboxTwo;
     private long collisionHitboxRota;
+    private Fov fov4;
+    private Fov fov5;
+    private boolean turnRight;
+    private boolean turnLeft;
+    private int keepTurning;
 
-    public Player(String playerModel, double speedMulti, Lives lives, int coins) {
+    public Player(String playerModel, double speedMulti, int maxHp, int coins) {
         // Vfx
         floatyImage[0] = new GreenfootImage("floaty.png");
         floatyImage[1] = new GreenfootImage("wood.png");
@@ -104,19 +116,20 @@ public class Player extends Effects {
         setRaft(0);
 
         // Instance variables
-        // speed = speed*speedMulti;
-        speed = 3.5;
+        this.speedMulti = speedMulti;
+        speed = 3*speedMulti;
         turnSpeed = 2.5;
-        lives = lives;
         coinsStored = coins;
+        this.maxHp = maxHp;
         hp = maxHp;
+        healAmount = (int)(maxHp*0.2);
         resetRotaCont = true;
         smartDodgeCounter = -1;
         overSwing = -1;
 
         weaponCDList[0] = 45;
-        weaponCDList[1] = 45;
-        weaponCDList[2] = 45;
+        weaponCDList[1] = 55;
+        weaponCDList[2] = 35;
         weaponCDList[3] = 45;
 
         createdHitbox = false;
@@ -131,17 +144,36 @@ public class Player extends Effects {
         createdHitbox = true;
     }
 
+    private void createFov3() {
+        if(!DEBUGMODE){
+            fov3 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 0.8, 0.8, 0.004 , 0.004);
+            getWorld().addObject(fov3, getX() + 55, getY() + 55);
+        }
+    }   
+
+    /**
     private void createFov() {
-        fov = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 3.745, 3.69, 1.3, 1.2);
-        getWorld().addObject(fov, getX() + 55, getY() + 55);
-        createdFovHitbox = true;
+    fov = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 3.745, 3.69, 1.3, 3);
+    getWorld().addObject(fov, getX() + 55, getY() + 55);
+
     }
-    
+
     private void createFov2() {
-        fov2 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 1.2, 1.2, 0.2 , 0.2);
-        getWorld().addObject(fov2, getX() + 55, getY() + 55);
-        createdFovHitboxTwo = true;
+    fov2 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 1.2, 1.2, 0.2 , 0.5);
+    getWorld().addObject(fov2, getX() + 55, getY() + 55);
     }
+
+
+    private void createFov4() {
+    fov4 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 0.3, 0.3, 0.03, 0.03, 90);
+    getWorld().addObject(fov4, getX() + 55, getY() + 55);
+    } 
+
+    private void createFov5() {
+    fov5 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 0.3, 0.3, 0.03, 0.03, -90);
+    getWorld().addObject(fov5, getX() + 55, getY() + 55);
+    }  
+     */
 
     public void act() {
         // Make a hitbox
@@ -150,11 +182,12 @@ public class Player extends Effects {
         }
 
         if (!createdFovHitbox){
-            createFov();
-        }
-        
-        if (!createdFovHitboxTwo){
-            createFov2();
+            //createFov();
+            //createFov2();
+            createFov3();
+            //createFov4();
+            //createFov5();
+            createdFovHitbox = true;
         }
 
         if (SimulationWorld.isActing()) {
@@ -178,35 +211,31 @@ public class Player extends Effects {
                 // Movement Action
                 //System.out.println(checkForWall());
 
-                if(!checkForWall()){
-                    //if(distanceToClosestTarget(Enemy.class, 0, 100, 300) > 250){
-                        
-                    /**
-                    if(fov.enemyNotDetected()){
-                        smartDodgeCounter--;
-                    }else{
-                        smartDodgeCounter = ONE_SECOND/20;
-                    }
-                    */
-                    
-                    if(fov2.wallNotDetected()){
+                if(fov3.wallNotDetected()){
+                    turnLeft = false;
+                    turnRight = false;
+                    keepTurning--;
+
+                    // System.out.println(fov2.wallNotDetected());
+                    if(fov3.wallNotDetected()){
                         if(/*!smartDodge || */ !findClosestEnemy()){
                             if(!doneUpgrades && !getWorld().getObjects(Coins.class).isEmpty()){
+                                System.out.println(lookingForCoins);
                                 lookForCoins();
                                 if(lookingForCoins){
                                     long rotationDiff = coinRota - getRotation();
-    
-                                    //System.out.println("money"); 
-    
+
+                                    System.out.println("money"); 
+
                                     if(rotationDiff >= 360){
                                         rotationDiff =  0 + (rotationDiff - 360);
                                     }
-    
+
                                     if(rotationDiff <= 0){
                                         rotationDiff =  0 + (rotationDiff + 360); 
                                     }
-    
-                                    //System.out.println(rotationDiff);
+
+                                    System.out.println(rotationDiff);
                                     //System.out.println("this rotation: " + rotaCont);
                                     if(rotationDiff > 0 && rotationDiff < 180){
                                         rotaCont += turnSpeed;
@@ -220,99 +249,52 @@ public class Player extends Effects {
                             setRotation(rotaCont);
                             move(speed);
                         }else{
-    
+
                             long rotationDiff = enemyRota - getRotation();
                             rotationDiff += 180;
-    
+
                             if(rotationDiff >= 360){
                                 rotationDiff =  0 + (rotationDiff - 360);
                             }
-    
+
                             if(rotationDiff <= 0){
                                 rotationDiff =  0 + (rotationDiff + 360); 
                             }
-    
+
                             // System.out.println(rotationDiff);
-    
+
                             if(rotationDiff > 0 && rotationDiff < 180){
                                 rotaCont += turnSpeed;
                             }
                             if(rotationDiff > 179 && rotationDiff <= 360){
                                 rotaCont -= turnSpeed;
                             }
-    
+
                             resetRota();
                             setRotation(rotaCont);
-                            move(speed-0.5);
+                            move(speed-0.4);
                         }
                     }else{
-                        rotaCont -= turnSpeed;
+
+                        /** lines that should be updated */
+
+                        rotaCont -= turnSpeed*1.2;
                         resetRota();
-                        setRotation(rotaCont);
-                        move(speed-0.5);
+                        //setRotation(rotaCont);
+                        move(speed-0.4);
                     }
                 }else{
-                    if(false/*isThereACloseEnemy()*/){
-                        
-                        /*
-                        System.out.println(commitTurn);
-                        if(!commitTurn){
-                            findClosestEnemy();
-                        }
-                        
-                        
-                        long rotationDiff = enemyRota - getRotation();
-                        rotationDiff += 180;
-
-                        if(rotationDiff >= 360){
-                            rotationDiff =  0 + (rotationDiff - 360);
-                        }
-
-                        if(rotationDiff <= 0){
-                            rotationDiff =  0 + (rotationDiff + 360); 
-                        }
-
-                        System.out.println(rotationDiff);
-                        
-                        if(rotationDiff > 0 && rotationDiff < 180 && !commitTurn){
-                            overSwing = ONE_SECOND/15;
-                            commitTurn = true;
-                            turnOver = Math.abs(overSwing) + 7;
-                        }
-                        if(rotationDiff > 179 && rotationDiff <= 360 && !commitTurn){
-                            overSwing = -ONE_SECOND/15;
-                            commitTurn = true;
-                            //rotaCont -= turnSpeed*2;
-                            turnOver = Math.abs(overSwing) + 7;
-                        }
-                        
-                        if(overSwing > 0){
-                            rotaCont += turnSpeed*2;
-                            overSwing--;
-                        }else{
-                            rotaCont -= turnSpeed*2;
-                            overSwing++;
-                        }
-                        
-                        if(turnOver <= 0){
-                            commitTurn = false;
-                        }
-                        */
-                        
-                        
-                        rotaCont += turnSpeed*2;
-                        System.out.println("Current Rotation: " + rotaCont);
-                        resetRota();
-                        setRotation(rotaCont);
-                    }else{
-                        setCollisionRotation();
-                        resetRota();
-                        setRotation(rotaCont);
-                        move(speed);
-                    }
+                    keepTurning = 5;
                 }
 
-                if(cooldown <= 0 && isThereACloseEnemy(0, 800)){
+                if(keepTurning > 0){
+                    rotaCont -= turnSpeed*1.2;
+                    resetRota();
+                    setRotation(rotaCont);
+                    move(speed-0.75);
+                }
+
+                if(cooldown <= 0 && isThereACloseEnemy(0, 700)){
                     spawnProjectile(weaponIndex);
                     cooldown = weaponCDList[weaponIndex];
                 }
@@ -332,19 +314,20 @@ public class Player extends Effects {
             // End Action
             collectCoins();
             checkEffects();
-
+            ((SimulationWorld)getWorld()).updateCoins(coinsStored);
         }
     }
 
     private void handleCooldowns(){
         if(cooldown > 0){
             cooldown--;
+            buyCooldown--;
         }
     }
-    
+
     private void setCollisionRotation(){
         long storeRota = getRotation();
-        
+
         if(!getWorld().getObjects(CollisionHitbox.class).isEmpty()){
             if(findClosestTarget(CollisionHitbox.class, 0, 150, 550) != null){
                 turnTowards(findClosestTarget(CollisionHitbox.class, 0, 200, 550));
@@ -364,52 +347,91 @@ public class Player extends Effects {
         if((collisionHitboxRota > 0 && collisionHitboxRota <= 45) || (collisionHitboxRota > 135 && collisionHitboxRota <= 180)){
             rotaCont = 270;
         }
-        
+
         if((collisionHitboxRota > 180 && collisionHitboxRota <= 225) || (collisionHitboxRota > 315 && collisionHitboxRota <= 360)){
             rotaCont = 90;
         }
-        
+
         if((collisionHitboxRota > 45 && collisionHitboxRota <= 90) || (collisionHitboxRota > 270 && collisionHitboxRota <= 315)){
             rotaCont = 180;
         }
-        
+
         if((collisionHitboxRota > 90 && collisionHitboxRota <= 135) || (collisionHitboxRota > 225 && collisionHitboxRota <= 270)){
             rotaCont = 0;
         }
     }
 
     private void determineWhatToBuy(){
-        if((coinsStored > POTION_COST && buyCooldown <= 0) && hp < maxHp){
+        if((coinsStored > POTION_COST && buyCooldown <= 0) && hp <= maxHp - healAmount){
             buyHealthPotion();
+            Greenfoot.playSound("item_Buy.mp3");
             buyCooldown = ONE_SECOND;
             return;
         }
 
         // skip other ifs (optimization)
         if(!doneUpgrades){
-            if(!netBought && (coinsStored > NET_COST && buyCooldown <= 0)){
+            if (!woodRaftBought && (coinsStored >= WOODRAFT_COST && buyCooldown <=0)){
+                floatyNum++;
+                woodRaftBought = true;
+                coinsStored -= WOODRAFT_COST;
+                Greenfoot.playSound("item_Buy.mp3");
+                buyCooldown = ONE_SECOND;
+                setRaft(floatyNum);
+                // Give wood raft buffs
+                maxHp = (int)(maxHp*1.5);
+                hp += (int)(maxHp/3);
+                if (hp > maxHp)
+                    hp = maxHp;
+                speed = 4*speedMulti;
+                return;
+            }
+
+            if (!metalRaftBought && (coinsStored >= METALRAFT_COST && buyCooldown <=0)){
+                floatyNum++;
+                metalRaftBought = true;
+                coinsStored -= METALRAFT_COST;
+                Greenfoot.playSound("item_Buy.mp3");
+                buyCooldown = ONE_SECOND;
+                setRaft(floatyNum);
+                // Give metal raft buffs
+                maxHp = (int)(maxHp*2);
+                hp += maxHp/2;
+                if (hp > maxHp)
+                    hp = maxHp;
+                speed = 5*speedMulti;
+                return;
+            }
+
+            if(!netBought && (coinsStored >= NET_COST && buyCooldown <= 0)){
                 weaponIndex++;
                 netBought = true;
+                coinsStored -= NET_COST;
+                Greenfoot.playSound("item_Buy.mp3");
                 buyCooldown = ONE_SECOND;
                 return;
             }
 
-            if(!shurikenBought && (coinsStored > SHURIKEN_COST && buyCooldown <= 0)){
+            if(!shurikenBought && (coinsStored >= SHURIKEN_COST && buyCooldown <= 0)){
                 weaponIndex++;
                 shurikenBought = true;
+                coinsStored -= SHURIKEN_COST;
+                Greenfoot.playSound("item_Buy.mp3");
                 buyCooldown = ONE_SECOND;
                 return;
             }
 
-            if(!harpoonBought && (coinsStored > HARPOON_COST && buyCooldown <= 0)){
+            if(!harpoonBought && (coinsStored >= HARPOON_COST && buyCooldown <= 0)){
                 weaponIndex++;
                 harpoonBought = true;
+                coinsStored -= HARPOON_COST;
+                Greenfoot.playSound("item_Buy.mp3");
                 buyCooldown = ONE_SECOND;
                 return;
             }
         }
 
-        if(harpoonBought && shurikenBought && netBought && allRaftUpgradesBought){
+        if(woodRaftBought && metalRaftBought && harpoonBought && shurikenBought && netBought && allRaftUpgradesBought){
             doneUpgrades = true;
         }
     }
@@ -427,7 +449,7 @@ public class Player extends Effects {
     // Buy Heal
     public void buyHealthPotion() {
         coinsStored -= POTION_COST;
-        hp ++; 
+        hp += healAmount; 
     }
 
     public boolean findClosestEnemy(){
@@ -448,6 +470,8 @@ public class Player extends Effects {
             }else{
                 foundEnemy = false;
             }
+        }else{
+            foundEnemy = false;
         }
         setRotation(storeRota);
         if(foundEnemy){
@@ -455,7 +479,7 @@ public class Player extends Effects {
         }
         return false;
     }
-    
+
     public boolean isThereACloseEnemy(int min, int max){
         if(!getWorld().getObjects(Enemy.class).isEmpty()){
             if(findClosestTarget(Enemy.class, min, 100, max) != null){
@@ -546,8 +570,8 @@ public class Player extends Effects {
         if (coin != null) {
             Coins c = (Coins) coin;
             coinsStored++;  // Add coins to player
-            ((SimulationWorld)getWorld()).updateCoins(1);
             getWorld().removeObject(c);  // Remove coin from world
+            Greenfoot.playSound("coin_pickUp.mp3");
         }
     }
 
@@ -658,6 +682,9 @@ public class Player extends Effects {
         return speed;
     }
 
+    public int getHP(){
+        return hp;
+    }
     // Update the hitbox position to align with the player
     private void updateHitboxPosition() {
         hitbox.setLocation(getX(), getY());
@@ -687,7 +714,15 @@ public class Player extends Effects {
     public void damageMe(int damage) {
         if (hp > 0) {
             hp -= damage;
-            lives.updateDisplay(); // Update the Lives display
+            ((SimulationWorld)(getWorld())).updateHP(hp); // Update the Lives display
+
+            // If hp < 0 enable losing screen
+            if (hp <= 0)((SimulationWorld)(getWorld())).losingScreen();
+
+        }
+        // Ensure losing screen
+        else if (hp <= 0){
+            ((SimulationWorld)(getWorld())).losingScreen();
         }
     }
 

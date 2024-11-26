@@ -17,7 +17,7 @@ public class Krakite extends Enemy
         img = new GreenfootImage[1];
         speed = 6;
         hp = 300;
-        damage = 3;
+        damage = 10;
         attackCooldown = 200;
         isMovable = true;
         // vfx
@@ -64,6 +64,7 @@ public class Krakite extends Enemy
 
     public void attack(){
         getPlayer().damageMe(damage);
+        Greenfoot.playSound("Bite_2.mp3");
     }
 
     public void attackAnimation(){

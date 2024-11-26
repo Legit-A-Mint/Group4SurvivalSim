@@ -22,7 +22,7 @@ public class Character extends World
     {    
         //create an unbounded world 
         super(1024, 576, 1, false);
-        addObject(new Background(), 512, 288);
+        addObject(new Image("PixelOceanStart.png", 1024, 576), 512, 288);
         addObject(characterLabel = new ImageDisplay(new GreenfootImage("CHARACTER", 100, Color.WHITE, null)), getWidth()/2, 100);
         addObject(display = new Image(getPlayerModel(), 300, 300), 512, 288);
         addObject(left = new Button("left", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 2 , -1, false), 362, 288);

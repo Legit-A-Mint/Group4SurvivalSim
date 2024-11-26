@@ -11,12 +11,12 @@ public class Swordfish extends Enemy
     private int speedCooldown;
     private static final int speedCooldownMax = 300;
     private boolean stopped;
-    public Swordfish(){
+    public Swordfish(double diffMulti){
         super();
         img = new GreenfootImage[1];
         speed = 8;
-        hp = 16;
-        damage = 5;
+        hp = (int)(3*diffMulti);
+        damage = (int)(25*diffMulti);
         attackCooldown = 60;
         speedCooldown = 0;
         isMovable = true;
@@ -65,6 +65,7 @@ public class Swordfish extends Enemy
 
     public void attack(){
         getPlayer().damageMe(damage);
+        Greenfoot.playSound("Bite_1.mp3");
     }
 
     public void attackAnimation(){

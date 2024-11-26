@@ -14,6 +14,8 @@ public class AOECircle extends Effects{
     private int growthSpeed;
     private int damage;
     private boolean exploded;
+    
+    private static final GreenfootSound explosionSfx = new GreenfootSound("Explosion.mp3");
 
     public AOECircle(int initialRadius, int maxRadius, int growthSpeed, int damage){
         this.maxRadius = maxRadius;
@@ -63,6 +65,9 @@ public class AOECircle extends Effects{
     private void triggerExplosion() {
         exploded = true;
 
+        //Plays the explosion sfx
+        playExplosionSound();
+        
         // Change the image to represent an explosion
         GreenfootImage explosionImage = new GreenfootImage(maxRadius * 2, maxRadius * 2);
         explosionImage.setColor(new Color(255, 165, 0, 200)); // Bright orange for the explosion
@@ -80,5 +85,9 @@ public class AOECircle extends Effects{
             image.setTransparency(transparency);
             setImage(image);
         }
+    }
+    
+    private void playExplosionSound(){
+        explosionSfx.play();
     }
 }

@@ -15,19 +15,28 @@ public class Kraken extends Enemy
 
     // Set max amount of krakites available to spawn
     private static final int MAX_KRAKITE_SPAWN = 10;
+    
+    //Boss music
+    private GreenfootSound bossMusic;
+    
+    private double diffMulti;
 
-    public Kraken(){
+    public Kraken(double diffMulti){
         super();
+        this.diffMulti = diffMulti;
         img = new GreenfootImage[12];
         createdHitbox = false;
-        hp = 3500;
-        damage = 500;
+        hp = (int)(100000*diffMulti);
+        damage = (int)(500*diffMulti);
         attackCooldown = 100;
         attackTimer = 0;
 
         // Inherited from superclass, ensure to not get pushed around or track player
         isMovable = false;
 
+        bossMusic = new GreenfootSound("Kraken.mp3");
+        bossMusic.playLoop();
+        
         // Set images for each position in the array
         img[0] = new GreenfootImage("KrakenF1.png");
         for(int i = 0; i < img.length; i++){
@@ -59,7 +68,9 @@ public class Kraken extends Enemy
             for(Tentacle t: tentacles){
                 t.damageMe(999999);
             }
-
+            // Stops music
+            bossMusic.pause();
+            
             // Remove related objects to me
             getWorld().removeObject(hitbox);
             getWorld().removeObject(this);
@@ -84,7 +95,7 @@ public class Kraken extends Enemy
             int spawnY = getY() + (int)(distance * Math.sin(angle));
 
             // Spawn in tentacle
-            Tentacle tentacle = new Tentacle();
+            Tentacle tentacle = new Tentacle(diffMulti);
             getWorld().addObject(tentacle, spawnX, spawnY);
         }
     }

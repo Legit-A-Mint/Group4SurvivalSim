@@ -11,4 +11,6 @@ comment4.params=img
 comment4.target=void\ setText(greenfoot.GreenfootImage)
 comment5.params=x\ y
 comment5.target=void\ scale(int,\ int)
-numComments=6
+comment6.params=
+comment6.target=boolean\ isUserInteracting()
+numComments=7
