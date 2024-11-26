@@ -104,7 +104,7 @@ public class Player extends Effects {
     private boolean turnLeft;
     private int keepTurning;
 
-    public Player(String playerModel, double speedMulti, Lives lives, int coins) {
+    public Player(String playerModel, double speedMulti, int maxHp, int coins) {
         // Vfx
         floatyImage[0] = new GreenfootImage("floaty.png");
         floatyImage[1] = new GreenfootImage("wood.png");
@@ -116,8 +116,8 @@ public class Player extends Effects {
         // speed = speed*speedMulti;
         speed = 3.5;
         turnSpeed = 2.5;
-        lives = lives;
         coinsStored = coins;
+        this.maxHp = maxHp;
         hp = maxHp;
         resetRotaCont = true;
         smartDodgeCounter = -1;
@@ -665,6 +665,9 @@ public class Player extends Effects {
         return speed;
     }
 
+    public int getHP(){
+        return hp;
+    }
     // Update the hitbox position to align with the player
     private void updateHitboxPosition() {
         hitbox.setLocation(getX(), getY());
@@ -694,7 +697,15 @@ public class Player extends Effects {
     public void damageMe(int damage) {
         if (hp > 0) {
             hp -= damage;
-            lives.updateDisplay(); // Update the Lives display
+            ((SimulationWorld)(getWorld())).updateHP(hp); // Update the Lives display
+            
+            // If hp < 0 enable losing screen
+            if (hp <= 0)((SimulationWorld)(getWorld())).losingScreen();
+        
+        }
+        // Ensure losing screen
+        else if (hp <= 0){
+            ((SimulationWorld)(getWorld())).losingScreen();
         }
     }
 

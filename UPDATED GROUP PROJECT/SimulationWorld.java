@@ -49,6 +49,9 @@ public class SimulationWorld extends World{
     private static final int FINAL_WAVE = 20;
     private static final int WAVE_IDLE_TIME = 500; // Adjust idle time for wave
     private Image waveClearImage;
+    
+    // Heart counter variables
+    private ImageDisplay heartCounter;
 
     // Ambient class spawnage
     private int seagullTimer;
@@ -76,7 +79,7 @@ public class SimulationWorld extends World{
         addObject(scroller = new Scroller(this, new GreenfootImage("water.png"), WIDTH, HEIGHT));
 
         // Add player to the center of the screen
-        addObject(player = new Player(playerModel, speed, lives, coinDisplay), this.getWidth() / 2, this.getHeight() / 2);
+        addObject(player = new Player(playerModel, speed, maxLives, coinDisplay), this.getWidth() / 2, this.getHeight() / 2);
 
         // Add border hitboxes to prevent the player from going outside the world
         addObject(new CollisionHitbox(WIDTH, 100, 2.5), WIDTH / 2, HEIGHT); // Bottom border
@@ -113,13 +116,16 @@ public class SimulationWorld extends World{
         waveClearImage.getImage().setTransparency(0);
 
         // Add lives
-        addObject(lives = new Lives(), 235, 30);
+        //addObject(lives = new Lives(), 235, 30);
 
         // Add coins
         addObject(this.coin = new ImageDisplay("coin.png"), 150, 100);
         addObject(displayCoins = new ImageDisplay(new GreenfootImage(Integer.toString(coinDisplay), 50, Color.WHITE, null)), 215, 100);
 
-        setPaintOrder(ImageDisplay.class, Shop.class, Image.class, Seagull.class, Lives.class, Interface.class, Projectile.class);
+        addObject(new ImageDisplay("pixel_Heart.png"), 150, 30);
+        addObject(heartCounter = new ImageDisplay(new GreenfootImage(Integer.toString(player.getHP()), 50, Color.WHITE, null)), 215, 30);
+        
+        setPaintOrder(ImageDisplay.class, Shop.class, Image.class, Interface.class, Seagull.class, Lives.class, Projectile.class);
     }
     // Method that gets called when the world is added to the Greenfoot environment
     public void addedToWorld ()
@@ -370,9 +376,14 @@ public class SimulationWorld extends World{
     private boolean isKrakenDefeated(){
         return getObjects(Kraken.class).isEmpty();  // Return true if the Kraken has been defeated
     }
-
+    // Transition to losing screen
+    public void losingScreen(){
+        // Transition logic for winning the game after defeating the Kraken in wave 20
+        Greenfoot.setWorld(new LosingScreen());
+    }
+    
     // Transition to the winning screen
-    private void WinningScreen(){
+    private void winningScreen(){
         // Transition logic for winning the game after defeating the Kraken in wave 20
         Greenfoot.setWorld(new WinningScreen());
     }
@@ -388,7 +399,10 @@ public class SimulationWorld extends World{
         removeObject(displayCoins);
         addObject(displayCoins = new ImageDisplay(new GreenfootImage(Integer.toString(coinDisplay), 50, Color.WHITE, null)), 215, 100);
     }
-
+    public void updateHP(int hp){
+        removeObject(heartCounter);
+        addObject(heartCounter = new ImageDisplay(new GreenfootImage(Integer.toString(hp), 50, Color.WHITE, null)), 215, 30);
+    }
     // Static method to calculate the distance between two actors
     public static double getDistance(Actor a, Actor b){
         return Math.hypot(a.getX() - b.getX(), a.getY() - b.getY());

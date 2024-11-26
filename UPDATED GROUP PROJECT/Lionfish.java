@@ -11,7 +11,7 @@ public class Lionfish extends Enemy
     public Lionfish(){
         super();
         img = new GreenfootImage[1];
-        speed = 2;
+        speed = 6;
         hp = 2;
         damage = 2;
         attackCooldown = 20;
