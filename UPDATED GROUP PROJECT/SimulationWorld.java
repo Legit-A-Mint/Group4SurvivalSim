@@ -363,7 +363,7 @@ public class SimulationWorld extends World{
     // Transition to losing screen
     public void losingScreen(){
         // Transition logic for winning the game after defeating the Kraken in wave 20
-        Greenfoot.setWorld(new LosingScreen());
+        Greenfoot.setWorld(new LosingScreen(waveCount + 1));
     }
 
     // Transition to the winning screen
