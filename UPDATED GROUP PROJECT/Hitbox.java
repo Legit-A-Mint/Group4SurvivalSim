@@ -18,6 +18,12 @@ public abstract class Hitbox extends Effects
     
     protected int offsetX, offsetY;
     protected double boundingFactor;
+    
+    private int myActNumber;
+    
+    // Static
+    private static int nextActNumber = -1;
+    
     public Hitbox(int h, int w, double boundingFactor){
         this.boundingFactor = boundingFactor;
         this.type = type;
@@ -28,6 +34,8 @@ public abstract class Hitbox extends Effects
             box.fill();
         }
         setImage(box);
+        
+        myActNumber = getNextActNumber();
     }
     
     public Hitbox(int h, int w, int offsetX, int offsetY, Actor owner, double boundingFactor){
@@ -44,15 +52,33 @@ public abstract class Hitbox extends Effects
         
         this.offsetX = offsetX;
         this.offsetY = offsetY;
+        
+        myActNumber = getNextActNumber();
     }
     
     // Ensure hitbox always stays with owner
     public void act(){
-        if(owner != null){
-            moveWithOwner();
+        if(SimulationWorld.getActNumber() == myActNumber){
+            if(owner != null){
+                moveWithOwner();
+            }
         }
         repelEnemies();
     }  
+    
+    public void refreshActNumber() {
+        myActNumber = getNextActNumber();
+    }
+    
+     private static int getNextActNumber () {
+        if (nextActNumber == -1){
+            nextActNumber = 1;
+        }
+        if (nextActNumber > 4){
+            nextActNumber = 1; // goes back to 1 - Zero (0) is reserved for UI refresh
+        }
+        return nextActNumber++;
+    }
 
     private void moveWithOwner(){
         setLocation(owner.getX() + offsetX, owner.getY() + offsetY);

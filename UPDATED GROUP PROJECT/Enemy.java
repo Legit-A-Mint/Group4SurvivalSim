@@ -239,7 +239,7 @@ public abstract class Enemy extends Effects
         if (nextActNumber == -1){
             nextActNumber = 1;
         }
-        if (nextActNumber > 19){
+        if (nextActNumber > 4){
             nextActNumber = 1; // goes back to 1 - Zero (0) is reserved for UI refresh
         }
         return nextActNumber++;

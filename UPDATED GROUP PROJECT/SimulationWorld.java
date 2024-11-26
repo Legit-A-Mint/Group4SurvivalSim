@@ -161,7 +161,7 @@ public class SimulationWorld extends World{
     
     public static int getActNumber() {
         // return a number from 0 - 59
-        return actCounter % 20;
+        return actCounter % 5;
     }
 
     // Main act method that runs on every frame of the game
