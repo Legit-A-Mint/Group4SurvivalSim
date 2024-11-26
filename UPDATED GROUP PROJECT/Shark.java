@@ -11,7 +11,7 @@ public class Shark extends Enemy
     public Shark(double diffMulti){
         super();
         img = new GreenfootImage[2];
-        speed = 2.3;
+        speed = 2.4;
         hp = (int)(5*diffMulti);
         damage = (int)(25*diffMulti);
         attackCooldown = 60;

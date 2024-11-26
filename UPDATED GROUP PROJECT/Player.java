@@ -129,8 +129,8 @@ public class Player extends Effects {
 
         weaponCDList[0] = 45;
         weaponCDList[1] = 55;
-        weaponCDList[2] = 35;
-        weaponCDList[3] = 45;
+        weaponCDList[2] = 25;
+        weaponCDList[3] = 80;
 
         createdHitbox = false;
         enableStaticRotation();
@@ -146,7 +146,7 @@ public class Player extends Effects {
 
     private void createFov3() {
         if(!DEBUGMODE){
-            fov3 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 0.85, 0.85, 0.004 , 0.004);
+            fov3 = new Fov(playerImage[0].getWidth()*6  , (int) (((double)playerImage[0].getHeight())*4.5), 0, 0, this, 2.5, 0.95, 0.88, 0.004 , 0.004);
             getWorld().addObject(fov3, getX() + 55, getY() + 55);
         }
     }   

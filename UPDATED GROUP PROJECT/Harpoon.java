@@ -11,11 +11,16 @@ public class Harpoon extends Projectile
     //Harpoon shooting sound effect
     private static final GreenfootSound fireSfx = new GreenfootSound("Harpoon.mp3");
     
+    private static final int PIERCE_CAP = 3;
+    private int hitCount;
+    
     public Harpoon(){
         speed = 4.75;
-        damage = 4;
+        damage = 5;
         attackSpeed = 90;
         lifeSpan = 300;
+        
+        hitCount = 0;
         
         playHarpoonSound();
     }
@@ -31,6 +36,10 @@ public class Harpoon extends Projectile
             hitEnemy = (Enemy) getOneIntersectingObject(Enemy.class);
             hitEnemy.damageMe(damage);
             hitEnemy.slowMe();
+            hitCount++;
+            if(hitCount >= PIERCE_CAP){
+                removeMe = true;
+            }
             if(getOneIntersectingObject(CollisionHitbox.class) != null){
                 speed = 0;
             }

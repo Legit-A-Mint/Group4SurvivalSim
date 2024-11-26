@@ -11,7 +11,7 @@ public class Coins extends Effects
         img = new GreenfootImage[4];
         
         // Adjust for faster/slower depsawn
-        despawnTimer = 1000;
+        despawnTimer = 1300;
         img[0] = new GreenfootImage("coin.png");
         for(int i = 0; i < img.length; i++){
             img[i] = new GreenfootImage("CoinF" + (i+1) + ".png");
