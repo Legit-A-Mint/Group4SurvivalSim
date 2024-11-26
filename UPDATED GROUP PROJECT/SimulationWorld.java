@@ -242,56 +242,37 @@ public class SimulationWorld extends World{
         switch(waveCount){
 
             case 0:
-                spawnEnemies(3, 0, 0, 0, 0, 0); // Easy introduction with Bass
+                spawnEnemies(5, 0, 0, 0, 0, 0); // Easy introduction with Bass
                 break;
             case 1:
-                spawnEnemies(4, 1, 0, 0, 0, 0); // Introduce Lionfish
+                spawnEnemies(3, 0, 0, 2, 0, 0); // Introduce Lionfish
                 break;
             case 2:
-                spawnEnemies(6, 2, 0, 0, 0, 0); // Increase Bass and Lionfish
+                spawnEnemies(6, 2, 0, 2, 0, 0); // Increase Bass and Lionfish
                 break;
             case 3:
-                spawnEnemies(8, 2, 1, 0, 0, 0); // Introduce Shark
+                spawnEnemies(0, 0, 5, 3, 0, 0); // Introduce Shark
                 break;
             case 4:
-                spawnEnemies(10, 4, 1, 0, 0, 0); // Mix of Bass and Lionfish
+                spawnEnemies(6, 4, 1, 1, 0, 0); // Mix of Bass and Lionfish
                 break;
             case 5:
-                spawnEnemies(12, 5, 2, 0, 0, 0); // Slight Shark increment
+                spawnEnemies(15, 0, 0, 0, 0, 0); // Slight Shark increment
                 break;
             case 6:
-                spawnEnemies(10, 8, 3, 1, 0, 0); // Introduce Whale
+                spawnEnemies(5, 5, 5, 5, 2, 0); // Introduce Whale
                 break;
             case 7:
-                spawnEnemies(15, 10, 5, 2, 0, 0); // Whale becomes a challenge
+                spawnEnemies(7, 2, 2, 2, 5, 2); // Whale becomes a challenge
                 break;
             case 8:
-                spawnEnemies(18, 12, 6, 2, 0, 0); // Continued balance scaling
+                spawnEnemies(5, 5, 5, 5, 5, 5); // Continued balance scaling
                 break;
             case 9:
-                spawnEnemies(20, 15, 8, 3, 1, 0); // Introduce Swordfish
-                break;
-            case 10:
-                spawnEnemies(25, 18, 10, 5, 2, 0); // Gradual increase
-                break;
-            case 11:
-                spawnEnemies(30, 20, 12, 7, 3, 0); // Whale becomes prominent
-                break;
-            case 12:
-                spawnEnemies(35, 25, 15, 10, 5, 0); // Larger numbers overall
-                break;
-            case 13:
-                spawnEnemies(40, 30, 18, 12, 6, 0); // High wave challenge
-                break;
-            case 14:
-                spawnEnemies(45, 35, 20, 15, 8, 2); // Introduce Manatee
-                break;
-            case 15:
-                spawnEnemies(10, 10, 10, 10, 10, 10); // Bossfight with peons
-
                 spawnKraken(); 
                 break;
-
+            case 10:
+                Greenfoot.setWorld(new WinningScreen());
         }        
     }
 

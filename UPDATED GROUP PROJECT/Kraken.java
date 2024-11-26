@@ -15,19 +15,24 @@ public class Kraken extends Enemy
 
     // Set max amount of krakites available to spawn
     private static final int MAX_KRAKITE_SPAWN = 10;
-    
+
     //Boss music
     private GreenfootSound bossMusic;
-    
+
     private double diffMulti;
+
+    private int myActNumber;
+
+    // Static
+    private static int nextActNumber = -1;
 
     public Kraken(double diffMulti){
         super();
         this.diffMulti = diffMulti;
         img = new GreenfootImage[12];
         createdHitbox = false;
-        hp = (int)(100000*diffMulti);
-        damage = (int)(500*diffMulti);
+        hp = (int)(40*diffMulti);
+        damage = (int)(10*diffMulti);
         attackCooldown = 100;
         attackTimer = 0;
 
@@ -36,12 +41,14 @@ public class Kraken extends Enemy
 
         bossMusic = new GreenfootSound("Kraken.mp3");
         bossMusic.playLoop();
-        
+
         // Set images for each position in the array
         img[0] = new GreenfootImage("KrakenF1.png");
         for(int i = 0; i < img.length; i++){
             img[i] = new GreenfootImage("KrakenF" + (i+1) + ".png");
         }
+
+        myActNumber = getNextActNumber();
     }
 
     public void act()
@@ -53,10 +60,13 @@ public class Kraken extends Enemy
         createHitbox();
 
         // Attack radius of kraken
-        if(!getObjectsInRange(250, Player.class).isEmpty()){
-            if(attackTimer == 0){
-                doRandomAttack();
-                attackTimer = attackCooldown;
+
+        if(SimulationWorld.getActNumber() == myActNumber){
+            if(!getObjectsInRange(450, Player.class).isEmpty()){
+                if(attackTimer == 0){
+                    doRandomAttack();
+                    attackTimer = attackCooldown;
+                }
             }
         }
 
@@ -70,7 +80,7 @@ public class Kraken extends Enemy
             }
             // Stops music
             bossMusic.pause();
-            
+
             // Remove related objects to me
             getWorld().removeObject(hitbox);
             getWorld().removeObject(this);
@@ -82,7 +92,7 @@ public class Kraken extends Enemy
 
     public void tentacleAttack(){
         int maxCreatedTentacles = Greenfoot.getRandomNumber(6) + 3; // Min 3 max 8
-         for(int i = 0; i < maxCreatedTentacles; i ++){
+        for(int i = 0; i < maxCreatedTentacles; i ++){
 
             // Generate a random angle in radians
             double angle = Math.random() * 2 * Math.PI;
@@ -107,7 +117,7 @@ public class Kraken extends Enemy
         // Handle each case seperatly
         switch(randomNumber) {
             case 0:
-                
+
                 if (getWorld().getObjects(Tentacle.class).isEmpty()) {
                     tentacleAttack();
                     if (doDoubleAttack) {
@@ -117,7 +127,7 @@ public class Kraken extends Enemy
                 break;
 
             case 1:
-                
+
                 summonAttack();
                 if (doDoubleAttack) {
                     performAnotherAttack(0, 2); // Perform a second attack (tentacle or aoe)
@@ -125,13 +135,13 @@ public class Kraken extends Enemy
                 break;
 
             case 2:
-                
+
                 aoeAttack();
                 if (doDoubleAttack) {
                     performAnotherAttack(0, 1); // Perform a second attack (tentacle or summon)
                 }
                 break;
-                
+
         }
     }
 
@@ -156,6 +166,24 @@ public class Kraken extends Enemy
                 aoeAttack();
                 break;
         }
+    }
+
+    private static int getNextActNumber () {
+        if (nextActNumber == -1){
+            nextActNumber = 1;
+        }
+        if (nextActNumber > 4){
+            nextActNumber = 1; // goes back to 1 - Zero (0) is reserved for UI refresh
+        }
+        return nextActNumber++;
+    }
+
+    public void refreshActNumber() {
+        myActNumber = getNextActNumber();
+    }
+
+    public static void resetActDistribution(){
+        nextActNumber = 1;
     }
 
     public void summonAttack(){
@@ -187,7 +215,7 @@ public class Kraken extends Enemy
 
     public void aoeAttack(){
         // Create the AOE Circle and add it to the world
-        AOECircle aoe = new AOECircle(0, 500, 5, 1000); 
+        AOECircle aoe = new AOECircle(0, 500, 5, 30); 
         getWorld().addObject(aoe, getX() - 7, getY());
     }
 
