@@ -8,12 +8,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Shark extends Enemy
 {
-    public Shark(){
+    public Shark(double diffMulti){
         super();
         img = new GreenfootImage[2];
         speed = 2.3;
-        hp = 7;
-        damage = 4;
+        hp = (int)(7*diffMulti);
+        damage = (int)(4*diffMulti);
         attackCooldown = 60;
         isMovable = true;
         // vfx

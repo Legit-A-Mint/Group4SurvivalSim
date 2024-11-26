@@ -8,12 +8,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Lionfish extends Enemy
 {
-    public Lionfish(){
+    public Lionfish(double diffMulti){
         super();
         img = new GreenfootImage[1];
         speed = 6;
-        hp = 2;
-        damage = 2;
+        hp = (int)(2*diffMulti);
+        damage = (int)(2*diffMulti);
         attackCooldown = 20;
         isMovable = true;
         // vfx

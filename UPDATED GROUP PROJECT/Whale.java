@@ -8,12 +8,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Whale extends Enemy
 {
-    public Whale(){
+    public Whale(double diffMulti){
         super();
         img = new GreenfootImage[2];
         speed = 0.8;
-        hp = 35;
-        damage = 10;
+        hp = (int)(35*diffMulti);
+        damage = (int)(10*diffMulti);
         attackCooldown = 60;
         isMovable = true;
         // vfx

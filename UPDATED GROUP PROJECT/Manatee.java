@@ -8,12 +8,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Manatee extends Enemy
 {
-    public Manatee(){
+    public Manatee(double diffMulti){
         super();
         img = new GreenfootImage[1];
         speed = 0.8;
-        hp = 100;
-        damage = 20;
+        hp = (int)(100*diffMulti);
+        damage = (int)(20*diffMulti);
         attackCooldown = 60;
         isMovable = true;
         // vfx

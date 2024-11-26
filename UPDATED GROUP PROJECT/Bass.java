@@ -8,12 +8,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Bass extends Enemy
 {
-    public Bass(){
+    public Bass(double diffMulti){
         super();
         img = new GreenfootImage[2];
         speed = 0.9;
-        hp = 2;
-        damage = 1;
+        hp = (int)(2*diffMulti);
+        damage = (int)(1*diffMulti);
         attackCooldown = 20;
         isMovable = true;
         // vfx

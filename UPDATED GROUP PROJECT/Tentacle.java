@@ -16,9 +16,10 @@ public class Tentacle extends Kraken {
     // Sound effect for attack
     private static final GreenfootSound attackSfx = new GreenfootSound("Tentacle.mp3");
 
-    public Tentacle() {
-        hp = 300;
-        damage = 100;
+    public Tentacle(double diffMulti) {
+        super(diffMulti);
+        hp = (int)(300*diffMulti);
+        damage = (int)(100*diffMulti);
         attackCooldown = 30;
         img = new GreenfootImage[3];
         createdHitbox = false;

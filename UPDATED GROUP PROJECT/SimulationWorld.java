@@ -299,32 +299,32 @@ public class SimulationWorld extends World{
         for (int i = 0; i < numBass; i++){
             int spawnX = WIDTH / 2 + getScroller().getScrolledX() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
             int spawnY = HEIGHT / 2 + getScroller().getScrolledY() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
-            addObject(new Bass(), spawnX, spawnY);
+            addObject(new Bass(diffMulti), spawnX, spawnY);
         }
         for (int i = 0; i < numLionfish; i++){
             int spawnX = WIDTH / 2 + getScroller().getScrolledX() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11)) ;
             int spawnY = HEIGHT / 2 + getScroller().getScrolledY() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
-            addObject(new Lionfish(), spawnX, spawnY);
+            addObject(new Lionfish(diffMulti), spawnX, spawnY);
         }
         for (int i = 0; i < numShark; i++){
             int spawnX = WIDTH / 2 + getScroller().getScrolledX() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
             int spawnY = HEIGHT / 2 + getScroller().getScrolledY() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11)) ;
-            addObject(new Shark(), spawnX, spawnY);
+            addObject(new Shark(diffMulti), spawnX, spawnY);
         }
         for (int i = 0; i < numWhale; i++){
             int spawnX = WIDTH / 2 + getScroller().getScrolledX() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
             int spawnY = HEIGHT / 2 + getScroller().getScrolledY() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
-            addObject(new Whale(), spawnX, spawnY);
+            addObject(new Whale(diffMulti), spawnX, spawnY);
         }
         for (int i = 0; i < numSwordfish; i++){
             int spawnX = WIDTH / 2 + getScroller().getScrolledX() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11)) ;
             int spawnY = HEIGHT / 2 + getScroller().getScrolledY() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
-            addObject(new Swordfish(), spawnX, spawnY);
+            addObject(new Swordfish(diffMulti), spawnX, spawnY);
         }
         for (int i = 0; i < numManatee; i++){
             int spawnX = WIDTH / 2 + getScroller().getScrolledX() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11)) ;
             int spawnY = HEIGHT / 2 + getScroller().getScrolledY() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
-            addObject(new Manatee(), spawnX, spawnY);
+            addObject(new Manatee(diffMulti), spawnX, spawnY);
         }
 
     }
@@ -354,7 +354,7 @@ public class SimulationWorld extends World{
     // Add a method to spawn the Kraken
     private void spawnKraken(){
         // Create a Kraken actor at a random position
-        Kraken kraken = new Kraken();  // Instantiate the Kraken actor
+        Kraken kraken = new Kraken(diffMulti);  // Instantiate the Kraken actor
         int spawnX = WIDTH/2 + getScroller().getScrolledX();
         int spawnY = HEIGHT/2 + getScroller().getScrolledY();
         //System.out.println("Added new kraken @ (" + spawnX + ", " + spawnY + ")");

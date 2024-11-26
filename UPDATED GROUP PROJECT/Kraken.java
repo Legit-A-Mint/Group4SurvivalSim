@@ -18,13 +18,16 @@ public class Kraken extends Enemy
     
     //Boss music
     private GreenfootSound bossMusic;
+    
+    private double diffMulti;
 
-    public Kraken(){
+    public Kraken(double diffMulti){
         super();
+        this.diffMulti = diffMulti;
         img = new GreenfootImage[12];
         createdHitbox = false;
-        hp = 3500;
-        damage = 500;
+        hp = (int)(1000*diffMulti);
+        damage = (int)(50*diffMulti);
         attackCooldown = 100;
         attackTimer = 0;
 
@@ -92,7 +95,7 @@ public class Kraken extends Enemy
             int spawnY = getY() + (int)(distance * Math.sin(angle));
 
             // Spawn in tentacle
-            Tentacle tentacle = new Tentacle();
+            Tentacle tentacle = new Tentacle(diffMulti);
             getWorld().addObject(tentacle, spawnX, spawnY);
         }
     }
