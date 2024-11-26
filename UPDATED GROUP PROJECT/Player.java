@@ -35,6 +35,8 @@ public class Player extends Effects {
     private boolean harpoonBought;
     private boolean allRaftUpgradesBought;
     private boolean doneUpgrades;
+    
+    private int healAmount = 10;
 
     private int weaponIndex;
 
@@ -357,7 +359,7 @@ public class Player extends Effects {
     }
 
     private void determineWhatToBuy(){
-        if((coinsStored > POTION_COST && buyCooldown <= 0) && hp < maxHp){
+        if((coinsStored > POTION_COST && buyCooldown <= 0) && hp <= maxHp - healAmount){
             buyHealthPotion();
             Greenfoot.playSound("item_Buy.mp3");
             buyCooldown = ONE_SECOND;
@@ -432,7 +434,7 @@ public class Player extends Effects {
     // Buy Heal
     public void buyHealthPotion() {
         coinsStored -= POTION_COST;
-        hp ++; 
+        hp += healAmount; 
     }
 
     public boolean findClosestEnemy(){
