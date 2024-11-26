@@ -50,7 +50,7 @@ public class StatsEditor extends World
         
         this.playerModel = playerModel;
         
-        addObject(new Background(), 512, 288);
+        addObject(new Image("PixelOceanStart.png", 1024, 576), 512, 288);
         addObject(leftHealth = new Button("leftHealth", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 1.5 , -1, false), getWidth()/4 - 200, 180);
         addObject(rightHealth = new Button("rightHealth", new String[]{"charArrow1.png","charArrow2.png","charArrow3.png"}, false, 1.5, 1, false), getWidth()/4 + 200, 180);
         

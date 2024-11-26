@@ -7,7 +7,7 @@ import greenfoot.GreenfootImage;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Image extends UI
+public class Image extends Interface
 {
     private GreenfootImage img;
     public Image (String img)
@@ -25,5 +25,10 @@ public class Image extends UI
     {
         setImage(img);
         getImage().scale(x,y);
+    }
+    
+    @Override
+    protected boolean isUserInteracting(){
+        return Greenfoot.mouseMoved(this);
     }
 }
