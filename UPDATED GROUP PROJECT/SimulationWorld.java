@@ -3,6 +3,7 @@ import java.util.*;  // Import utility classes such as List
 
 /**
  * Full SimulationWorld
+ * @Andrew
  * @Darius
  * @Logan
  * @Jonathan
@@ -130,16 +131,16 @@ public class SimulationWorld extends World{
 
         setPaintOrder(ImageDisplay.class, Shop.class, Image.class, Interface.class, Seagull.class, Lives.class, Projectile.class);
     }
+    
+    /**
+     * @Darius
+     * AddedToworld, started, stopped
+     */
     // Method that gets called when the world is added to the Greenfoot environment
     public void addedToWorld ()
     {
         // Plays the ambient noise in a loop
         ambientSound.playLoop(); 
-    }
-
-    // Method to get the scroller instance for background movement
-    public Scroller getScroller(){
-        return scroller;
     }
 
     // Method that gets called when the world starts
@@ -159,11 +160,14 @@ public class SimulationWorld extends World{
         // This empty method prevents other addObject calls from being overridden
     }
     
+    // @Mr.Cohen
+    // Modified by @Jonathan
     public static int getActNumber() {
         // return a number from 0 - 59
         return actCounter % 5;
     }
 
+    // @Logan
     // Main act method that runs on every frame of the game
     public void act(){
         if (acting){
@@ -211,6 +215,8 @@ public class SimulationWorld extends World{
         }
     }
 
+    // @Logan
+    // Increament the wave counter based on if the wave is cleared
     private void handleWaves(){
         // Begin with first wave always
         if(firstWave){
@@ -235,10 +241,15 @@ public class SimulationWorld extends World{
         }   
     }
 
+    
+    // @Logan
+    // Spawns a wave depending on the entered parameters and waveCount
     private void startWave (int waveCount){ 
         // Spawn different enemies in different waves
 
         // Edit the values in spawnEnemies parameter to change spawn amount of each enemy
+        // @Param 
+        // Bass, lionfish, shark, whale, swordfish, manatee
         switch(waveCount){
 
             case 0:
@@ -272,11 +283,17 @@ public class SimulationWorld extends World{
                 ambientSound.stop();
                 spawnKraken(); 
                 break;
+                
+                // If you beat the last wave, switch to winning screen
+                
             case 10:
                 Greenfoot.setWorld(new WinningScreen());
         }        
     }
 
+    // @Logan
+    // Spawns enemies at the center of the world
+    // params determine amount of each spawned
     private void spawnEnemies(int numBass, int numLionfish, int numShark, int numWhale, int numSwordfish, int numManatee){
         for (int i = 0; i < numBass; i++){
             int spawnX = WIDTH / 2 + getScroller().getScrolledX() + (int) ((Math.random() < 0.5 ? 1 : -1)*(Math.random() * 11));
@@ -310,29 +327,8 @@ public class SimulationWorld extends World{
         }
 
     }
-
-    /*
-    // Supplier to reduce redundancy
-    // Spawn certain # enemies depending on the parameters (in order)
-    // NOT WORKING AS OF NOW
-    private void spawnEnemies(int numBass, int numShark, int numWhale, int numSwordfish){
-    // Pass each constructor as supplier
-    spawnEnemyType(numBass, Bass::new);
-    spawnEnemyType(numShark, Shark::new);
-    spawnEnemyType(numWhale, Whale::new);
-    spawnEnemyType(numSwordfish, Swordfish::new);
-    }
-
-    // Helper method for spawnEnemies
-    private void spawnEnemyType(int count, Supplier<Enemy> enemySupplier) {
-    for (int i = 0; i < count; i++){
-    int spawnX = WIDTH / 2 + getScroller().getScrolledX();
-    int spawnY = HEIGHT / 2 + getScroller().getScrolledY();
-    // Gets the type of enemy from parameter
-    addObject(enemySupplier.get(), spawnX, spawnY);
-    }
-    }*/
-
+    
+    // @Logan
     // Add a method to spawn the Kraken
     private void spawnKraken(){
         // Create a Kraken actor at a random position
@@ -343,6 +339,7 @@ public class SimulationWorld extends World{
         addObject(kraken, spawnX, spawnY);
     }
 
+    // @Logan
     // Spawn ambient seagulls
     private void spawnSeagull(){
         seagullTimer = SEAGULL_SPAWN_TIME;
@@ -354,6 +351,7 @@ public class SimulationWorld extends World{
 
     }
 
+    // Logan
     // Method to check if the Kraken is defeated
     private boolean isKrakenDefeated(){
         return getObjects(Kraken.class).isEmpty();  // Return true if the Kraken has been defeated
@@ -376,6 +374,7 @@ public class SimulationWorld extends World{
         super.addObject(object, (int) (x + 0.5), (int) (y + 0.5));
     }
 
+    // @Jonathan
     public void updateCoins(int num)
     {
         coinDisplay = num;
@@ -383,17 +382,28 @@ public class SimulationWorld extends World{
         addObject(displayCoins = new ImageDisplay(new GreenfootImage(Integer.toString(coinDisplay), 50, Color.WHITE, null)), 215, 100);
     }
 
+    // @Darius
     public void updateHP(int hp){
         removeObject(heartCounter);
         addObject(heartCounter = new ImageDisplay(new GreenfootImage(Integer.toString(hp), 50, Color.WHITE, null)), 215, 30);
     }
+    
+    // @Andrew
     // Static method to calculate the distance between two actors
     public static double getDistance(Actor a, Actor b){
         return Math.hypot(a.getX() - b.getX(), a.getY() - b.getY());
     }
 
+    // @Jonathan
     // Static method to check if the game is acting (active)
     public static boolean isActing(){
         return acting;
+    }
+    
+    // @Andrew
+    // Method to get the scroller instance for background movement
+    // For scrollable world
+    public Scroller getScroller(){
+        return scroller;
     }
 }

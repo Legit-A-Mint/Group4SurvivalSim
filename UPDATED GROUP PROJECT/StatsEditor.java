@@ -1,15 +1,15 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Stats here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * A stats editor to allow the user to modify and customize that stats
+ * as well as change the difficulty of the game mode
+ * @Jonathan
  */
 public class StatsEditor extends World
 {
     String playerModel;
     
+    // Intiate base Stats
     private int health = 100;
     private double speed = 1;
     private int difficulty = 1;
@@ -20,12 +20,14 @@ public class StatsEditor extends World
     private String[] diffImg = {"easy.png", "normal.png", "insane.png", "impossible.png"};
     private double[] diffMulti = {0.3, 1, 1.3, 3};
     
+    // Images
     private GreenfootImage temp;
     ImageDisplay healthTxt;
     ImageDisplay speedTxt;
     ImageDisplay diffTxt;
     ImageDisplay coinsTxt;
 
+    // UI
     Button leftHealth;
     Button rightHealth;
     ImageDisplay heartImg;
@@ -78,6 +80,7 @@ public class StatsEditor extends World
     
     public void act()
     {
+        // Depending on which button is clicked, change the corresponding stat
         if (Greenfoot.mouseClicked(leftHealth)||Greenfoot.isKeyDown("left"))
         {
             if (health > 10)

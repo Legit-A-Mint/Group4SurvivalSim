@@ -1,13 +1,13 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class OpeningWindow here.
- * 
- * @author (your name) 
+ * Title screen
+ * @Jonathan
  * 2.08
  */
 public class OpeningWindow extends World
 {
+    // UI
     Button start;
     
     public OpeningWindow()

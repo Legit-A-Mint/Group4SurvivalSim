@@ -1,27 +1,33 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Caracter here.
+ * Chararacter select Window
+ * Allow the user to change and modify their character
+ * No effect on gameplayer
+ * @Jonathan
  * 
- * @author (your name) 
- * @version (a version number or a date)
  */
 public class Character extends World
 {
+    // Images and lables
     Image display;
     ImageDisplay characterLabel;
     Button textBack;
+    private String[] listOfCharacters = {"boy.png","girl.png","sus.png"};
+    protected static int characterNum = 0;
     
+    // UI
     Button left;
     Button right;
     Button next;
     
-    private String[] listOfCharacters = {"boy.png","girl.png","sus.png"};
-    protected static int characterNum = 0;
+    
     public Character()
     {    
         //create an unbounded world 
         super(1024, 576, 1, false);
+        
+        // Cache images
         addObject(new Image("PixelOceanStart.png", 1024, 576), 512, 288);
         addObject(characterLabel = new ImageDisplay(new GreenfootImage("CHARACTER", 100, Color.WHITE, null)), getWidth()/2, 100);
         addObject(display = new Image(getPlayerModel(), 300, 300), 512, 288);
@@ -32,16 +38,19 @@ public class Character extends World
     
     public void act()
     {
+        // switch the the highest index character, other than this
         if (Greenfoot.mouseClicked(left))
         {
             characterNum--;
             setDisplay();
         }
+        // swtich to the lowest index character, other than this
         if (Greenfoot.mouseClicked(right))
         {
             characterNum++;
             setDisplay();
         }
+        // move onto the next world
         if (Greenfoot.mouseClicked(next))
         {
             Greenfoot.setWorld(new StatsEditor(getPlayerModel()));
@@ -49,6 +58,7 @@ public class Character extends World
         display.changeImg(getPlayerModel(), 300, 300);
     }
     
+    // loop the index
     public void setDisplay()
     {
         if (characterNum > 2)
@@ -57,6 +67,7 @@ public class Character extends World
             characterNum = 2;
     }
     
+    // return the character image that should be displayed
     public String getPlayerModel()
     {
         return listOfCharacters[characterNum];
