@@ -118,7 +118,7 @@ public class Player extends Effects {
         // Instance variables
         this.speedMulti = speedMulti;
         speed = 3*speedMulti;
-        turnSpeed = 2.5;
+        turnSpeed = 2.5*speedMulti;
         coinsStored = coins;
         this.maxHp = maxHp;
         hp = maxHp;
@@ -129,8 +129,8 @@ public class Player extends Effects {
 
         weaponCDList[0] = 50;
         weaponCDList[1] = 55;
-        weaponCDList[2] = 22;
-        weaponCDList[3] = 80;
+        weaponCDList[2] = 18;
+        weaponCDList[3] = 100;
 
         createdHitbox = false;
         enableStaticRotation();

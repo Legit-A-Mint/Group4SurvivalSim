@@ -12,7 +12,7 @@ public class Spear extends Projectile
     
     public Spear(){
         speed = 4;
-        damage = 4;
+        damage = 2;
         attackSpeed = 45;
         lifeSpan = 250;
          

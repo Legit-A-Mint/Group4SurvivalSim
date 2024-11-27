@@ -42,7 +42,7 @@ public abstract class Enemy extends Effects
 
     public Enemy(){
         minSpeed = 0.5;
-        slow = 0.35;
+        slow = 0.33;
         attackTimer = 0;
         removeMe = false;
         createdHitbox = false;

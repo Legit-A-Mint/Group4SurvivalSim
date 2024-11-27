@@ -16,9 +16,9 @@ public class Krakite extends Enemy
         super();
         img = new GreenfootImage[1];
         speed = 4.4;
-        hp = 4;
+        hp = 6;
         damage = 6;
-        attackCooldown = 200;
+        attackCooldown = 160;
         isMovable = true;
         // vfx
         img[0] = new GreenfootImage("Krakite.png");

@@ -24,12 +24,12 @@ public class Shop extends SuperSmoothMover
         {
             if (getWorld() != null)
             {
-                getWorld().addObject(health = new HealthPotIcon(), 525, 500);
-                getWorld().addObject(wood = new raft1ShopIcon(), 600, 500);
-                getWorld().addObject(metal = new raft2ShopIcon(), 675, 500);
-                getWorld().addObject(net = new NetShopIcon(), 750, 500);
-                getWorld().addObject(shuriken = new ShurikenShopIcon(), 825, 500);
-                getWorld().addObject(harpoon = new HarpoonShopIcon(), 900, 500);
+                getWorld().addObject(health = new HealthPotIcon(), 525, 570);
+                getWorld().addObject(wood = new raft1ShopIcon(), 600, 570);
+                getWorld().addObject(metal = new raft2ShopIcon(), 675, 570);
+                getWorld().addObject(net = new NetShopIcon(), 750, 570);
+                getWorld().addObject(shuriken = new ShurikenShopIcon(), 825, 570);
+                getWorld().addObject(harpoon = new HarpoonShopIcon(), 900, 570);
             }
         }
         else

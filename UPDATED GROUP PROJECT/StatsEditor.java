@@ -89,7 +89,7 @@ public class StatsEditor extends World
         }
         if (Greenfoot.mouseClicked(rightHealth)||Greenfoot.isKeyDown("Right"))
         {
-            if (health < 9990)
+            if (health < 200)
                 health += 10;
             healthTxt.setImage(new GreenfootImage("Health: " + Integer.toString(health), 50, Color.WHITE, null));
         }

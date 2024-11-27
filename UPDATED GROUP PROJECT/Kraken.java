@@ -31,8 +31,8 @@ public class Kraken extends Enemy
         this.diffMulti = diffMulti;
         img = new GreenfootImage[12];
         createdHitbox = false;
-        hp = (int)(50*diffMulti);
-        damage = (int)(10*diffMulti);
+        hp = (int)(100*diffMulti);
+        damage = (int)(12*diffMulti);
         attackCooldown = 100;
         attackTimer = 0;
 
@@ -215,7 +215,7 @@ public class Kraken extends Enemy
 
     public void aoeAttack(){
         // Create the AOE Circle and add it to the world
-        AOECircle aoe = new AOECircle(0, 500, 5, 30); 
+        AOECircle aoe = new AOECircle(0, 500, 6, 30); 
         getWorld().addObject(aoe, getX() - 7, getY());
     }
 
