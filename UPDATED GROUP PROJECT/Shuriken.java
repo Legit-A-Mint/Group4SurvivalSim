@@ -13,17 +13,22 @@ public class Shuriken extends Projectile
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
-    private static final int PIERCE_CAP = 2;
+    private static final int PIERCE_CAP = 1;
     private int hitCount;
     
     private static final GreenfootSound fireSfx = new GreenfootSound("Shuriken.mp3");
     
     public Shuriken(){
+        img = new GreenfootImage("Proj3.png");
+        img.scale(23,23);
+        setImage(img);
+        
         speed = 4.4;
         damage = 1;
         attackSpeed = 35;
         lifeSpan = 100;
         hitCount = 0;
+         
         
         playShurikenSound();
     }

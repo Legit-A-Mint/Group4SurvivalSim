@@ -16,7 +16,7 @@ public class Harpoon extends Projectile
     
     public Harpoon(){
         speed = 4.75;
-        damage = 5;
+        damage = 3;
         attackSpeed = 90;
         lifeSpan = 300;
         

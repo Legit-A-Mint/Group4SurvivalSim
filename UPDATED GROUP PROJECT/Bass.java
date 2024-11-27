@@ -12,7 +12,7 @@ public class Bass extends Enemy
         super();
         img = new GreenfootImage[2];
         speed = 1.8;
-        hp = (int)(2*diffMulti);
+        hp = (int)(3*diffMulti);
         damage = (int)(2*diffMulti);
         attackCooldown = 20;
         isMovable = true;

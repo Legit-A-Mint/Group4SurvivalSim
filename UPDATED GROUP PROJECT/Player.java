@@ -127,9 +127,9 @@ public class Player extends Effects {
         smartDodgeCounter = -1;
         overSwing = -1;
 
-        weaponCDList[0] = 45;
+        weaponCDList[0] = 50;
         weaponCDList[1] = 55;
-        weaponCDList[2] = 25;
+        weaponCDList[2] = 22;
         weaponCDList[3] = 80;
 
         createdHitbox = false;
@@ -513,6 +513,7 @@ public class Player extends Effects {
         if(hp <= maxHp + healAmount){
             coinsStored -= POTION_COST;
             hp += healAmount; 
+            ((SimulationWorld)(getWorld())).updateHP(hp);
         }
     }
 

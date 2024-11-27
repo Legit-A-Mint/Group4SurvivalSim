@@ -62,7 +62,7 @@ public class SimulationWorld extends World{
 
     // Constructor for the world, initializes objects
     public SimulationWorld(String playerModel, int maxLives, double speed, double difficulty, int coin){
-        super(1024, 576, 1, false); // Create world with size 1024x576 pixels
+        super(1024, 646, 1, false); // Create world with size 1024x576 pixels
 
         // Initialize game variables
         waveCount = 0;  // Start at wave 0

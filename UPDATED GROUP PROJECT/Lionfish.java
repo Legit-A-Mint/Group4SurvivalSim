@@ -13,7 +13,7 @@ public class Lionfish extends Enemy
         img = new GreenfootImage[1];
         speed = 2.8;
         hp = (int)(2*diffMulti);
-        damage = (int)(7*diffMulti);
+        damage = (int)(3*diffMulti);
         attackCooldown = 20;
         isMovable = true;
         // vfx
