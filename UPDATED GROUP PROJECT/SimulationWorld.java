@@ -57,7 +57,7 @@ public class SimulationWorld extends World{
     // Ambient class spawnage
     private int seagullTimer;
     private static final int SEAGULL_SPAWN_TIME = 500;
-    
+
     private static int actCounter;
 
     // Constructor for the world, initializes objects
@@ -131,7 +131,7 @@ public class SimulationWorld extends World{
 
         setPaintOrder(ImageDisplay.class, Shop.class, Image.class, Interface.class, Seagull.class, Lives.class, Projectile.class);
     }
-    
+
     /**
      * @Darius
      * AddedToworld, started, stopped
@@ -159,7 +159,7 @@ public class SimulationWorld extends World{
     public void addObject(Actor a){
         // This empty method prevents other addObject calls from being overridden
     }
-    
+
     // @Mr.Cohen
     // Modified by @Jonathan
     public static int getActNumber() {
@@ -206,13 +206,15 @@ public class SimulationWorld extends World{
             shopToggled = !shopToggled; // Flip state 
             shop.showShop(shopToggled);
         }
-        
+
         if (actCounter % 3000 == 0){ // redistribute every 3000 acts ( to even out bug pathings per act
             Enemy.resetActDistribution();
             for (Enemy E : getObjects(Enemy.class)){
                 E.refreshActNumber();
             }
         }
+        
+        ambientSound.setVolume((int)(slider.getPercent()));
     }
 
     // @Logan
@@ -241,7 +243,6 @@ public class SimulationWorld extends World{
         }   
     }
 
-    
     // @Logan
     // Spawns a wave depending on the entered parameters and waveCount
     private void startWave (int waveCount){ 
@@ -283,9 +284,9 @@ public class SimulationWorld extends World{
                 ambientSound.stop();
                 spawnKraken(); 
                 break;
-                
+
                 // If you beat the last wave, switch to winning screen
-                
+
             case 10:
                 Greenfoot.setWorld(new WinningScreen());
         }        
@@ -327,7 +328,7 @@ public class SimulationWorld extends World{
         }
 
     }
-    
+
     // @Logan
     // Add a method to spawn the Kraken
     private void spawnKraken(){
@@ -387,7 +388,7 @@ public class SimulationWorld extends World{
         removeObject(heartCounter);
         addObject(heartCounter = new ImageDisplay(new GreenfootImage(Integer.toString(hp), 50, Color.WHITE, null)), 215, 30);
     }
-    
+
     // @Andrew
     // Static method to calculate the distance between two actors
     public static double getDistance(Actor a, Actor b){
@@ -399,7 +400,7 @@ public class SimulationWorld extends World{
     public static boolean isActing(){
         return acting;
     }
-    
+
     // @Andrew
     // Method to get the scroller instance for background movement
     // For scrollable world

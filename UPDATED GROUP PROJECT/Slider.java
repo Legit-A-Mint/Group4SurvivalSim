@@ -42,7 +42,7 @@ public class Slider extends Interface
             createdSlider = true;
         }
 
-        //System.out.println(getPercent() * 100 + "%");
+        //System.out.println((int)(getPercent() * 100) + "%");
     }
 
     public void setTransparency(double t){
@@ -50,22 +50,25 @@ public class Slider extends Interface
     }
 
     public double getPercent(){
-        //get maximum and minimpoint based on x coordinants
-        double pointAX = this.getX() - slider.getMaxOffset();
-        double pointBX = this.getX() + slider.getMaxOffset();
-        double range = pointBX - pointAX;
-        //ensure no divide by 0 error
-        if (range == 0) {
-            return 0;
+        if (createdSlider){
+            //get maximum and minimpoint based on x coordinants
+            double pointAX = this.getX() - slider.getMaxOffset();
+            double pointBX = this.getX() + slider.getMaxOffset();
+            double range = pointBX - pointAX;
+            //ensure no divide by 0 error
+            if (range == 0) {
+                return 0;
+            }
+            if (slider.getX() == pointAX + 1){
+                return 0.0;
+            } 
+            else if (slider.getX() == pointBX - 1) {
+                return 1.0*100;
+            }
+            //return percent calculation based on x position of slider with respect to minimum offset
+            return ((slider.getX() - pointAX) / range)*100;
         }
-        if (slider.getX() == pointAX + 1){
-            return 0.0;
-        } 
-        else if (slider.getX() == pointBX - 1) {
-            return 1.0;
-        }
-        //return percent calculation based on x position of slider with respect to minimum offset
-        return(slider.getX() - pointAX) / range;
+        return 50;
     }
 
     @Override
