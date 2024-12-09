@@ -1,5 +1,10 @@
 import greenfoot.*;
-
+/**
+ * Write a description of class StatsLabel here.
+ * 
+ * @Jonathan 
+ * @1.0.0
+ */
 public class Label extends Interface {
     private GreenfootImage image;
     private String text;

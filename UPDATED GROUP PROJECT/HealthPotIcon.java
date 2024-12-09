@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class HealthPot here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Jonathan 
+ * @1.0.0
  */
 public class HealthPotIcon extends Shop
 {

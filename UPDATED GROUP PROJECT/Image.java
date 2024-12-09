@@ -4,8 +4,8 @@ import greenfoot.GreenfootImage;
 /**
  * Write a description of class DisplayCharacter here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Jonathan 
+ * @1.0.0
  */
 public class Image extends Interface
 {

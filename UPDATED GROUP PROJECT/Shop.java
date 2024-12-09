@@ -1,6 +1,11 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
-
+/**
+ * Write a description of class StatsLabel here.
+ * 
+ * @Jonathan 
+ * @1.0.0
+ */
 public class Shop extends SuperSmoothMover
 {
     private GreenfootImage shopBackground;

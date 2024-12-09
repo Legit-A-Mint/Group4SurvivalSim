@@ -143,12 +143,14 @@ public class SimulationWorld extends World{
         ambientSound.playLoop(); 
     }
 
+    // @Jonathan
     // Method that gets called when the world starts
     public void started(){
         // Start the ambient sound in a loop when the game starts
         ambientSound.playLoop();
     }
 
+    // @Jonathan
     // Method that gets called when the world stops / is paused
     public void stopped(){
         // Stop the ambient sound when the game is paused
